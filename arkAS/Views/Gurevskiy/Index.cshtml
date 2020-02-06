@@ -1,0 +1,547 @@
+﻿
+@{
+    ViewBag.Title = "Документооборот";
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+
+    var strTab = Request.Params["tab"];
+    string[] tab = new string[3];
+    if (strTab == "invoices") {
+        tab[1] = "class=\'active\'";
+    }
+    else if (strTab == "mail")
+    {
+        tab[2] = "class=\'active\'";
+    }
+    else
+    {
+        tab[0] = "class='active'";
+    }
+}
+
+<br />
+
+<ul id="tabsDoc" class="nav nav-tabs">
+    <li @Html.Raw(tab[0])><a href="/Gurevskiy?tab=contracts">Договора</a></li>
+    <li @Html.Raw(tab[1])><a href="/Gurevskiy?tab=invoices">Счета</a></li>
+    <li @Html.Raw(tab[2])><a href="Gurevskiy?tab=mail">Почта</a></li>
+</ul>
+
+<div id='tCont'></div>
+
+
+
+@section js {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var partnerSource = @Html.Raw(js.Serialize(((List<arkAS.BLL.gurevskiy_partner>)ViewBag.Partners).Select(x => new { Value = x.id, Text = x.name, Selected = false })));
+            var contractTypeSource = @Html.Raw(js.Serialize(((List<arkAS.BLL.gurevskiy_contractTypes>)ViewBag.ContractTypes).Select(x => new { Value = x.id, Text = x.name, Selected = false })));
+            var contractStatusSource = @Html.Raw(js.Serialize(((List<arkAS.BLL.gurevskiy_contractStatuses>)ViewBag.ContractStatus).Select(x => new { Value = x.id, Text = x.name, Selected = false })));
+            var invoiceStatusSource = @Html.Raw(js.Serialize(((List<arkAS.BLL.gurevskiy_invoiceStatuses>)ViewBag.InvoiceStatus).Select(x => new { Value = x.id, Text = x.name, Selected = false })));
+            var mailStatusSource = @Html.Raw(js.Serialize(((List<arkAS.BLL.gurevskiy_mailStatuses>)ViewBag.MailStatus).Select(x => new { Value = x.id, Text = x.name, Selected = false })));
+
+            var asdoc = {
+                init: function (tab) {
+                    asdoc.initMainTable(tab);
+                },
+                initMainTable: function (tab) {
+                    //Счет
+                    if (tab == "invoices") {
+                        as.crud.init({
+                            cont: $('#tCont'),
+                            title: '',
+                            groupOperationsToolbar: '',
+                            ajaxURLFormat: '/Gurevskiy/Invoices_{0}',
+                            inlineAjaxURL: "",
+                            showChecksCol: false,
+                            showNumsCol: false,
+                            showToolbar: true,
+                            showColSettings: false,
+                            showReplaceTool: false,
+                            showExcelExport: false,
+                            additionalSort: false,
+                            pageSize: 5,
+                            cookiePrefix: "as-crud-gur-invoice",
+                            emptyText: 'Нет данных',
+                            createLinkTitle: 'Создать',
+                            filterLinkTitle: 'Найти',
+                            filterTitle: 'Фильтрация данных',
+                            cols: [
+                                {
+                                    code: "id",
+                                    title: "ID",
+                                    tooltip: "Идентификатор",
+                                    isVisible: false,
+                                    isPK: true,
+                                    datatype: "int",
+                                    isRequired: false,
+                                    editHide: true
+                                },
+                                {
+                                    code: "date",
+                                    title: "Дата",
+                                    tooltip: "Дата",
+                                    isVisible: true,
+                                    isPK: false,
+                                    datatype: "date",
+                                    isRequired: true,
+                                    isSort: true,
+                                    callback: null,
+                                    filter: { type: "daterange" }
+                                },
+                                {
+                                    code: "number",
+                                    title: "Номер",
+                                    tooltip: "Номер",
+                                    isVisible: true,
+                                    isPK: false,
+                                    datatype: "string",
+                                    isRequired: true,
+                                    isSort: false,
+                                    callback: null,
+                                    filter: { type: "string" }
+                                },
+                                {
+                                    code: "statusName",
+                                    title: "Статус",
+                                    tooltip: "Статус",
+                                    isVisible: true,
+                                    isPK: false,
+                                    datatype: "select",
+                                    isRequired: true,
+                                    isSort: true,
+                                    editSources: invoiceStatusSource,
+                                    callback: null,
+                                    filter: { type: "select", source: invoiceStatusSource, notSelected: "Не выбрано" }
+                                },
+                                {
+                                    code: "statusID",
+                                    title: "ID статуса",
+                                    tooltip: "ID статуса",
+                                    isVisible: false,
+                                    isPK: false,
+                                    datatype: "int",
+                                    isRequired: false,
+                                    isSort: false,
+                                    editHide: true,
+                                    callback: null
+                                },
+                                {
+                                    code: "partnerName",
+                                    title: "Контрагент",
+                                    tooltip: "Контрагент",
+                                    isVisible: true,
+                                    isPK: false,
+                                    datatype: "select",
+                                    isRequired: true,
+                                    isSort: true,
+                                    editSources: partnerSource,
+                                    callback: null,
+                                    filter: { type: "select", source: partnerSource, notSelected: "Не выбрано" }
+                                },
+                                {
+                                    code: "partnerID",
+                                    title: "ID Контрагента",
+                                    tooltip: "ID Контрагента",
+                                    isVisible: false,
+                                    isPK: false,
+                                    datatype: "int",
+                                    isRequired: false,
+                                    isSort: false,
+                                    editHide: true,
+                                    callback: null
+                                },
+                                {
+                                    code: "comment",
+                                    title: "Примечание",
+                                    tooltip: "Примечание",
+                                    isVisible: false,
+                                    isPK: false,
+                                    datatype: "text",
+                                    isRequired: false,
+                                    isSort: false,
+                                    callback: null
+                                }
+                            ],
+
+                            operations: {
+                                create: true,
+                                remove: true,
+                                edit: true,
+                                other: []
+                            }
+                        });
+                    }
+                    //Почта
+                    else if (tab == "mail") {
+                        as.crud.init({
+                            cont: $('#tCont'),
+                            title: '',
+                            groupOperationsToolbar: '',
+                            ajaxURLFormat: '/Gurevskiy/Mails_{0}',
+                            inlineAjaxURL: "",
+                            showChecksCol: false,
+                            showNumsCol: false,
+                            showToolbar: true,
+                            showColSettings: false,
+                            showReplaceTool: false,
+                            showExcelExport: false,
+                            additionalSort: false,
+                            pageSize: 5,
+                            cookiePrefix: "as-crud-gur-mail",
+                            emptyText: 'Нет данных',
+                            createLinkTitle: 'Создать',
+                            filterLinkTitle: 'Найти',
+                            filterTitle: 'Фильтрация данных',
+                            cols: [
+                                {
+                                    code: "id",
+                                    title: "ID",
+                                    tooltip: "Идентификатор",
+                                    isVisible: false,
+                                    isPK: true,
+                                    datatype: "int",
+                                    isRequired: false,
+                                    editHide: true
+                                },
+                                {
+                                    code: "date",
+                                    title: "Дата",
+                                    tooltip: "Дата",
+                                    isVisible: true,
+                                    isPK: false,
+                                    datatype: "date",
+                                    isRequired: true,
+                                    isSort: true,
+                                    callback: null,
+                                    filter: { type: "daterange" }
+                                },
+                                {
+                                    code: "from",
+                                    title: "От кого",
+                                    tooltip: "От кого",
+                                    isVisible: true,
+                                    isPK: false,
+                                    datatype: "string",
+                                    isRequired: false,
+                                    isSort: true,
+                                    callback: null,
+                                    filter: { type: "string" }
+                                },
+                                {
+                                    code: "to",
+                                    title: "Кому",
+                                    tooltip: "Кому",
+                                    isVisible: true,
+                                    isPK: false,
+                                    datatype: "string",
+                                    isRequired: false,
+                                    isSort: true,
+                                    callback: null,
+                                    filter: { type: "string" }
+                                },
+                                {
+                                    code: "statusName",
+                                    title: "Статус",
+                                    tooltip: "Статус",
+                                    isVisible: true,
+                                    isPK: false,
+                                    datatype: "select",
+                                    isRequired: true,
+                                    isSort: true,
+                                    editSources: mailStatusSource,
+                                    callback: null,
+                                    filter: { type: "select", source: mailStatusSource, notSelected: "Не выбрано" }
+                                },
+                                {
+                                    code: "statusID",
+                                    title: "ID статуса",
+                                    tooltip: "ID статуса",
+                                    isVisible: false,
+                                    isPK: false,
+                                    datatype: "int",
+                                    isRequired: false,
+                                    isSort: false,
+                                    editHide: true,
+                                    callback: null
+                                },
+                                {
+                                    code: "numberTrack",
+                                    title: "Трекномер",
+                                    tooltip: "Трекномер",
+                                    isVisible: true,
+                                    isPK: false,
+                                    datatype: "string",
+                                    isRequired: true,
+                                    isSort: false,
+                                    callback: null,
+                                    filter: { type: "string" }
+                                },
+                                {
+                                    code: "dateBack",
+                                    title: "Обратно дата",
+                                    tooltip: "Обратно дата",
+                                    isVisible: true,
+                                    isPK: false,
+                                    datatype: "date",
+                                    isRequired: false,
+                                    isSort: false,
+                                    callback: null,
+                                },
+                                {
+                                    code: "numberTrackBack",
+                                    title: "Обратно трекномер",
+                                    tooltip: "Обратно трекномер",
+                                    isVisible: true,
+                                    isPK: false,
+                                    datatype: "string",
+                                    isRequired: false,
+                                    isSort: false,
+                                    callback: null,
+                                    filter: { type: "string" }
+                                },
+                                {
+                                    code: "systemSending",
+                                    title: "Cистема отправки",
+                                    tooltip: "Cистема отправки",
+                                    isVisible: false,
+                                    isPK: false,
+                                    datatype: "string",
+                                    isRequired: false,
+                                    isSort: false,
+                                    callback: null
+                                },
+                                {
+                                    code: "desc",
+                                    title: "Описание",
+                                    tooltip: "Описание",
+                                    isVisible: false,
+                                    isPK: false,
+                                    datatype: "text",
+                                    isRequired: false,
+                                    isSort: false,
+                                    callback: null
+                                }
+                            ],
+
+                            operations: {
+                                create: true,
+                                remove: true,
+                                edit: true,
+                                other: []
+                            }
+                        });
+                    }
+                    //Договора
+                    else {
+                        as.crud.init({
+                            cont: $('#tCont'),
+                            title: '',
+                            groupOperationsToolbar: '',
+                            ajaxURLFormat: '/Gurevskiy/Contracts_{0}',
+                            inlineAjaxURL: "",
+                            showChecksCol: false,
+                            showNumsCol: false,
+                            showToolbar: true,
+                            showColSettings: false,
+                            showReplaceTool: false,
+                            showExcelExport: false,
+                            additionalSort: false,
+                            pageSize: 5,
+                            cookiePrefix: "as-crud-gur-contract",
+                            emptyText: 'Нет данных',
+                            createLinkTitle: 'Создать',
+                            filterLinkTitle: 'Найти',
+                            filterTitle: 'Фильтрация данных',
+                            cols: [
+                                {
+                                    code: "id",
+                                    title: "ID",
+                                    tooltip: "Идентификатор",
+                                    isVisible: false,
+                                    isPK: true,
+                                    datatype: "int",
+                                    isRequired: false,
+                                    editHide: true
+                                },
+                                {
+                                    code: "date",
+                                    title: "Дата",
+                                    tooltip: "Дата",
+                                    isVisible: true,
+                                    isPK: false,
+                                    datatype: "date",
+                                    isRequired: true,
+                                    isSort: true,
+                                    callback: null,
+                                    filter: { type: "daterange" }
+                                },
+                                {
+                                    code: "number",
+                                    title: "Номер",
+                                    tooltip: "Номер",
+                                    isVisible: true,
+                                    isPK: false,
+                                    datatype: "string",
+                                    isRequired: true,
+                                    isSort: false,
+                                    callback: null,
+                                    filter: { type: "string" }
+                                },
+                                {
+                                    code: "typeName",
+                                    title: "Документ",
+                                    tooltip: "Вид документа",
+                                    isVisible: true,
+                                    isPK: false,
+                                    datatype: "select",
+                                    isRequired: true,
+                                    isSort: true,
+                                    editSources: contractTypeSource,
+                                    callback: null,
+                                    filter: { type: "select", source: contractTypeSource, notSelected: "Не выбрано" }
+                                },
+                                {
+                                    code: "typeID",
+                                    title: "ID вида документа",
+                                    tooltip: "ID вида документа",
+                                    isVisible: false,
+                                    isPK: false,
+                                    datatype: "int",
+                                    isRequired: false,
+                                    isSort: false,
+                                    editHide: true,
+                                    callback: null
+                                },
+                                {
+                                    code: "statusName",
+                                    title: "Статус",
+                                    tooltip: "Статус",
+                                    isVisible: true,
+                                    isPK: false,
+                                    datatype: "select",
+                                    isRequired: true,
+                                    isSort: true,
+                                    editSources: contractStatusSource,
+                                    callback: null,
+                                    filter: { type: "select", source: contractStatusSource, notSelected: "Не выбрано" },
+                                },
+                                {
+                                    code: "statusID",
+                                    title: "ID статуса",
+                                    tooltip: "ID статуса",
+                                    isVisible: false,
+                                    isPK: false,
+                                    datatype: "int",
+                                    isRequired: false,
+                                    isSort: false,
+                                    editHide: true,
+                                    callback: null
+                                },
+                                {
+                                    code: "partnerName",
+                                    title: "Контрагент",
+                                    tooltip: "Контрагент",
+                                    isVisible: true,
+                                    isPK: false,
+                                    datatype: "select",
+                                    isRequired: true,
+                                    isSort: true,
+                                    editSources: partnerSource,
+                                    callback: null,
+                                    filter: { type: "select", source: partnerSource, notSelected: "Не выбрано" }
+                                },
+                                {
+                                    code: "partnerID",
+                                    title: "ID Контрагента",
+                                    tooltip: "ID Контрагента",
+                                    isVisible: false,
+                                    isPK: false,
+                                    datatype: "int",
+                                    isRequired: false,
+                                    isSort: false,
+                                    editHide: true,
+                                    callback: null
+                                },
+                                {
+                                    code: "sum",
+                                    title: "Сумма",
+                                    tooltip: "Сумма",
+                                    isVisible: true,
+                                    isPK: false,
+                                    datatype: "float",
+                                    isRequired: false,
+                                    isSort: false,
+                                    callback: null
+                                },
+                                {
+                                    code: "comment",
+                                    title: "Примечание",
+                                    tooltip: "Примечание",
+                                    isVisible: false,
+                                    isPK: false,
+                                    datatype: "text",
+                                    isRequired: false,
+                                    isSort: false,
+                                    callback: null
+                                },
+                                {
+                                    code: "link",
+                                    title: "Cсылка",
+                                    tooltip: "Cсылка",
+                                    isVisible: false,
+                                    isPK: false,
+                                    datatype: "string",
+                                    isRequired: false,
+                                    isSort: false,
+                                    callback: null
+                                }
+                            ],
+
+                            operations: {
+                                create: true,
+                                remove: true,
+                                edit: true,
+                                other: []
+                            },
+                        });
+                    }
+                }
+            }
+
+            function getUrlVars() {
+                var vars = {};
+                var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) { vars[key] = value; });
+                return vars;
+            }
+
+            $(function () {
+                asdoc.init(getUrlVars()["tab"]);
+            });
+
+
+            //$("#tabsDoc li a").click(function () {
+            //    //var tab = $(this).parent();
+            //    //if (!tab.hasClass("active")) {
+            //    //    $("#tabsDoc li").each(function () {
+            //    //        if ($(this).hasClass("active")) {
+            //    //            $(this).removeClass("active");
+            //    //            return;
+            //    //        }
+            //    //    });
+
+            //    //    tab.addClass("active");
+            //    //}
+
+
+            //    asdoc.init($(this).attr("data-id"));
+            //    //var tab = $(this).attr("data-id");
+            //    //if (tab == 'Contracts') {
+            //    //    asContract.init();
+            //    //}
+            //    //else if (tab == 'Invoices') {
+            //    //    asInvoice.init();
+            //    //}
+            //});
+        });
+    </script>
+}

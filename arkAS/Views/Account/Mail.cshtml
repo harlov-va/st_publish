@@ -1,0 +1,37 @@
+﻿@model  ForgotViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<!-- If you delete this meta tag, Half Life 3 will never be released. -->
+<meta name="viewport" content="width=device-width" />    
+<meta name="viewport" content="width=device-width, initial scale=1.0"/>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Email subject or title</title>
+<style type="text/css">
+.ExternalClass {width:100%;}
+img {display: block;}
+
+@@media only screen and (max-width: 600px) {
+    table[class="hide"], img[class="hide"], td[class="hide"] {
+      display:none!important;
+    }
+  }
+
+</style>      
+</head>
+ 
+<body bgcolor="#FFFFFF">
+
+Пароль для вашего акаунта успешно восстановлен.Вы может войти на сайт используя следующие данные:<br/><br/>
+Логин: @Model.UserName<br/>
+Пароль: @Model.Password<br/><br/>
+
+
+</body>
+
+

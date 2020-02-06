@@ -1,0 +1,62 @@
+﻿@{
+    ViewBag.Title = "Компонент одиночной замены картинки";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section css {
+    <link href="~/Content/fe/festyle.css" rel="stylesheet" />
+    <link href="~/js/CodeMirror/lib/codemirror.css" rel="stylesheet" />
+    <link href="~/js/fancy/source/jquery.fancybox.css" rel="stylesheet" />
+    <style>
+        .as-file-editor {
+            border: 1px solid black;
+            cursor: pointer;
+            float: left;
+            margin: 50px 10px;
+            padding: 20px;
+        }
+
+            .as-file-editor:hover {
+                background: #bbb;
+                border: 1px solid red;
+            }
+
+            .as-file-editor img {
+                width: 50px;
+                height: 50px;
+            }
+    </style>
+}
+<h1>Компонент одиночной замены картинки</h1>
+<div class="row">
+    <div class="col-md-12">
+        Передвинте курсор на изображение, для начала работы!
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-6">
+        <div class="as-text" data-code="FirstParagraph" data-mode="image" data-seotext="1">@Html.Raw(arkAS.BLL.Core.TextManager.Get("FirstParagraph"))</div>
+    </div>
+
+     <div class="col-md-6">
+         <div class="as-text" data-code="defaultFirstParagraph" data-seotext="1">@Html.Raw(arkAS.BLL.Core.TextManager.Get("defaultFirstParagraph"))</div>
+     </div>  
+    </div>
+
+
+@section js{    
+    <script src="~/js/jQueryFileUpload/js/vendor/jquery.ui.widget.js"></script>
+    <script src="~/js/jQueryFileUpload/js/jquery.iframe-transport.js"></script>
+    <script src="~/js/jQueryFileUpload/js/jquery.fileupload.js"></script>
+    <script src="~/js/CodeMirror/lib/codemirror.js"></script>
+    <script src="~/js/CodeMirror/lib/require.js"></script>
+    <script src="~/js/cm.sys.js"></script>
+    @*<script src="~/js/AS/controls/as.fileEditor.js"></script>*@
+@*<script src="~/js/AS/controls/as.fileEditor.js"></script>*@
+    <script src="~/js/AS/controls/as.FileExplorer.js"></script>
+    <script src="~/js/fancy/source/jquery.fancybox.js"></script>
+
+    <script type="text/javascript">
+    </script>
+}

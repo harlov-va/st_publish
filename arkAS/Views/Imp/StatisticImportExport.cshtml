@@ -1,0 +1,140 @@
+﻿@using arkAS.BLL
+@{
+    Layout = arkAS.BLL.Core.CoreManager.GetCabinetLayout();
+    ViewBag.Title = "Статистика Импорт/Экспорт";
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+
+<select class="operationsTemplate hide">
+        <option value="0">Не выбрано</option>
+        @foreach (var i in (List<imp_items>)ViewBag.Operations)
+        {
+            <option value="@i.id">@i.name</option>
+        }
+</select>
+
+<select class="usersTemplate hide">
+    <option value="@Guid.Empty">Не выбрано</option>
+    @foreach (var i in (List<aspnet_Users>)ViewBag.Users)
+    {
+        <option value="@i.UserId">@i.UserName</option>
+    }
+</select>
+
+<select class="objectsTemplate hide">
+    <option value="any">Не выбрано</option>
+    @foreach (var i in (List<TableDataBase>)ViewBag.Objects)
+    {
+        <option value="@i.db_name">@i.db_name</option>
+    }
+</select>
+
+<div class="checkError hide">
+    <input type='checkbox'/> Есть ошибки
+</div>
+
+<div class='usCont'>
+</div>
+
+@section js{
+    <script type="text/javascript">
+        var asdemo = {
+            init: function() {
+                asdemo.initMainTable();
+            },
+            initMainTable: function() {
+                as.crud.init({
+                    cont: $('.usCont'),
+                    title: 'Статистика Импорт/Экспорт',
+                    toolbarAdditional: '',
+                    groupOperationsToolbar: '',
+                    ajaxURLFormat: '/Imp/StatisticImportExport_{0}',
+                    inlineAjaxURL: "",
+                    pageSize: 150,
+                    cookiePrefix: "as-crud-StatisticImportExport-",
+                    emptyText: 'Нет элементов',
+                    createLinkTitle: 'Создать',
+                    filterLinkTitle: 'Найти',
+                    filterTitle: 'Фильтрация данных',
+                    showChecksCol: false,
+                    showNumsCol: true,
+                    showToolbar: true,
+                    showColSettings: false,
+                    showReplaceTool: false,
+                    showExcelExport: false,
+                    additionalSort: false,
+                    cols: [
+                        {
+                            code: "creat",
+                            title: "Дата создания",
+                            tooltip: "Дата создания",
+                            isVisible: true,
+                            isPK: false,
+                            datatype: "string",
+                            isRequired: false,
+                            format: "{0}",
+                            isSort: true,
+                            callback: null,
+                            filter: { type: "daterange" }
+                        },
+                        { code: "createdBy", title: "Пользователь", tooltip: "Пользователь", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null },
+                        { code: "datatable", title: "Объект", tooltip: "Объект", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null },
+                        { code: "operationName", title: "Тип операции", tooltip: "Тип операции", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: false, callback: null },
+                        { code: "duration", title: "Длительность", tooltip: "Длительность", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null },
+                        { code: "errors", title: "Ошибки", tooltip: "Ошибки", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: false, callback: null },
+                        { code: "info", title: "Информация", tooltip: "Информация", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: false, callback: null },
+                        { code: "withBackupT", title: "Бэкап", tooltip: "Бэкап", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: false, callback: null }
+                    ],
+                    operations: {
+                        create: false,
+                        remove: false,
+                        edit: false,
+                        other: [
+                        ]
+                    },
+                    getFilterMakeup: function(filter) {
+                        var s = [];
+
+                        $('.usersTemplate option').removeAttr('selected');
+                        $('.usersTemplate option[value=' + filter.user + ']').attr('selected', 'selected');
+                        s.push("<div class='crdFilterItem'><span class='gCap'>Пользователь</span><select class='fUser'>" + $('.usersTemplate').html() + "</select></div>");
+
+                        $('.operationsTemplate option').removeAttr('selected');
+                        $('.operationsTemplate option[value=' + filter.oper + ']').attr('selected', 'selected');
+                        s.push("<div class='crdFilterItem'><span class='gCap'>Тип операции</span><select class='fOper'>" + $('.operationsTemplate').html() + "</select></div>");
+
+                        $('.objectsTemplate option').removeAttr('selected');
+                        $('.objectsTemplate option[value=' + filter.object + ']').attr('selected', 'selected');
+                        s.push("<div class='crdFilterItem'><span class='gCap'>Объект</span><select class='fObject'>" + $('.objectsTemplate').html() + "</select></div>");
+
+
+                        $('.checkError input:checkbox').removeAttr('checked');
+                        if (filter.checked) {
+                            $('.checkError input:checkbox').attr('checked', 'checked');
+                        }
+                        s.push("<div class='checkBox'>" + $('.checkError').html() + "</div>");
+
+                        return s.join("");
+                    },
+                    filter: function() {
+                        var filter = {
+                            user: $('.fUser').val() || "",
+                            oper: $('.fOper').val() || "",
+                            object: $('.fObject').val() || "",
+                            checked: $('.checkBox input:checkbox').is(':checked')
+                        };
+                        return filter;
+                    }
+                });
+            }
+        }
+        $(function() {
+            asdemo.init();
+        });
+    </script>
+
+}
+
+
+
+

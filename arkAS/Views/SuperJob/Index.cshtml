@@ -1,0 +1,171 @@
+﻿@{
+    ViewBag.Title = "Super Job";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+
+<h1>Поиск вакансий в Super Job</h1>
+<div class="panel-group crdFilter" id="crdFilter">
+    <div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" data-parent="#crdFilter" href="#crdFilterPanel" aria-expanded="true" class="">Фильтрация данных</a></h4>
+    </div>
+    <div id="crdFilterPanel" class="panel-collapse collapse in" aria-expanded="true">
+        <div class="panel-body">
+            <p><span class="gCap">Ключевое слово</span><input type="text" id="nameFilter" class="form-control" value=""></p>
+            <p><span class="gCap">Город</span><input type="text" id="townFilter" class="form-control" value=""></p>
+            <p><span class="gCap">Зар. плата от</span><input type="text" id="pay_fromFilter" class="form-control" value=""></p>
+            <p><span class="gCap">Зар. плата до</span><input type="text" id="pay_toFilter" class="form-control" value=""></p>
+            <p>
+                <span class="gCap">Тип занятости</span>
+                <select id="type_of_workFilter" class="form-control">
+                    <option value="1">Не выбрано</option>
+                    <option value="6">Полный день</option>
+                    <option value="10">Неполный день</option>
+                    <option value="12">Cменный график</option>
+                    <option value="13">Частичная занятость</option>
+                    <option value="7">Временная работа</option>
+                    <option value="9">Вахтовым методом</option>
+                </select>
+            </p>
+            <p>
+                <span class="gCap">Пол</span>
+                <select id="genderFilter" class="form-control">
+                    <option value=" 0">
+                    Не имеет значения</option>
+                    <option value="2">Мужской</option>
+                    <option value="3">Женский</option>
+                </select>
+            </p>
+            <p>
+                <span class="gCap">Опыт работы</span>
+                <select id="experienceFilter" class="form-control">
+                    <option value="0">Не выбрано</option>
+                    <option value="1">Опыт не требуется</option>
+                    <option value="5">1 год</option>
+                    <option value="2">От 1 до 3 лет</option>
+                    <option value="3">От 3 до 6 лет</option>
+                    <option value="4">От 6 лет</option>
+                </select>
+            </p>
+</div>
+    </div>
+    </div>
+</div>
+
+<button class="btn btn-default btn-sm" id="find">Найти</button>
+
+<ul class="pager hide">
+    <li class="previous disabled"><a href="#">&larr; Предыдущая</a></li>
+    <li class="next disabled"><a href="#">Следующая &rarr;</a></li>
+</ul>
+
+<div class="sjCont"></div>
+
+    @section js {
+        <script type="text/javascript">
+            var sJob = {
+                options: { page: 1, count: 15 },
+                init: function (options) {
+                    sJob.options = $.extend(options, sJob.options);
+                    $('#find').on('click', { page: sJob.options.page, count: sJob.options.count }, sJob.ajaxSend);
+                    $('#find').trigger('click');
+                },
+                ajaxSend: function (event) {
+                    var params = {
+                        keyword: $('#nameFilter').val(),
+                        town: $('#townFilter').val(),
+                        payment_from: $('#pay_fromFilter').val(),
+                        payment_to: $('#pay_toFilter').val(),
+                        type_of_work: $('#type_of_workFilter option:selected').val(),
+                        gender: $('#genderFilter option:selected').val(),
+                        experience: $('#experienceFilter option:selected').val(),
+                        page: event.data.page,
+                        count: sJob.options.count
+                    }
+                    var url = "/SuperJob/GetVacancies/";
+                    $.ajax({
+                        type: 'GET',
+                        url: url,
+                        dataType: 'json',
+                        cache: false,
+                        contentType: 'application/json',
+                        data: params,
+                        success: function (data) {
+                            $('.sjCont').empty();
+                            if (data.objects.length == 0) {
+                                if (!$('.next').hasClass('hide')) $('.next').addClass('hide');
+                                if (!$('.previous').hasClass('hide')) $('.previous').addClass('hide');
+                                $('.sjCont').append("<div class='alert alert-info' role='alert'>Вакансии не найдены.</div>");
+                            }
+                            else {
+                                if ($('.next').hasClass('hide')) $('.next').removeClass('hide');
+                                if ($('.previous').hasClass('hide')) $('.previous').removeClass('hide');
+                                var s = [];
+                                for (var i = 0; i < data.objects.length; i++) {
+                                    s.push("<div class='panel panel-default'><div class='panel-heading'>");
+                                    if (data.objects[i].link != null && data.objects[i].profession != null) {
+                                        s.push("<a href='" + data.objects[i].link + "'>" + data.objects[i].profession + "</a><br/>");
+                                    }
+                                    if(data.objects[i].firm_name != null)
+                                    {
+                                        s.push(data.objects[i].firm_name + "<br/>");
+                                    }
+                                    if(data.objects[i].town.title != null)
+                                    {
+                                        s.push(data.objects[i].town.title);
+                                    }
+                                    if (data.objects[i].payment_from != 0) {
+                                        s.push("<br />от " + data.objects[i].payment_from);
+                                        switch (data.objects[i].currency) {
+                                            case "rub": { s.push(" рублей"); break; }
+                                            case "uah": { s.push(" гривен"); break; }
+                                            case "uzs": { s.push(" сум"); break; }
+                                        }
+                                    }
+                                    s.push("</p></div>");
+                                    s.push("<div class='panel-body'>");
+                                    if (data.objects[i].work != null) {
+                                        s.push("<h4>Должностные обязанности</h4><p>" + data.objects[i].work + "</p>");
+                                    }
+                                    if (data.objects[i].candidat != null) {
+                                        s.push("<h4>Требования</h4><p>" + data.objects[i].candidat + "</p>");
+                                    }
+                                    s.push("</div>");
+                                    var publish_date = new Date(data.objects[i].date_published * 1000);
+                                    var d = publish_date.getDate();
+                                    var m = publish_date.getMonth();
+                                    var months = ['Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря'];
+                                    var y = publish_date.getFullYear();
+                                    s.push("<div class='panel-footer'><p>Опубликовано: " + d + " " + months[m] + " " + y + " года" + "</div></div>");
+                                }
+
+                                var totalPages = Math.ceil(data.total / event.data.count);
+                                if (event.data.page < totalPages) {
+                                    $('.pager li.next a').off('click');
+                                    $('.pager li.next a').on('click', { page: event.data.page + 1, count: event.data.count }, sJob.ajaxSend);
+                                    if ($('.pager li.next').hasClass('disabled')) { $('.pager li.next').removeClass('disabled'); }
+                                }
+                                else if (!$('.pager li.next').hasClass('disabled')) { $('.pager li.next').addClass('disabled'); }
+
+                                if (event.data.page > 1) {
+                                    $('.pager li.previous a').off('click');
+                                    $('.pager li.previous a').on('click', { page: event.data.page - 1, count: event.data.count }, sJob.ajaxSend);
+                                    if ($('.pager li.previous').hasClass('disabled')) { $('.pager li.previous').removeClass('disabled'); }
+                                }
+                                else if (!$('.pager li.previous').hasClass('disabled')) { $('.pager li.previous').addClass('disabled'); }
+
+                                if ($('.pager').hasClass('hide')) { $('.pager').removeClass('hide'); }
+
+                                $('.sjCont').append(s.join(""));
+                            }
+                        }  
+                    });
+                    return false;
+                }
+            };
+            $(function () {
+                sJob.init();
+            });
+        </script>
+    }

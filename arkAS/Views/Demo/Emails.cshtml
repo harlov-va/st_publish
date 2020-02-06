@@ -1,0 +1,72 @@
+﻿@{
+    ViewBag.Title = "Письма";
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+<style>
+
+</style>
+<div class='dmCont'>
+</div>
+
+
+
+
+@Html.Raw(arkAS.BLL.Core.CoreManager.GetMainFormLink());
+
+@section js{
+    <script type="text/javascript">
+   
+
+        var asdemo = {
+            options: { params: ''},
+            init: function () {
+                asdemo.initMainTable();
+
+                
+            },
+            initMainTable: function () {
+                as.crud.init({
+                    cont: $('.dmCont'),
+                    title: 'Список писем',
+                    toolbarAdditional: '',
+                    groupOperationsToolbar: '',
+                    ajaxURLFormat: '/Demo/Emails_{0}',
+                    inlineAjaxURL: "",
+                    pageSize: 5,
+                    cookiePrefix: "as-crud-emails-",
+                    emptyText: 'Нет элементов',
+                    createLinkTitle: 'Создать',
+                    filterLinkTitle: 'Найти',
+                    filterTitle: 'Фильтрация данных',
+                    showChecksCol: false,
+                    showNumsCol: true,
+                    showToolbar: true,
+                    showColSettings: false,
+                    showReplaceTool: false,
+                    showExcelExport: false,
+                    additionalSort: false,
+                    cols: [
+                        { code: "id", title: "ID", tooltip: "Идентификатор", isVisible: false, isPK: true, datatype: "int", isRequired: false },
+                        { code: "subject", title: "Тема", tooltip: "Тема письма", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: false, callback: null },
+                        { code: "body", title: "Содержание", tooltip: "Содержание письма", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: false, callback: null },
+                        { code: "date", title: "Дата", tooltip: "Дата создания", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null },
+                        ],
+                    operations: {
+                        create: true,
+                        remove: true,
+                        edit: true,
+                        other: [
+                        ]
+                    }
+                });
+            }
+        }
+        $(function () {
+            asdemo.init();
+        });
+    </script>
+}
+
+
+
+

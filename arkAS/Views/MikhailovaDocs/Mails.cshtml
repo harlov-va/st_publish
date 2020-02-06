@@ -1,0 +1,329 @@
+﻿@using arkAS.BLL
+
+@{
+    Layout = arkAS.BLL.Core.CoreManager.GetCabinetLayout();
+    ViewBag.Title = "Почта";
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+
+<select class='usCheckDocStatuses hide'>
+    <option value="0">Не выбрано</option>
+    @foreach (var item in ViewBag.ListStatuses)
+    {
+        <option value='@item.id'>@item.name</option>
+    }
+</select>
+
+<div class='usCont'></div>
+
+@section js{
+    <script type="text/javascript">
+    var sourceListStatuses = @Html.Raw(js.Serialize(((List<Mikhailova_statuses_mails>)ViewBag.ListStatuses).Select(x => new { Value = x.id, Text = x.name, Selected = false })));
+    var sourceListStatusesEditable = @Html.Raw(js.Serialize(((List<Mikhailova_statuses_mails>)ViewBag.ListStatuses).Select(x => new { value = x.id, text = x.name })));
+
+    var asdemo = {
+        init: function() {
+            asdemo.initMainTable();
+            $(document).delegate('.usCreateDoc', 'click', function(e) {
+                e.preventDefault();
+                asdemo.createItem();
+            });
+        },
+        initMainTable: function() {
+            as.crud.init({
+                cont: $('.usCont'),
+                title: 'Почта',
+                toolbarAdditional: '<a href="#" class="btn btn-primary usCreateDoc">Создать</a>&nbsp;&nbsp;',
+                groupOperationsToolbar: '',
+                ajaxURLFormat: '/MikhailovaDocs/Mails_{0}',
+                inlineAjaxURL: "/MikhailovaDocs/MailsInline",
+                pageSize: 150,
+                cookiePrefix: "as-crud-mailsDoc-",
+                emptyText: 'Нет элементов',
+                createLinkTitle: 'Создать',
+                filterLinkTitle: 'Найти',
+                filterTitle: 'Фильтрация данных',
+                showChecksCol: false,
+                showNumsCol: true,
+                showToolbar: true,
+                showColSettings: false,
+                showReplaceTool: false,
+                showExcelExport: false,
+                additionalSort: false,
+                cols: [
+                    { code: "id", title: "ID", tooltip: "Идентификатор", isVisible: false, isPK: true, datatype: "int", isRequired: false, editHide: true },
+                    {
+                        code: "treckNumber",title: "Номер", tooltip: "Номер", isVisible: true, isPK: false, datatype: "string", isRequired: true, format: "{0}", isSort: true, callback: null
+                        ,editable: { type: "text", format: "{0}", callback: function(el, newValue) {} }
+                    },
+                    { code: "date", filter: { type: "daterange" }, title: "Дата создания", editHide: true, tooltip: "Дата создания", isVisible: true, isPK: false, datatype: "date", isRequired: false, format: "{0}", isSort: true, callback: null },
+                    {
+                        code: "from",title: "Откуда", tooltip: "Откуда", isVisible: true, isPK: false, datatype: "string", isRequired: true, format: "{0}", isSort: true, callback: null
+                    },
+                    {
+                        code: "to",title: "Куда", tooltip: "Куда", isVisible: true, isPK: false, datatype: "string", isRequired: true, format: "{0}", isSort: true, callback: null
+                    },
+                    {
+                        code: "desc", title: "Описание", tooltip: "Описание", isVisible: true, isPK: false, datatype: "string", isRequired: true, format: "{0}", isSort: true, callback: null,
+                        editable: { type: "text", format: "{0}", callback: function(el, newValue) {} }
+                    },
+                    {
+                        code: "systemMail",title: "Почтовый Сервер", tooltip: "Почтовый Сервер", isVisible: true, isPK: false, datatype: "string", isRequired: true, format: "{0}", isSort: true, callback: null
+                        ,editable: { type: "text", format: "{0}", callback: function(el, newValue) {} }
+                    },
+                    {
+                        code: "statusName", title: "Статус", tooltip: "Статус", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                        editable: { type: "select", format: "{0}", source: sourceListStatusesEditable, notSelected: "Не установлено", callback: function(el, newValue) {} },
+                    },
+                    {
+                        code: "statusID",  title: "Статус", tooltip: "Статус", isVisible: false, isPK: false, datatype: "int", isRequired: false, format: "{0}", callback: null
+                    },
+                    {
+                        code: "treckNumberReplay",title: "Обратно трек номер", tooltip: "Обратно трек номер", isVisible: true, isPK: false, datatype: "string", isRequired: true, format: "{0}", isSort: true, callback: null
+                        ,editable: { type: "text", format: "{0}", callback: function(el, newValue) {} }
+
+                    },
+                    { code: "dateReplay", title: "Обратно дата получения", tooltip: "Дата ответа", isVisible: true, isPK: false, datatype: "date", isRequired: false, format: "{0}", isSort: true, callback: null },
+
+                ],
+                operations: {
+                    create: false,
+                    remove: true,
+                    edit: false,
+                    other: [
+                        { linkClass: 'crdTo2', iconClass: 'glyphicon glyphicon-pencil', title: 'Редактировать', callback: asdemo.editItem }
+                    ]
+                },
+
+                getFilterMakeup: function(filter) {
+                    var s = [];
+                    s.push("<div class='crdFilterItem'><span class='gCap'>Номер</span><input type='text' class='usNumber' value='" + (filter.treckNumber || '') + "' /></div>");
+
+                    $('.usCheckDocStatuses option').removeAttr('selected');
+                    $('.usCheckDocStatuses option[value=' + filter.statusID + ']').attr('selected', 'selected');
+                    s.push("<div class='crdFilterItem'><span class='gCap'>Статус</span><select class='usDocStatus'>" + $('.usCheckDocStatuses').html() + "</select></div>");
+
+                    return s.join("");
+                },
+                filter: function() {
+
+                    var filter = {
+                        treckNumber: $('.usNumber').val() || "",
+                        statusID: $('.usDocStatus option:selected').val(),
+                    };
+                    return filter;
+                }
+            });
+        },
+
+        createItem: function() {
+            var s = [];
+            s.push("<span>Номер</span><input type='text' class='form-control usNewTreckNumber' /><br />");
+            s.push("<span>Укажите email для отправки</span>");
+            s.push("<input type='text' class='form-control usNewFrom' value=''/><br />");
+
+            s.push("<span>Укажите email отправителя</span>");
+            s.push("<input type='text' class='form-control usNewTo' value=''/><br />");
+
+            s.push("<span>Укажите почтовый сервер</span>");
+            s.push("<input type='text' class='form-control usNewSystemMail' value=''/><br />");
+
+            s.push("<textarea id='note' class='form-control' placeholder='Описание...' cols='30' rows='2'></textarea>");
+
+            setTimeout(function() { $('.usNewName').focus(); }, 200);
+            as.sys.showDialog("Создание", s.join(""), "Сохранить", function() {
+                var treckNumber = $('.usNewTreckNumber').val();
+                var from = $('.usNewFrom').val();
+                var to = $('.usNewTo').val();
+                var systemMail = $('.usNewSystemMail').val();
+                var desc = $('#note').val();
+                //debugger;
+                //var checkFrom1=isEmail(from); 
+                //var checkTo=isEmail(to); 
+                
+                if (!treckNumber) {
+                    as.sys.bootstrapAlert("Укажите пожалуйста номер", { type: 'warning' });
+                    $('.usNewTreckNumber').focus();
+                    return;
+                }
+                if (!from) {  //(!from || !checkFrom1)
+                    as.sys.bootstrapAlert("Укажите пожалуйста email", { type: 'warning' });
+                    $('.usNewFrom').focus();
+                    return;
+                }
+                if (!to) {     //(!to || !checkTo)
+                    as.sys.bootstrapAlert("Укажите пожалуйста email", { type: 'warning' });
+                    $('.usNewTo').focus();
+                    return;
+                }
+                if (!systemMail) {
+                    as.sys.bootstrapAlert("Укажите пожалуйста систему отправки", { type: 'warning' });
+                    $('.usNewSystemMail').focus();
+                    return;
+                }
+                if (!desc) {
+                    as.sys.bootstrapAlert("Укажите пожалуйста описание", { type: 'warning' });
+                    $('#note').focus();
+                    return;
+                }
+
+                var params = {
+                    treckNumber: treckNumber,
+                    from:from,
+                    to: to,
+                    systemMail: systemMail,
+                    desc:desc
+                };
+                function isEmail(value) {  
+                    debugger;
+                    var str = value.toString();
+                    if (!str.match(/^[\w-\.]{1,}\@@([\da-zA-Z-]{1,}\.){1,}[\da-zA-Z-]{2,6}$/)) {        
+                        return false;
+                    } 
+                    else { 
+                        return true;
+                         }
+                    };
+                    as.sys.ajaxSend("/MikhailovaDocs/CreateMails", params, function(data) {
+                        if (typeof (data) != "object") data = eval('(' + data + ')');
+                        if (data.result) {
+                            as.sys.bootstrapAlert("Элемент сохранен", { type: 'success' });
+                            as.sys.closeDialog();
+                            as.crud.getItems();
+                            setTimeout(function() {
+                                as.crud.gotoItem(data.textID);
+                            }, 1000);
+                        } else {
+                            as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                        }
+                    });
+                });
+            },
+
+            editItem: function() {
+                var params = { id: $(this).closest('tr').attr('data-itemid') };
+                var p = params;
+                as.sys.ajaxSend("/MikhailovaDocs/GetMail", params, function(data) {
+                    if (typeof (data) != "object") data = eval('(' + data + ')');
+                    if (data.id) {
+                        var s = [];
+                        s.push("<input type='hidden' id='docId' value='" + data.id + "'/><br />");
+                        s.push("<span>Номер</span><input type='text' class='form-control usNewTreckNumber' value='" + data.treckNumber + "' /><br />");
+
+                        var date = asdemo.formatDate(data.date);
+                        s.push("<input  type='hidden' disabled data-date-format='DD MM YYYY' value='" + date + "' class='form-control usCreated'/>");
+
+                        s.push("<span>Email для отправки</span>");
+                        s.push("<input type='text' class='form-control usNewFrom' value='" + data.from + "'/><br />");
+
+                        s.push("<span>Email отправителя</span>");
+                        s.push("<input type='text' class='form-control usNewTo' value='" + data.to + "'/><br />");
+
+                        s.push("<span>Почтовый сервер</span>");
+                        s.push("<input type='text' class='form-control usNewSystemMail' value='" + data.systemMail + "'/><br />");
+
+                        $('.usCheckDocStatuses option').removeAttr('selected');
+                        $(".usCheckDocStatuses option[value='" + data.statusID + "']").attr("selected", "selected");
+                        s.push("<span>Статус</span><select class='form-control usNewStatusID' >" + $('.usCheckDocStatuses').html() + "</select><br />");
+
+                        s.push("<span>Обратно трек номер</span>");
+                        s.push("<input type='text' class='form-control usNewTreckNumberReplay' value='" + data.treckNumberReplay + "' readonly/><br />");
+
+                        s.push("<span>Обратно дата получения</span>");
+                        s.push("<input type='text' class='form-control usNewDateReplay' value='" + data.dateReplay + "readonly'/><br />");
+
+
+                        s.push("<textarea id='note' class='form-control' placeholder='Описание...' cols='30' rows='2'>" + data.desc+ " </textarea>");
+
+                        setTimeout(function() { $('.usNewName').focus(); }, 200);
+                        as.sys.showDialog("Редактирование", s.join(""), "Сохранить", function() {
+                            var id = parseInt(params.id);
+                            var treckNumber = $('.usNewTreckNumber').val();
+                            var date = $('.usCreated').val();
+                            var from = $('.usNewFrom').val();
+                            var to = $('.usNewTo').val();
+                            var systemMail = $('.usNewSystemMail').val();
+                            var statusID = $('.usNewStatusID option:selected').val();
+                            var treckNumberReplay = $('.usNewTreckNumberReplay').val();
+                            var desc = $('#note').val();
+                            var dateReplay = $('.usNewDateReplay').val();
+
+                            if (!treckNumber) {
+                                as.sys.bootstrapAlert("Укажите пожалуйста номер", { type: 'warning' });
+                                $('.usNewTreckNumber').focus();
+                                return;
+                            }
+                            if (!from) {
+                                as.sys.bootstrapAlert("Укажите пожалуйста email отправителя", { type: 'warning' });
+                                $('.usNewFrom').focus();
+                                return;
+                            }
+                            if (!to) {
+                                as.sys.bootstrapAlert("Укажите пожалуйста email получателя", { type: 'warning' });
+                                $('.usNewTo').focus();
+                                return;
+                            }
+                            if (!systemMail) {
+                                as.sys.bootstrapAlert("Укажите пожалуйста систему отправки", { type: 'warning' });
+                                $('.usNewSystemMail').focus();
+                                return;
+                            }
+                            if (!statusID || statusID == 0) {
+                                as.sys.bootstrapAlert("Укажите пожалуйста статус", { type: 'warning' });
+                                $('.usNewStatusID').focus();
+                                return;
+                            }
+                            if (!desc) {
+                                as.sys.bootstrapAlert("Укажите пожалуйста описание", { type: 'warning' });
+                                $('#note').focus();
+                                return;
+                            }
+
+                            var paramsEdit = {
+                                id: id,
+                                date: date,
+                                treckNumber: treckNumber,
+                                from: from,
+                                to: to,
+                                systemMail: systemMail,
+                                statusID: statusID,
+                                treckNumberReplay: treckNumberReplay,
+                                dateReplay: dateReplay
+                            };
+
+                            function isNumber(value) {
+                                var str = value.toString();
+                                if (!str.match(/^-?[0-9]*[.][0-9]+$/)) {return false;} else {return true;}
+                            };
+                            as.sys.ajaxSend("/MikhailovaDocs/EditMails", paramsEdit, function(data) {
+                                if (typeof (data) != "object") data = eval('(' + data + ')');
+                                if (data.result) {
+                                    as.sys.bootstrapAlert("Документ успешно отредактирован", { type: 'success' });
+                                    as.sys.closeDialog();
+                                    as.crud.getItems();
+                                    setTimeout(function() {
+                                        as.crud.gotoItem(data.itemID);
+                                    }, 1000);
+                                } else {
+                                    as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                                }
+                            });
+                        });
+                    } else {
+                        as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                    }
+                });
+            },
+
+            formatDate: function(dateString) {
+                var date_mas = dateString.split('.');
+                return [date_mas[2], date_mas[1], date_mas[0]].join('-');
+            }
+        }
+
+
+        $(function() {
+            asdemo.init();
+        });
+    </script>
+}

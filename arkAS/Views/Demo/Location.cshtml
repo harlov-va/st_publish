@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = "Выбор города";
+}
+@section css{
+    <link href="~/js/AS/controls/controls_style/location.css" rel="stylesheet" />
+    <link href="~/js/estimate/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+}
+<script src="~/js/AS/controls/mics/as.location.js"></script>
+
+<h1>Выбор города</h1>
+<div class="well">
+    Данный компонент позволяет выбрать город
+</div>
+
+<div>
+    <div id="cCountry"></div><br />
+    <div id="cCity"></div><br /><br />
+    <div>
+        <div id="resultCountry" style="display:none">Страна: <span id="rCountry"></span>, id: <span id="rCountryId"></span></div>
+        <div id="resultCity" style="display:none">Город: <span id="rCity"></span>, id: <span id="rCityId"></span></div>
+    </div>
+</div>
+
+@section js
+{
+    <script>
+        $(function () {
+            as.location.init({
+                ctrlCountry: "#cCountry",
+                ctrlCity: '#cCity',
+                changeLocation: function (country, countryId, city, cityId) {
+                    $("#rCountry").html(country);
+                    $("#rCountryId").html(countryId);
+                    $("#rCity").html(city);
+                    $("#rCityId").html(cityId);
+                    if (country)
+                        $("#resultCountry").show();
+                    else
+                        $("#resultCountry").hide();
+
+                    if (city)
+                        $("#resultCity").show();
+                    else
+                        $("#resultCity").hide();
+                }
+            });
+        });
+    </script>
+}

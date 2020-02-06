@@ -1,0 +1,146 @@
+﻿@{
+    ViewBag.Title = "Редактирование новостей";
+    Layout = arkAS.BLL.Core.CoreManager.GetCabinetLayout();
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+
+<div class='dmCont'>
+</div>
+
+@section js{
+    <script type="text/javascript">
+
+    var statusesSourceFilter = @Html.Raw(js.Serialize(((List<arkAS.BLL.art_newsType>)ViewBag.NewsType).Select(x => new { Value = x.id, Text = x.name, Selected = false })));
+    var statusesSourceEditable = @Html.Raw(js.Serialize(((List<arkAS.BLL.art_newsType>)ViewBag.NewsType).Select(x => new { value = x.id, text = x.name })));
+
+    var asdemo = {
+        init: function () {
+            asdemo.initMainTable();
+            asdemo.initSelectImage();
+
+            $(document).delegate('.usCloseText', 'click', function (e) {
+                e.preventDefault();
+                $(this).closest("tr").hide(250, function () { $(this).remove() });
+            });
+            $(document).delegate('.usSaveText', 'click', function (e) {
+                e.preventDefault();
+                asdemo.saveText($(this));
+            });
+        },
+
+        initMainTable: function () {
+            as.crud.init({
+                cont: $('.dmCont'),
+                title: 'Редактирование новостей',
+                toolbarAdditional: "",
+                groupOperationsToolbar: '',
+                ajaxURLFormat: '/Article/GetArticleTable_{0}',
+                inlineAjaxURL: "/Article/GetArticleTableInline",
+                pageSize: 150,
+                cookiePrefix: "as-crud-GetArticleTable-",
+                emptyText: 'Нет элементов',
+                createLinkTitle: 'Создать',
+                filterLinkTitle: 'Найти',
+                filterTitle: 'Фильтрация данных',
+                showChecksCol: false,
+                showNumsCol: true,
+                showToolbar: true,
+                showColSettings: false,
+                showReplaceTool: false,
+                showExcelExport: false,
+                additionalSort: false,
+                cols: [
+                    {   code: "id",       title: "ID",            tooltip: "Идентификатор",   isVisible: true,    isPK: true,     datatype: "int",    isRequired: false},
+                    {   code: "created",  title: "Дата создания", tooltip: "Дата создания",   isVisible: true,    isPK: false,    datatype: "date",   isRequired: false,   format: "{0}",  isSort: true,   callback: null },
+                    {
+                        code: "title",   title: "Заголовок", tooltip: "Заголовок", isVisible: true, isPK: false, datatype: "string",   isRequired: false, format: "{0}", isSort: true, callback: null,
+                        editable: { type: "text", format: "{0}", callback: function (el, newValue) { } }
+                    },
+                    { code: "imgPath",  title: "Картинка",      tooltip: "Добавить картинку",        isVisible: true,    isPK: false, editHide: true,    datatype: "string",   isRequired: false,  format: "{0}",  isSort: false,  callback: null },
+                    {
+                        code: "anouns", title: "Анонс", tooltip: "Анонс", isVisible: true, isPK: false, datatype: "string",   isRequired: false, format: "{0}", isSort: false, callback: null,
+                        editable: { type: "text", format: "{0}", callback: function (el, newValue) { } }
+                    },
+
+                    {
+                        code: "typeID", title: "Тип новостей", tooltip: "Тип новостей", isVisible: true, isPK: false, datatype: "select",    editSources: statusesSourceFilter, isRequired: false, format: "{0}", isSort: false, callback: null,
+                        editable: { type: "select", format: "{0}", source: statusesSourceEditable, notSelected: "Не установлено", callback: function (el, newValue) { } },
+                        filter: { type: "checkboxes", source: statusesSourceFilter, notSelected: "Не установлено" }
+
+                    }
+                ],
+                operations: {
+                    create: true,
+                    remove: true,
+                    edit: false,
+                    other: [
+                      { linkClass: 'crdTo2', iconClass: 'glyphicon glyphicon-pencil', title: 'Редактировать текст', callback: asdemo.editValue }
+                    ]
+                },
+                getItemsCallback : function () {
+                    as.selectImage.changeImageContent();
+                    $(".crdFilterItem input[type='checkbox']").attr({"style":"width:30px;"})
+                }
+            });
+        },
+
+        initSelectImage: function (){
+            as.selectImage.init({
+                cont: 'myUsUploadImage',
+                swfURLFormat: '/js/uploadify/uploadify.swf',
+                uploaderURLFormat: '/Article/ArticleImageSave',
+                    deleteURLFormat: '/Article/ArticleImageDelete',
+                    toSaveDirectory:  '/uploads/Images/Articles',
+            })
+        },
+
+        editValue: function(e){
+            e.preventDefault();
+            var btn = $(this);
+            var tr = btn.closest('tr');
+            if (tr.next().hasClass('crdAddRow')) {
+                tr.next().hide(50, function () { $(this).remove() });
+            } else {
+                var s = [];
+                s.push("<tr class='crdAddRow'><td colspan='5'>");
+                s.push("<div class='well well-sm'><a class='btn btn-success usSaveText'>Сохранить</a>&nbsp;&nbsp;<a class='btn btn-default usCloseText'>Закрыть</a></div>");
+                s.push("<textarea class='as-html usText' rows='15' cols='120' style='max-width:  1600px;'></textarea>");
+                s.push("</td></tr>");
+                $(s.join("")).insertAfter(tr);
+                var params = { id: tr.attr('data-itemID') };
+                as.sys.ajaxSend("/Article/GetArticleText", params, function (data) {
+                    if (typeof (data) != "object") data = eval('(' + data + ')');
+                    if (data.result) {
+                        var t = tr.next().find('.usText')
+                        var mce = tinyMCE.get( t.attr('id'));
+                        mce.setContent ? mce.setContent(data.text) : t.val(data.text);
+
+                    } else {
+                        as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                    }
+                });
+            }
+        },
+
+        saveText: function(btn){
+            var tr = btn.closest("tr").prev();
+            var t = btn.closest("tr").find('.usText')
+            var mce = tinyMCE.get( t.attr('id'));
+            var text = mce.getContent ? mce.getContent() : t.val();
+            var params = { pk: tr.attr('data-itemID'), value: text, name: "text" };
+            as.sys.ajaxSend("/Article/GetArticleTableInline", params, function (data) {
+                if (typeof (data) != "object") data = eval('(' + data + ')');
+                if (data.result) {
+                    as.sys.bootstrapAlert("Сохранено", { type: 'success' });
+                } else {
+                    as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                }
+            });
+        }
+    }
+    $(function () {
+        asdemo.init();
+    });
+
+    </script>
+}

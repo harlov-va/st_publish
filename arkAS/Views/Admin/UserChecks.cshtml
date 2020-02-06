@@ -1,0 +1,185 @@
+﻿@using arkAS.Models;
+@{
+    Layout = arkAS.BLL.Core.CoreManager.GetCabinetLayout();
+    ViewBag.Title = "Реакция пользователей на рассылку";
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+
+<div class='usCont'>
+</div>
+@section js{
+    <script type="text/javascript">
+        @*var sourceCommentsTypes = @Html.Raw(js.Serialize(((List<string>)ViewBag.CommentsTypes).Select(x => new { Value = x, Text = x, Selected = false })));*@
+
+        var us = {
+            init: function () {
+                us.initMainTable();
+
+                $(document).delegate('.usSendMail', 'click', function (e) {
+                    e.preventDefault();
+                    us.SendMail($(this));
+                });
+
+                $(document).delegate('.usClosed', 'click', function (e) {
+                    us.ChangeCheck($(this));
+                });
+
+                $(document).delegate('.usCloseColumn', 'click', function (e) {
+                    us.CloseColumn($(this));
+                });
+
+            },
+            initMainTable: function () {
+                as.userchecks.init({
+                    containerClass: $('.usCont')
+                });
+            },
+            SendMail: function (btn) {
+
+                var nameUser = btn.attr("data-username");
+                var idCheckItem = btn.attr("data-checkid");
+                var s = [];
+
+                var params = {
+                    id: idCheckItem
+                };
+
+                as.sys.ajaxSend("/Admin/GetUserCheckItem", params, function (data) {
+                    if (typeof (data) != "object") data = eval('(' + data + ')');
+                    if (data.result) {
+
+                        s.push("<span>Тема</span><input type='text' class='form-control usNewEmailSubject' /><br />");
+                        s.push("<span>Текст</span><textarea rows='4' cols='50' class='form-control usNewEmailText'></textarea><br />");
+                        s.push("<span>Замечание</span><input type='text' class='form-control usNewEmailNote' /><br />");
+
+                        setTimeout(function () {
+                            $('.usNewEmailSubject').val(data.emailSubject);
+                            $('.usNewEmailText').val(data.emailText);
+                            $('.usNewEmailNote').focus();
+                        }, 500);
+
+                        as.sys.showDialog("Отправка сообщения", s.join(""), "Отправить", function () {
+                            var emailSubject = $('.usNewEmailSubject').val();
+                            var emailText = $('.usNewEmailText').val();
+                            var emailNote = $('.usNewEmailNote').val();
+
+                            var params = {
+                                emailSubject: emailSubject,
+                                emailText: emailText,
+                                emailNote: emailNote,
+                                nameUser: nameUser,
+                                idCheckItem: idCheckItem
+                            };
+
+                            as.sys.ajaxSend("/Admin/UserChecks_sendMail", params, function (data) {
+                                if (typeof (data) != "object") data = eval('(' + data + ')');
+                                if (data.result) {
+                                    as.sys.bootstrapAlert("Письмо отправлено", { type: 'success' });
+                                    as.sys.closeDialog();
+                                    us.RefreshCell(btn);
+                                } else {
+                                    as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                                }
+                            });
+                        });
+
+                    } else {
+                        as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                    }
+                });
+
+            },
+            ChangeCheck: function (chk) {
+
+                var curCell = chk.closest("td");
+
+                var nameUser = chk.attr("data-username");
+                var idCheckItem = chk.attr("data-checkid");
+                var checked = chk.prop("checked");
+
+                var params = {
+                    isClosed: checked,
+                    nameUser: nameUser,
+                    idCheckItem: idCheckItem
+                };
+
+                as.sys.ajaxSend("/Admin/UserChecks_changeIsClosed", params, function (data) {
+                    if (typeof (data) != "object") data = eval('(' + data + ')');
+                    if (data.result) {
+                        as.sys.bootstrapAlert("Изменено", { type: 'success' });
+                        as.sys.closeDialog();
+
+                        us.RefreshCell(chk);
+
+                    } else {
+                        as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                    }
+                });
+            },
+            CloseColumn: function (btn) {
+
+                var idCheckItem = btn.attr("data-checkid");
+
+                var params = {
+                    idCheckItem: idCheckItem
+                };
+
+                as.sys.ajaxSend("/Admin/UserChecks_CloseColumn", params, function (data) {
+                    if (typeof (data) != "object") data = eval('(' + data + ')');
+                    if (data.result) {
+                        as.sys.bootstrapAlert("Изменено", { type: 'success' });
+                        as.sys.closeDialog();
+
+                        var buttons = $("input[data-checkid=" + idCheckItem + "]");
+                        buttons.each(function () { us.RefreshCell($(this)); });
+
+                    } else {
+                        as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                    }
+                });
+            },
+            RefreshCell: function (elem) {
+
+                var curCell = elem.closest("td");
+
+                var nameUser = elem.attr("data-username");
+                var idCheckItem = elem.attr("data-checkid");
+
+                var params = {
+                    nameUser: nameUser,
+                    idCheckItem: idCheckItem
+                };
+
+                as.sys.ajaxSend("/Admin/UserChecks_getItem", params, function (data) {
+                    if (typeof (data) != "object") data = eval('(' + data + ')');
+                    if (data.result) {
+
+                        var s = [];
+                        s.push("<span class='usModified'>" + data.modified + "</span></br>");
+                        s.push("<label><input type='checkbox' " + (data.isClosed ? 'checked' : '') + " data-username='" + nameUser + "'  data-checkid='" + idCheckItem + "' class='usClosed'>Закрыто</label></br>");
+
+                        s.push("<a href='#' data-username='" + nameUser + "'  data-checkid='" + idCheckItem + "' class='usSendMail btn btn-default btn-sm'>Отправить</a>");
+                        curCell.html(s.join(""));
+
+                        if (data.isClosed == true) {
+                            curCell.removeClass("warning");
+                            curCell.addClass("success");
+                        } else {
+                            if (data.isSended == true) {
+                                curCell.removeClass("success");
+                                curCell.addClass("warning");
+                            }
+                        }
+
+                    }
+                });
+            }
+
+
+        };
+
+        $(function () {
+            us.init();
+        });
+    </script>
+}

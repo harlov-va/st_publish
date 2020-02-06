@@ -1,0 +1,107 @@
+﻿@{
+    ViewBag.Title = "DotJsDemo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="/js/doT.js"></script>
+<div class='dmCont'>
+</div>
+<h2>Демонстрация скорости работы шаблонизаторов</h2>
+<div class="testData col-md-12">
+    <div class="col-md-6">
+        <a class="btn btn-default" onclick="dotjsTest();">dotjsTest</a>
+        <div id="dotJsLoadTime" class="col-md-12"></div>
+        <div id="dotJsResult" class="col-md-12"></div>
+    </div>
+    <div class="col-md-6">
+        <a class="btn btn-default" onclick="jsrenderTest();">jsrenderTest</a>
+        <div id="jsRenderLoadTime" class="col-md-12"></div>
+        <div id="jsRenderResult" class="col-md-12"></div>
+    </div>
+
+</div>
+@section js
+{
+    <script src="~/js/jsrender.js"></script>
+    <script id="tmpl" type="text/x-jsrender">
+        <ul>
+            {{for}}
+            <li>{{:name}} lives in <b>{{:address}}</b></li>
+            {{/for}}
+        </ul>
+    </script>
+    <script id="headertmpl" type="text/x-dot-template">
+        <ul>
+            {{~it :value:index}}
+
+            <li>{{=value.name}} lives in <b>{{=value.address}}</b> </li>
+            {{~}}
+        </ul>
+    </script>
+
+    <script type="text/javascript" language="javascript">
+        function dotjsTest() {
+            var progressBar = $('#progressbar');
+            var startTime = 0;
+            $.ajax({
+                contentType: "application/json; charset=utf-8",
+                url: "/uploads/BigData/testText.json",
+                dataType: 'json',
+                beforeSend: function () {
+                    var d = new Date();
+                    startTime = d.getTime();
+                },
+                success: function (data) {
+                    as.sys.openProgressBar();
+                    var templ = $('#headertmpl').html();
+                    var pageFn = doT.template(templ);
+                    var result = pageFn(data);
+                   
+                    $('#dotJsResult').empty();
+                    $('#dotJsResult').html(result);
+
+                    var d = new Date();
+                    var loadTime = (d.getTime() - startTime) / 1000;
+                    $('#dotJsLoadTime').empty();
+                    $('#dotJsLoadTime').html('<span style=\"color:red\">Время выполнения: ' + loadTime + 'c</span>');
+
+                    as.sys.closeProgressBar();
+                },
+                error: function (data, status, xhr) {
+                    alert("Error: " + xhr.status + " : " + xhr.statusText);
+                }
+            });
+        };
+        function jsrenderTest() {
+            var startTime = 0;
+            $.ajax({
+                contentType: "application/json; charset=utf-8",
+                url: "/uploads/BigData/testText.json",
+                dataType: 'json',
+                beforeSend: function () {
+                    var d = new Date();
+                    startTime = d.getTime();
+                },
+                success: function (data) {
+                    as.sys.openProgressBar();
+                    console.log("success");
+                    var templ = $.templates("#tmpl");
+                    var result = templ.render(data);
+                    
+                    $('#jsRenderResult').empty();
+                    $('#jsRenderResult').html(result);
+
+                    var d = new Date();
+                    var loadTime = (d.getTime() - startTime) / 1000;
+                    $('#jsRenderLoadTime').empty();
+                    $('#jsRenderLoadTime').html('<span style=\"color:red\">Время выполнения: ' + loadTime + 'c</span>');
+
+                    as.sys.closeProgressBar();
+                },
+                error: function (data, status, xhr) {
+                    alert("Error: " + xhr.status + " : " + xhr.statusText);
+                }
+            });
+        }
+    </script>
+}
+

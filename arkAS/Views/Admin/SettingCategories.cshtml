@@ -1,0 +1,60 @@
+﻿@{
+    Layout = arkAS.BLL.Core.CoreManager.GetCabinetLayout();
+    ViewBag.Title = "Категории настроек";
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+<div class='usCont'>
+</div>
+@section js{
+<script type="text/javascript">
+    
+    var asdemo = {
+        init: function () {
+            asdemo.initMainTable();
+        },
+        initMainTable: function () {
+            as.crud.init({
+                cont: $('.usCont'),
+                title: 'Категории настроек',
+                toolbarAdditional: '',
+                groupOperationsToolbar: '',
+                ajaxURLFormat: '/Admin/SettingCategories_{0}',
+                inlineAjaxURL: "",
+                pageSize: 150,
+                cookiePrefix: "as-crud-SettingCategoriesDict-",
+                emptyText: 'Нет элементов',
+                createLinkTitle: 'Создать',
+                filterLinkTitle: 'Найти',
+                filterTitle: 'Фильтрация данных',
+                showChecksCol: false,
+                showNumsCol: true,
+                showToolbar: true,
+                showColSettings: false,
+                showReplaceTool: false,
+                showExcelExport: false,
+                additionalSort: false,
+                cols: [
+                    { code: "id", title: "ID", tooltip: "Идентификатор", isVisible: false, isPK: true, datatype: "int", isRequired: false, editHide: true },       
+                    { code: "name", title: "Название категории настройки", tooltip: "Название категории настройки", isVisible: true, isPK: false, datatype: "string", isRequired: true, format: "{0}", isSort: true, callback: null },
+                    { code: "ord", title: "Сортировка", tooltip: "Сортировка", isVisible: true, isPK: false, datatype: "string", isRequired: true, format: "{0}", isSort: true, callback: null },                    
+                ],
+                operations: {
+                    create: true,
+                    remove: true,
+                    edit: true,
+                    other: [
+                    ]
+                }
+            });
+        }
+    }
+    $(function () {
+        asdemo.init();
+    });
+</script>
+}
+
+
+
+
+

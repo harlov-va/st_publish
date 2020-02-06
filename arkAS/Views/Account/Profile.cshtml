@@ -1,0 +1,55 @@
+﻿@{
+    Layout = arkAS.BLL.Core.CoreManager.GetCabinetLayout();
+    ViewBag.Title = "Профиль";
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+
+<div class='usCont'>
+</div>
+
+@section css{
+<style type="text/css">
+    .as-form-item { height:52px;}
+    
+    /*div.as-form-item div.as-form-item-el input :only-child{position:relative;top:-15px;}*/
+    .dmCont input[type=text], .dmCont select { width: 200px; }
+</style>    
+}
+
+@section js{
+    <script type="text/javascript">
+        var us = {
+            init: function() {              
+                us.initForm();               
+            },
+            initForm: function () {               
+                as.form.init({
+                    editID: "0",
+                    cont: $('.usCont'),
+                    title: 'Профиль пользователя',
+                    subtitle: '',
+                    buttonText: 'Сохранить изменения',
+                    ajaxURLFormat: "/Account/Profile_{0}", // load, save
+                    cookiePrefix: 'as-form-profile',
+                    fields: [
+                        { code: "fio", title: "ФИО", tooltip: "Укажите ФИО", example: "", datatype: "string", visible: true, isRequired: true, checkCallback: function() {} },
+                        { code: "email", title: "e-mail", tooltip: "Укажите e-mail", example: "name@mail.com", datatype: "email", visible: true, isRequired: true, checkCallback: function() {} },
+                        { code: "skype", title: "skype", tooltip: "Укажите skype", example: "", datatype: "string", visible: true, isRequired: false, checkCallback: function() {} },
+                        { code: "phone", title: "Телефон", tooltip: "Укажите номер телефона", example: "", datatype: "phone", visible: true, isRequired: false, checkCallback: function() {} },
+                        { code: "note", title: "Примечание", tooltip: "Укажите дополнительные сведения", example: "", datatype: "string", visible: true, isRequired: false, checkCallback: function() {} }
+                    ]
+                });
+            }
+        }
+
+        $(function () {          
+            us.init();            
+        });
+    </script>
+}
+                                       
+
+
+
+
+

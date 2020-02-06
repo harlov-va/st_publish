@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "Вывод подсказок по элементам";
+}
+
+
+
+<!DOCTYPE html>
+<style>
+    /*.as-info{
+        display:none;
+    }*/
+</style>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>GetPopover</title>
+</head>
+<body>
+    <h2>SimplePopovers</h2>
+    <br /><br /><br /><br /><br /><br />
+    <ul>
+        <li>
+            <a href="#" class="as-info" data-ajax-url="/ArkStuff/GetPopover/" data-title="Заголовок" data-content2="Описание чего либо88" data-itemid="1" data-code="simpleinfo" data-placement="top" data-container="body" data-show="true">
+                Автозагрузка popover
+            </a>
+        </li>
+        <li>
+            <a href="#" class="as-info" data-ajax-url="/ArkStuff/GetPopover/" data-title="Заголовок" data-content2="Описание чего либо99" data-itemid="2" data-code="simpleinfo" data-placement="top" data-container="body" data-show="false">
+                Ручная загрузка popover
+            </a>
+        </li>
+    </ul>
+
+
+</body>
+</html>

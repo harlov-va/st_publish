@@ -1,0 +1,133 @@
+USE Core;
+GO
+
+IF OBJECT_ID('dbo.h_invoices','U') IS NOT NULL
+	DROP TABLE dbo.h_invoices;
+GO
+
+IF OBJECT_ID('dbo.h_invoiceStatuses','U') IS NOT NULL
+	DROP TABLE dbo.h_invoiceStatuses;
+GO
+
+IF OBJECT_ID('dbo.h_logMails','U') IS NOT NULL
+	DROP TABLE dbo.h_logMails;
+GO
+
+IF OBJECT_ID('dbo.h_mails','U') IS NOT NULL
+	DROP TABLE dbo.h_mails;
+GO
+
+IF OBJECT_ID('dbo.h_mailStatuses','U') IS NOT NULL
+	DROP TABLE dbo.h_mailStatuses;
+GO
+
+IF OBJECT_ID('dbo.h_deliverySystems','U') IS NOT NULL
+	DROP TABLE dbo.h_deliverySystems;
+GO
+
+IF OBJECT_ID('dbo.h_documents','U') IS NOT NULL
+	DROP TABLE dbo.h_documents;
+GO
+
+IF OBJECT_ID('dbo.h_contragents','U') IS NOT NULL
+	DROP TABLE dbo.h_contragents;
+GO
+
+IF OBJECT_ID('dbo.h_docStatuses','U') IS NOT NULL
+	DROP TABLE dbo.h_docStatuses;
+GO
+
+IF OBJECT_ID('dbo.h_docTypes','U') IS NOT NULL
+	DROP TABLE dbo.h_docTypes;
+GO
+
+CREATE TABLE h_contragents(
+id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+name NVARCHAR(100) NOT NULL,
+email NVARCHAR(100)
+);
+
+CREATE TABLE h_invoiceStatuses(
+id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+name NVARCHAR(30) NOT NULL,
+code NVARCHAR(30) NOT NULL
+);
+
+CREATE TABLE h_invoices(
+id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+uniqueCode UNIQUEIDENTIFIER DEFAULT(NEWID()),
+date DATETIME NOT NULL,
+number NVARCHAR(30) NOT NULL,
+description NVARCHAR(500),
+invStatusID INT REFERENCES h_invoiceStatuses(id) ON DELETE SET NULL,
+contragentID INT REFERENCES h_contragents(id) ON DELETE SET NULL
+);
+
+
+CREATE TABLE h_deliverySystems(
+id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+name NVARCHAR(30) NOT NULL,
+code NVARCHAR(30) NOT NULL
+);
+
+
+CREATE TABLE h_mailStatuses(
+id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+name NVARCHAR(30) NOT NULL,
+code NVARCHAR(30) NOT NULL
+);
+
+CREATE TABLE h_mails(
+id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+uniqueCode UNIQUEIDENTIFIER DEFAULT(NEWID()),
+date DATETIME NOT NULL,
+fromSender NVARCHAR(200),
+toRecipient NVARCHAR(200),
+description NVARCHAR(200),
+trackNumber NVARCHAR(20),
+backTrackNumber NVARCHAR(200),
+backDateRecipient DATETIME,
+deliverySystemID INT REFERENCES h_deliverySystems(id) ON DELETE SET NULL,
+mailStatusID INT REFERENCES h_mailStatuses(id) ON DELETE SET NULL
+);
+
+CREATE TABLE h_logMails(
+[id] INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+[date] DATETIME NOT NULL,
+[notice] NVARCHAR(200) NOT NULL,
+[userName] NVARCHAR(50) NOT NULL,
+[mailID] INT NOT NULL REFERENCES h_mails(id) ON DELETE CASCADE
+  );
+  GO
+
+CREATE TABLE h_docTypes(
+id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+name NVARCHAR(30) NOT NULL,
+code NVARCHAR(30) NOT NULL
+);
+
+CREATE TABLE h_docStatuses(
+id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+name NVARCHAR(30) NOT NULL,
+code NVARCHAR(30) NOT NULL
+);
+
+CREATE TABLE h_documents(
+id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+uniqueCode UNIQUEIDENTIFIER DEFAULT(NEWID())  NOT NULL,
+date DATETIME  NOT NULL,
+number NVARCHAR(30)  NOT NULL,
+sum MONEY  NOT NULL,
+description NVARCHAR(500)  NOT NULL,
+link NVARCHAR(MAX)  NOT NULL,
+contragentID  INT NOT NULL REFERENCES h_contragents(id) ON DELETE NO ACTION,
+docTypeID INT NOT NULL REFERENCES h_docTypes(id) ON DELETE NO ACTION,
+docStatusID INT NOT NULL REFERENCES h_docStatuses(id) ON DELETE NO ACTION,
+docParentID  INT NOT NULL REFERENCES h_documents(id) ON DELETE NO ACTION
+);
+
+ALTER TABLE h_documents ADD isDeleted BIT NOT NULL DEFAULT('false');
+GO
+
+ALTER TABLE h_invoices ADD isDeleted BIT NOT NULL DEFAULT('false');
+GO

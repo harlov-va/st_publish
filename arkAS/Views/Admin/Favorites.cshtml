@@ -1,0 +1,82 @@
+﻿@{
+    Layout = arkAS.BLL.Core.CoreManager.GetCabinetLayout();
+    ViewBag.Title = "Избранное";
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+<div class='usCont'>
+</div>
+@section js{
+    <script type="text/javascript">
+
+    var asdemo = {
+        init: function () {
+            asdemo.initMainTable();
+        },
+        initMainTable: function () {
+            as.crud.init({
+                cont: $('.usCont'),
+                title: 'Избранное',
+                toolbarAdditional: '',
+                groupOperationsToolbar: '',
+                ajaxURLFormat: '/Admin/Favorites_{0}',
+                inlineAjaxURL: "/Admin/FavoritesInline",
+                pageSize: 150,
+                cookiePrefix: "as-crud-FavoritesDict-",
+                emptyText: 'Нет элементов',
+                createLinkTitle: 'Создать',
+                filterLinkTitle: 'Найти',
+                filterTitle: 'Фильтрация данных',
+                showChecksCol: false,
+                showNumsCol: true,
+                showToolbar: true,
+                showColSettings: false,
+                showReplaceTool: false,
+                showExcelExport: false,
+                additionalSort: false,
+                cols: [
+                    { code: "id", title: "ID", tooltip: "Идентификатор", isVisible: false, isPK: true, datatype: "int", isRequired: false, editHide: true },
+                    {
+                        code: "itemID", title: "Идентификатор 2", tooltip: "Идентификатор 2", isVisible: true, isPK: false, datatype: "int", isRequired: true, format: "{0}", isSort: true, callback: null,
+                        editable: { type: "number", format: "{0}", callback: function (el, newValue) { } }
+                    },
+                    {
+                        code: "appName", title: "Название", tooltip: "Название", isVisible: true, isPK: false, datatype: "string", isRequired: true, format: "{0}", isSort: true, callback: null,
+                        editable: { type: "text", format: "{0}", callback: function (el, newValue) { } }
+                    },
+                    { code: "created", title: "Дата", tooltip: "Дата", isVisible: true, isPK: false, datatype: "date", isRequired: true, format: "{0}", isSort: true, callback: null, filter: { type: "daterange" }, editable: false },
+                    { code: "userGuid", title: "Идентификатор пользователя", tooltip: "Идентификатор пользователя", isVisible: true, editHide: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null },
+                ],
+                operations: {
+                    create: true,
+                    remove: true,
+                    edit: false,
+                    other: [
+                    ]
+                },
+            getFilterMakeup: function (filter) {
+                var s = [];
+                s.push("<span class='gCap'>Название</span><input type='text' class='usAppName' value='" + (filter.appName || '') + "' /><br />");
+                return s.join("");
+            },
+            filter: function () {
+               
+                var filter = {
+                    appName: $('.usAppName').val() || ""
+                };
+                return filter;
+            },
+
+            });
+        }
+    }
+
+    $(function () {
+        asdemo.init();
+    });
+    </script>
+}
+
+
+
+
+

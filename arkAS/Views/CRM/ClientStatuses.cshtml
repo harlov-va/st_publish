@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewBag.Title = "Статусы клиентов";
+    Layout = arkAS.BLL.Core.CoreManager.GetCabinetLayout();
+ }
+
+<div class = "clientStatuses">
+</div>
+@section js{
+<script type ="text/javascript">
+
+    var clientStatuses = {
+
+        init: function () {
+            clientStatuses.initMainTable();
+        },
+        initMainTable: function () {
+            as.crud.init({
+                cont: $(".clientStatuses"),
+                title: "Статусы клиентов",
+                toolbarAdditional: "",
+                groupOperationsToolbar: "",
+                ajaxURLFormat: "/CRM/ClientStatuses_{0}",
+                inlineAjaxURL: "/CRM/ClientStatusesInline",
+                pageSize: 150,
+                cookiePrefix: "as-crud-clientStatucesTable-",
+                emptyText: "Статуcы не заданы",
+                createLinkTitle: "Создать",
+                filterLinkTitle: "",
+                filterTitle: "",
+                showChecksCol: false,
+                showNumsCol: true,
+                showToolbar: true,
+                showColSettings: false,
+                showReplaceTool: false,
+                showExcelExport: false,
+                additionalSort: false,
+                cols: [
+                    { code: "id", title: "ID", tooltip: "идентификатор", isVisible: false, isPK: true, datatype: "int", isRequired: false },
+                    { code: "name", title: "Название", tootltip: "Название", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null },
+                    { code: "code", title: "Код", tooltip: "Код", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null },
+                    { code: "color", title: "Цвет", tooltip: "Цвет", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null },
+                    { code: "state", title: "Состояние", tooltip: "Состояние", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}",isSort:true,callback:null}
+                ],
+
+                operations: {
+                    create: true,
+                    remove: true,
+                    edit: true,
+                    other: [
+                    ]
+                },
+
+                getFilterMakeup: function (filter) {
+                    var s = [];
+                    return s.join("");
+                },
+
+                filter: function () {
+                    return {};
+                },
+
+                getItemsCallback: function () {
+
+                }
+
+            });
+        }
+    }
+    $(function () {
+        clientStatuses.init();
+    });
+</script>
+
+}

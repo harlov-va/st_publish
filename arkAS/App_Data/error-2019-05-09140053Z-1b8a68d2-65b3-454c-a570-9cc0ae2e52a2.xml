@@ -1,0 +1,192 @@
+﻿<error errorId="1b8a68d2-65b3-454c-a570-9cc0ae2e52a2" host="DESKTOP-U43M2US" type="System.Web.HttpException" message="The controller for path '/favicon.ico' was not found or does not implement IController." source="System.Web.Mvc" detail="System.Web.HttpException (0x80004005): The controller for path '/favicon.ico' was not found or does not implement IController.&#xD;&#xA;   в System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)&#xD;&#xA;   в System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)&#xD;&#xA;   в Castle.Proxies.Invocations.IControllerFactory_CreateController.InvokeMethodOnTarget()&#xD;&#xA;   в Castle.DynamicProxy.AbstractInvocation.Proceed()&#xD;&#xA;   в Glimpse.Core.Extensibility.CastleInvocationToAlternateMethodContextAdapter.Proceed()&#xD;&#xA;   в Glimpse.Core.Extensions.AlternateMethodContextExtensions.TryProceedWithTimer(IAlternateMethodContext context, TimerResult&amp; timerResult)&#xD;&#xA;   в Glimpse.Core.Extensibility.AlternateMethod.NewImplementation(IAlternateMethodContext context)&#xD;&#xA;   в Glimpse.Core.Extensibility.AlternateTypeToCastleInterceptorAdapter.Intercept(IInvocation invocation)&#xD;&#xA;   в Castle.DynamicProxy.AbstractInvocation.Proceed()&#xD;&#xA;   в Castle.Proxies.IControllerFactoryProxy.CreateController(RequestContext requestContext, String controllerName)&#xD;&#xA;   в System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController&amp; controller, IControllerFactory&amp; factory)&#xD;&#xA;   в System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)&#xD;&#xA;   в System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)&#xD;&#xA;   в System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)&#xD;&#xA;   в System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()&#xD;&#xA;   в System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)&#xD;&#xA;   в System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean&amp; completedSynchronously)" user="roshAdmin@email.com" time="2019-05-09T14:00:53.7782251Z" statusCode="404">
+  <serverVariables>
+    <item name="ALL_HTTP">
+      <value string="HTTP_CACHE_CONTROL:no-cache&#xD;&#xA;HTTP_CONNECTION:keep-alive&#xD;&#xA;HTTP_PRAGMA:no-cache&#xD;&#xA;HTTP_ACCEPT:image/webp,image/apng,image/*,*/*;q=0.8&#xD;&#xA;HTTP_ACCEPT_ENCODING:gzip, deflate, br&#xD;&#xA;HTTP_ACCEPT_LANGUAGE:ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7&#xD;&#xA;HTTP_COOKIE:ASP.NET_SessionId=uw4v4405hmpqq4r34suqn3ml; userGuid=4884435a-8d6a-4786-a747-fbdccc88fa28; __RequestVerificationToken=E6tZfIDbnEwMJ6K56aJB2qz-EJuUnfOlMlbLpWoflphkAJXcZhwyXyNbgF3Y5RYsxuNrb25sZC--O2u-mJMA_4MDuSw1; as-crud-m-doc-selectParams_docCont={&quot;page&quot;:1,&quot;pageSize&quot;:15,&quot;filter&quot;:{&quot;number&quot;:&quot;&quot;,&quot;typeID&quot;:&quot;0&quot;,&quot;contractorID&quot;:&quot;0&quot;,&quot;statusIDs&quot;:[&quot;1&quot;],&quot;strStatusIDs&quot;:&quot;1&quot;},&quot;sort&quot;:&quot;&quot;,&quot;direction&quot;:&quot;&quot;}; as-crud-molch-contragselectParams_contragentCont={&quot;page&quot;:2,&quot;pageSize&quot;:5,&quot;filter&quot;:{&quot;text&quot;:&quot;&quot;},&quot;sort&quot;:&quot;&quot;,&quot;direction&quot;:&quot;&quot;}; as-crud-molch-docsselectParams_docCont={&quot;page&quot;:1,&quot;pageSize&quot;:5,&quot;filter&quot;:{&quot;text&quot;:&quot;&quot;,&quot;ctrgID&quot;:&quot;0&quot;,&quot;docTypeID&quot;:&quot;0&quot;,&quot;parentDocID&quot;:&quot;0&quot;,&quot;statusIDs&quot;:[]},&quot;sort&quot;:&quot;&quot;,&quot;direction&quot;:&quot;&quot;}; arkAS=FE2942B55521217E3ED08062AC36CA54E5A869D7719372A810DA48C65A5A80A3C1AAB66B720082DA186C2F27538127A1B0226D3556FD93DD32EC8730F97435D6EAC77F01599400EDBBD3A7C45F7EFCB043E98267EA3658393D618F56484DD49DA18B243206104428131D48F05B6B006A35691368; as-crud-docs1-selectParams_usCont={&quot;page&quot;:1,&quot;pageSize&quot;:10,&quot;filter&quot;:{&quot;text&quot;:&quot;&quot;},&quot;sort&quot;:&quot;&quot;,&quot;direction&quot;:&quot;&quot;}&#xD;&#xA;HTTP_HOST:localhost:52390&#xD;&#xA;HTTP_REFERER:http://localhost:52390/harlov/Documents/DocumentsList&#xD;&#xA;HTTP_USER_AGENT:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36&#xD;&#xA;HTTP_DNT:1&#xD;&#xA;" />
+    </item>
+    <item name="ALL_RAW">
+      <value string="Cache-Control: no-cache&#xD;&#xA;Connection: keep-alive&#xD;&#xA;Pragma: no-cache&#xD;&#xA;Accept: image/webp,image/apng,image/*,*/*;q=0.8&#xD;&#xA;Accept-Encoding: gzip, deflate, br&#xD;&#xA;Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7&#xD;&#xA;Cookie: ASP.NET_SessionId=uw4v4405hmpqq4r34suqn3ml; userGuid=4884435a-8d6a-4786-a747-fbdccc88fa28; __RequestVerificationToken=E6tZfIDbnEwMJ6K56aJB2qz-EJuUnfOlMlbLpWoflphkAJXcZhwyXyNbgF3Y5RYsxuNrb25sZC--O2u-mJMA_4MDuSw1; as-crud-m-doc-selectParams_docCont={&quot;page&quot;:1,&quot;pageSize&quot;:15,&quot;filter&quot;:{&quot;number&quot;:&quot;&quot;,&quot;typeID&quot;:&quot;0&quot;,&quot;contractorID&quot;:&quot;0&quot;,&quot;statusIDs&quot;:[&quot;1&quot;],&quot;strStatusIDs&quot;:&quot;1&quot;},&quot;sort&quot;:&quot;&quot;,&quot;direction&quot;:&quot;&quot;}; as-crud-molch-contragselectParams_contragentCont={&quot;page&quot;:2,&quot;pageSize&quot;:5,&quot;filter&quot;:{&quot;text&quot;:&quot;&quot;},&quot;sort&quot;:&quot;&quot;,&quot;direction&quot;:&quot;&quot;}; as-crud-molch-docsselectParams_docCont={&quot;page&quot;:1,&quot;pageSize&quot;:5,&quot;filter&quot;:{&quot;text&quot;:&quot;&quot;,&quot;ctrgID&quot;:&quot;0&quot;,&quot;docTypeID&quot;:&quot;0&quot;,&quot;parentDocID&quot;:&quot;0&quot;,&quot;statusIDs&quot;:[]},&quot;sort&quot;:&quot;&quot;,&quot;direction&quot;:&quot;&quot;}; arkAS=FE2942B55521217E3ED08062AC36CA54E5A869D7719372A810DA48C65A5A80A3C1AAB66B720082DA186C2F27538127A1B0226D3556FD93DD32EC8730F97435D6EAC77F01599400EDBBD3A7C45F7EFCB043E98267EA3658393D618F56484DD49DA18B243206104428131D48F05B6B006A35691368; as-crud-docs1-selectParams_usCont={&quot;page&quot;:1,&quot;pageSize&quot;:10,&quot;filter&quot;:{&quot;text&quot;:&quot;&quot;},&quot;sort&quot;:&quot;&quot;,&quot;direction&quot;:&quot;&quot;}&#xD;&#xA;Host: localhost:52390&#xD;&#xA;Referer: http://localhost:52390/harlov/Documents/DocumentsList&#xD;&#xA;User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36&#xD;&#xA;DNT: 1&#xD;&#xA;" />
+    </item>
+    <item name="APPL_MD_PATH">
+      <value string="/LM/W3SVC/2/ROOT" />
+    </item>
+    <item name="APPL_PHYSICAL_PATH">
+      <value string="C:\GDisk\Projects\Курс Touch 1.0\Core\arkAS\" />
+    </item>
+    <item name="AUTH_TYPE">
+      <value string="Forms" />
+    </item>
+    <item name="AUTH_USER">
+      <value string="roshAdmin@email.com" />
+    </item>
+    <item name="AUTH_PASSWORD">
+      <value string="" />
+    </item>
+    <item name="LOGON_USER">
+      <value string="" />
+    </item>
+    <item name="REMOTE_USER">
+      <value string="roshAdmin@email.com" />
+    </item>
+    <item name="CERT_COOKIE">
+      <value string="" />
+    </item>
+    <item name="CERT_FLAGS">
+      <value string="" />
+    </item>
+    <item name="CERT_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SERIALNUMBER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CERT_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CONTENT_LENGTH">
+      <value string="0" />
+    </item>
+    <item name="CONTENT_TYPE">
+      <value string="" />
+    </item>
+    <item name="GATEWAY_INTERFACE">
+      <value string="CGI/1.1" />
+    </item>
+    <item name="HTTPS">
+      <value string="off" />
+    </item>
+    <item name="HTTPS_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="INSTANCE_ID">
+      <value string="2" />
+    </item>
+    <item name="INSTANCE_META_PATH">
+      <value string="/LM/W3SVC/2" />
+    </item>
+    <item name="LOCAL_ADDR">
+      <value string="::1" />
+    </item>
+    <item name="PATH_INFO">
+      <value string="/favicon.ico" />
+    </item>
+    <item name="PATH_TRANSLATED">
+      <value string="C:\GDisk\Projects\Курс Touch 1.0\Core\arkAS\favicon.ico" />
+    </item>
+    <item name="QUERY_STRING">
+      <value string="" />
+    </item>
+    <item name="REMOTE_ADDR">
+      <value string="::1" />
+    </item>
+    <item name="REMOTE_HOST">
+      <value string="::1" />
+    </item>
+    <item name="REMOTE_PORT">
+      <value string="12911" />
+    </item>
+    <item name="REQUEST_METHOD">
+      <value string="GET" />
+    </item>
+    <item name="SCRIPT_NAME">
+      <value string="/favicon.ico" />
+    </item>
+    <item name="SERVER_NAME">
+      <value string="localhost" />
+    </item>
+    <item name="SERVER_PORT">
+      <value string="52390" />
+    </item>
+    <item name="SERVER_PORT_SECURE">
+      <value string="0" />
+    </item>
+    <item name="SERVER_PROTOCOL">
+      <value string="HTTP/1.1" />
+    </item>
+    <item name="SERVER_SOFTWARE">
+      <value string="Microsoft-IIS/10.0" />
+    </item>
+    <item name="URL">
+      <value string="/favicon.ico" />
+    </item>
+    <item name="HTTP_CACHE_CONTROL">
+      <value string="no-cache" />
+    </item>
+    <item name="HTTP_CONNECTION">
+      <value string="keep-alive" />
+    </item>
+    <item name="HTTP_PRAGMA">
+      <value string="no-cache" />
+    </item>
+    <item name="HTTP_ACCEPT">
+      <value string="image/webp,image/apng,image/*,*/*;q=0.8" />
+    </item>
+    <item name="HTTP_ACCEPT_ENCODING">
+      <value string="gzip, deflate, br" />
+    </item>
+    <item name="HTTP_ACCEPT_LANGUAGE">
+      <value string="ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7" />
+    </item>
+    <item name="HTTP_COOKIE">
+      <value string="ASP.NET_SessionId=uw4v4405hmpqq4r34suqn3ml; userGuid=4884435a-8d6a-4786-a747-fbdccc88fa28; __RequestVerificationToken=E6tZfIDbnEwMJ6K56aJB2qz-EJuUnfOlMlbLpWoflphkAJXcZhwyXyNbgF3Y5RYsxuNrb25sZC--O2u-mJMA_4MDuSw1; as-crud-m-doc-selectParams_docCont={&quot;page&quot;:1,&quot;pageSize&quot;:15,&quot;filter&quot;:{&quot;number&quot;:&quot;&quot;,&quot;typeID&quot;:&quot;0&quot;,&quot;contractorID&quot;:&quot;0&quot;,&quot;statusIDs&quot;:[&quot;1&quot;],&quot;strStatusIDs&quot;:&quot;1&quot;},&quot;sort&quot;:&quot;&quot;,&quot;direction&quot;:&quot;&quot;}; as-crud-molch-contragselectParams_contragentCont={&quot;page&quot;:2,&quot;pageSize&quot;:5,&quot;filter&quot;:{&quot;text&quot;:&quot;&quot;},&quot;sort&quot;:&quot;&quot;,&quot;direction&quot;:&quot;&quot;}; as-crud-molch-docsselectParams_docCont={&quot;page&quot;:1,&quot;pageSize&quot;:5,&quot;filter&quot;:{&quot;text&quot;:&quot;&quot;,&quot;ctrgID&quot;:&quot;0&quot;,&quot;docTypeID&quot;:&quot;0&quot;,&quot;parentDocID&quot;:&quot;0&quot;,&quot;statusIDs&quot;:[]},&quot;sort&quot;:&quot;&quot;,&quot;direction&quot;:&quot;&quot;}; arkAS=FE2942B55521217E3ED08062AC36CA54E5A869D7719372A810DA48C65A5A80A3C1AAB66B720082DA186C2F27538127A1B0226D3556FD93DD32EC8730F97435D6EAC77F01599400EDBBD3A7C45F7EFCB043E98267EA3658393D618F56484DD49DA18B243206104428131D48F05B6B006A35691368; as-crud-docs1-selectParams_usCont={&quot;page&quot;:1,&quot;pageSize&quot;:10,&quot;filter&quot;:{&quot;text&quot;:&quot;&quot;},&quot;sort&quot;:&quot;&quot;,&quot;direction&quot;:&quot;&quot;}" />
+    </item>
+    <item name="HTTP_HOST">
+      <value string="localhost:52390" />
+    </item>
+    <item name="HTTP_REFERER">
+      <value string="http://localhost:52390/harlov/Documents/DocumentsList" />
+    </item>
+    <item name="HTTP_USER_AGENT">
+      <value string="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36" />
+    </item>
+    <item name="HTTP_DNT">
+      <value string="1" />
+    </item>
+  </serverVariables>
+  <cookies>
+    <item name="ASP.NET_SessionId">
+      <value string="uw4v4405hmpqq4r34suqn3ml" />
+    </item>
+    <item name="userGuid">
+      <value string="4884435a-8d6a-4786-a747-fbdccc88fa28" />
+    </item>
+    <item name="__RequestVerificationToken">
+      <value string="E6tZfIDbnEwMJ6K56aJB2qz-EJuUnfOlMlbLpWoflphkAJXcZhwyXyNbgF3Y5RYsxuNrb25sZC--O2u-mJMA_4MDuSw1" />
+    </item>
+    <item name="as-crud-m-doc-selectParams_docCont">
+      <value string="{&quot;page&quot;:1,&quot;pageSize&quot;:15,&quot;filter&quot;:{&quot;number&quot;:&quot;&quot;,&quot;typeID&quot;:&quot;0&quot;,&quot;contractorID&quot;:&quot;0&quot;,&quot;statusIDs&quot;:[&quot;1&quot;],&quot;strStatusIDs&quot;:&quot;1&quot;},&quot;sort&quot;:&quot;&quot;,&quot;direction&quot;:&quot;&quot;}" />
+    </item>
+    <item name="as-crud-molch-contragselectParams_contragentCont">
+      <value string="{&quot;page&quot;:2,&quot;pageSize&quot;:5,&quot;filter&quot;:{&quot;text&quot;:&quot;&quot;},&quot;sort&quot;:&quot;&quot;,&quot;direction&quot;:&quot;&quot;}" />
+    </item>
+    <item name="as-crud-molch-docsselectParams_docCont">
+      <value string="{&quot;page&quot;:1,&quot;pageSize&quot;:5,&quot;filter&quot;:{&quot;text&quot;:&quot;&quot;,&quot;ctrgID&quot;:&quot;0&quot;,&quot;docTypeID&quot;:&quot;0&quot;,&quot;parentDocID&quot;:&quot;0&quot;,&quot;statusIDs&quot;:[]},&quot;sort&quot;:&quot;&quot;,&quot;direction&quot;:&quot;&quot;}" />
+    </item>
+    <item name="arkAS">
+      <value string="FE2942B55521217E3ED08062AC36CA54E5A869D7719372A810DA48C65A5A80A3C1AAB66B720082DA186C2F27538127A1B0226D3556FD93DD32EC8730F97435D6EAC77F01599400EDBBD3A7C45F7EFCB043E98267EA3658393D618F56484DD49DA18B243206104428131D48F05B6B006A35691368" />
+    </item>
+    <item name="as-crud-docs1-selectParams_usCont">
+      <value string="{&quot;page&quot;:1,&quot;pageSize&quot;:10,&quot;filter&quot;:{&quot;text&quot;:&quot;&quot;},&quot;sort&quot;:&quot;&quot;,&quot;direction&quot;:&quot;&quot;}" />
+    </item>
+  </cookies>
+</error>

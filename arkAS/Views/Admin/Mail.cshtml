@@ -1,0 +1,443 @@
+﻿@{
+    Layout = arkAS.BLL.Core.CoreManager.GetCabinetLayout();
+    ViewBag.Title = "Рассылка почты";
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+
+@section css{
+    <link href="~/Content/fe/festyle.css" rel="stylesheet" />
+    <link href="~/js/CodeMirror/lib/codemirror.css" rel="stylesheet" />
+    <link href="~/js/fancy/source/jquery.fancybox.css" rel="stylesheet" />
+    <style>
+        #emailBody {
+            border: 1px solid #c6c6c6;
+            padding: 20px 5px 20px;
+            margin-top: 20px;
+        }
+
+        .mailBody {
+            padding: 20px 10px;
+        }
+    </style>
+}
+
+<div class='dmCont'>
+</div>
+<select class='dmRolesTemplate hide'>
+    <option value="0">Не выбрано</option>
+    @foreach (var item in ViewBag.Roles)
+    {
+        <option value='@item'>@item</option>
+    }
+</select>
+
+
+
+@Html.Raw(arkAS.BLL.Core.CoreManager.GetMainFormLink());
+
+@section js{
+
+
+    <script type="text/javascript">
+
+    @*var emailList = @Html.Raw(js.Serialize(((List<arkAS.BLL.as_emails>)ViewBag.Emails).Select(x => new { id = x.id, Subject = x.subject, Body = x.body})));*@
+        var Mails = @Html.Raw(js.Serialize(((List<arkAS.BLL.as_mail>)ViewBag.Mails).Select(x => new {Value = x.id, Text = x.subject, Selected = false })));
+        var Users = @Html.Raw(js.Serialize(((List<MembershipUser>)ViewBag.Users).Select(x => new { Value = x.UserName, Text = x.UserName, Selected = false })));
+        var Userss = @Html.Raw(js.Serialize(((List<MembershipUser>)ViewBag.Users).Select(x => new { Value = x.UserName, Text = x.UserName, Selected = false })));
+
+
+
+        var asdemo = {
+            options: { params: {isRole:false, isNew:false, items:[],body:"",subject:"", mailID:"",attachmentURL:"",attachmentID:"0"}, flag:false},
+            init: function () {
+                asdemo.initMainTable();
+
+                $(document).delegate('.usCreateMail', 'click', function (e) {
+                    e.preventDefault();
+                    asdemo.options.params.isNew = true;
+                    asdemo.options.params.mailID = "";
+                    asdemo.createMail(true);
+
+                });
+                $(document).delegate('.crdSelectAll', 'change', function (e) {
+                    var res = $(this).attr('checked');
+                    $(this).closest("table").find("input [type='checkbox']").attr('checked', res);
+
+                });
+                $(document).delegate('.crdPopUpSort', 'click', function (e) {
+                    var sort = $(this).closest("th").attr("sortDirect");
+                    if(sort == "up"){sort = "down";}
+                    else{sort = "up";}
+
+                    var btn = $("#asModal .btn-group .btn.active").attr("data-type");
+                    if(btn == "Roles")
+                    {
+                        asdemo.initPopUpTableRoles(sort);
+                    }
+                    if(btn == "Users")
+                    {
+                        asdemo.initPopUpTableUsers(sort);
+                    }
+
+                });
+                $(document).delegate('.attachNameBtn', 'click', function (e) {
+                    asdemo.options.attachName = "";
+                    asdemo.options.params.attachmentURL = "";
+                    $("#asModal .attachName").remove();
+                    $(this).remove();
+                });
+                $(document).delegate('.crdTo1', 'click', function (e) {
+                    e.preventDefault();
+                    asdemo.options.params.isNew = false;
+                    asdemo.options.params.mailID = $(this).closest("tr").find('[data-code="mailID"]').html();
+                    asdemo.options.params.subject = $(this).closest("tr").find('[data-code="subject"]').html();
+                    asdemo.options.params.body = $(this).closest("tr").find('[data-code="body"]').html();
+                    asdemo.options.params.attachmentURL = $(this).closest("tr").find('[data-code="attach"]').html();
+                    var attachArr = asdemo.options.params.attachmentURL.split('\\');
+                    asdemo.options.attachName =  attachArr[attachArr.length -1]
+
+                    asdemo.createMail(true);
+
+                });
+
+                $(document).delegate('#asModal .btn-group .btn', 'click', function (e) {
+                    e.preventDefault();
+                    $("#asModal .btn-group .btn").removeClass("active");
+                    // $(this).addClass("activevvv");
+                    var btn = $(this).attr("data-type");
+
+                    $(".itemsTable").html("");
+                    if(btn == "Roles")
+                    {
+
+
+                        asdemo.initPopUpTableRoles("up");
+                    }
+                    if(btn == "Users")
+                    {
+
+                        asdemo.initPopUpTableUsers("up");
+                    }
+
+                });
+                asdemo.initFileManager();
+            },
+            initMainTable: function () {
+                as.crud.init({
+                    cont: $('.dmCont'),
+                    title: 'Рассылка для пользователей',
+                    toolbarAdditional: '<a href="#" class="btn btn-primary usCreateMail">Создать</a>&nbsp;&nbsp;',
+                    groupOperationsToolbar: ' ',
+                    ajaxURLFormat: '/Admin/Mail_{0}',
+                    inlineAjaxURL: "",
+                    pageSize: 150,
+                    cookiePrefix: "as-crud-MailLog-",
+                    emptyText: 'Нет элементов',
+                    createLinkTitle: 'Создать',
+                    filterLinkTitle: 'Найти',
+                    filterTitle: 'Фильтрация данных',
+                    showChecksCol: false,
+                    showNumsCol: true,
+                    showToolbar: true,
+                    showColSettings: false,
+                    showReplaceTool: false,
+                    showExcelExport: false,
+                    additionalSort: true,
+                    cols: [
+                        { code: "id", title: "ID", tooltip: "Идентификатор", isVisible: false, isPK: true, datatype: "int", isRequired: false },
+                        { code: "date", title: "Дата", tooltip: "Дата отправки", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                            filter: { type: "daterange"}},
+                        { code: "author", title: "Автор", tooltip: "Автор письма", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                            filter: { type: "select", source: Users, notSelected: "Не выбрано" }
+                        },
+                        {code: "subject", title: "Тема", tooltip: "Тема письма", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null  },
+                        { code: "addressee", title: "Адресат", tooltip: "Адресат", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null ,
+                            filter: { type: "select", source: Userss, notSelected: "Не выбрано" }},
+                        { code: "body", title: "Body", tooltip: "Body", isVisible: false, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: false, callback: null },
+                        { code: "mailID", title: "mailID", tooltip: "mailID", isVisible: false, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: false, callback: null },
+                        { code: "attach", title: "attach", tooltip: "attach", isVisible: false, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: false, callback: null }
+
+
+                    ],
+                    operations: {
+                        create: false,
+                        remove: true,
+                        edit: false,
+                        other: [{
+                            linkClass: 'crdTo2', iconClass: 'glyphicon glyphicon-envelope', title: 'Просмотреть письмо', callback: function (e) {
+                                var btn = $(this);
+                                var tr = btn.closest('tr');
+                                var mailBody = tr.find('[data-code="body"]').html();
+                                var attach = tr.find('[data-code="attach"]').html();
+                                if (tr.next().hasClass('crdAddRow')) {
+                                    tr.next().hide(50, function () { $(this).remove() });
+                                } else {
+                                    var s = [];
+                                    s.push("<tr class='crdAddRow'><td colspan='7'>");
+                                    s.push("<div class='mailBody'>"+mailBody +"</div>");
+                                    if(attach != ""){
+                                        var attachArr = attach.split('\\');
+                                        s.push("<div class='mailAttach'><b>Прикрепление:</b> "+attachArr[attachArr.length -1]+"</div><br />");
+
+                                    }
+                                    s.push("</td></tr>");
+                                    $(s.join("")).insertAfter(tr);
+                                }
+                            }
+                        },
+                        {
+                            linkClass: 'crdTo1', iconClass: 'glyphicon glyphicon-repeat', title: 'Переслать письмо', callback: function (e) {
+
+
+
+                            }
+                        }
+                        ]
+                    },
+                    getFilterMakeup: function (filter) {
+                        var s = [];
+                        s.push("<span class='gCap'>Тема</span><input type='text' class='mailSubj' value='" + (filter.subject || '') + "' /><br />");
+                        // s.push("<span class='gCap'>Автор</span><input type='text' class='mailAuth' value='" + (filter.author || '') + "' /> <br /><br />");
+                        //s.push("<span class='gCap'>Адресат</span><input type='text' class='mailAdress' value='" + (filter.addressee || '') + "' /> <br />");
+
+                        return s.join("");
+                    },
+                    filter: function () {
+
+                        var filter = {
+                            Role: $('.dmRoles option:selected').val(),
+                            subject: $('.mailSubj').val() || "",
+                            //author: $('.mailAuth').val() || "",
+                            //addressee: $('.mailAdress').val() || ""
+                        };
+                        return filter;
+                    }
+                });
+            },
+            initPopUpTableUsers:function(sort){
+                var s = [];
+                var sortDirect = {direction:sort};
+                as.sys.ajaxSend("/Admin/UsersTable_getItems", sortDirect, function (data)
+                {
+                    s.push("<table id='users' class='table table-striped table-bordered' cellspacing='0' width='100%'>");
+                    s.push("<thead>");
+                    s.push("<tr><th width='50'><input type='checkbox' class='crdSelectAll'></th><th class='hide'></th><th sortDirect = '"+sort+"'><a href='#' class='crdPopUpSort'>Имя</a></th></tr>");
+                    s.push("</thead>");
+                    s.push("<tbody>");
+                    for(var i = 0; i<data.items.length; i++)
+                    {
+                        s.push("<tr>");
+                        s.push("<td><input type='checkbox' class='crdSelect'></td>");
+                        s.push("<td data-code='id' class='hide'>"+data.items[i].id+"</td>");
+                        s.push("<td data-code='name' >"+data.items[i].name+"</td>");
+
+                        s.push("</tr>");
+                    }
+
+                    s.push("</tbody>");
+
+                    s.push("</table>");
+
+                    $(".itemsTable").html(s.join(""));
+
+                },false);
+            },
+            initPopUpTableRoles:function(sort){
+                var s = [];
+                var sortDirect = {direction:sort};
+                as.sys.ajaxSend("/Admin/RolesTable_getItems", sortDirect, function (data)
+                {
+                    s.push("<table id='roles' class='table table-striped table-bordered' cellspacing='0' width='100%'>");
+                    s.push("<thead>");
+                    s.push("<tr><th width='50'><input type='checkbox' class='crdSelectAll'></th><th sortDirect = '"+sort+"'><a href='#' class='crdPopUpSort'>Роль</a></th></tr>");
+                    s.push("</thead>");
+                    s.push("<tbody>");
+                    for(var i = 0; i<data.items.length; i++)
+                    {
+                        s.push("<tr>");
+                        s.push("<td><input type='checkbox' class='crdSelect'></td>");
+                        s.push("<td data-code='role'>"+data.items[i].role+"</td>");
+
+                        s.push("</tr>");
+                    }
+
+                    s.push("</tbody>");
+
+                    s.push("</table>");
+
+                    $(".itemsTable").html(s.join(""));
+
+                },false);
+            },
+            initFileManager:function (){
+
+                $(document).delegate('.as-file-editor', 'click', function (e) {
+                    e.preventDefault();
+
+                    asdemo.options.params.subject = $("#asModal .usNewSubject").val();
+                    asdemo.options.params.body = tinyMCE.get(asdemo.options.tinyMCEID).getContent();
+                    if(asdemo.options.params.subject == "")
+                    {
+                        as.sys.bootstrapAlert("Укажите параметр 'Тема'!", { type: 'warning' });
+                        $(".usNewSubject").focus();
+                        return;
+                    }
+
+                    if(asdemo.options.params.body == "")
+                    {
+                        as.sys.bootstrapAlert("Укажите параметр 'Текст письма'!", { type: 'warning' });
+                        tinyMCE.get(asdemo.options.tinyMCEID).focus();
+                        return;
+                    }
+
+
+                    if(!asdemo.options.flag){fe.init(); asdemo.options.flag = true; }
+                    var t = $(this);
+                    fe.showFileEditorDialog($(this), function (url, curElementData, params) {
+                        // $(t).attr('data-value', url).html("<img  src='" + url + "' title='" + params.alt + "' />");
+                        // $(this).val(params.alt);
+                       // asdemo.options.attachment = params.title;
+                        asdemo.options.attachName = params.title;
+                        asdemo.options.params.attachmentURL = url;
+                        asdemo.createMail(false);
+                        //alert("window");
+                    }, { folderShared: '0', folderType: 'projects', folderName: "", id: $(this).attr('data-code') });
+
+                });
+            },
+            createMail:function(isNewDialog){
+                //var params = {};
+                var addresseeItems = [];
+                var s = [];
+
+                if(isNewDialog){
+                    var id=as.tools.guidGenerator();//for tinyMCE generate newID
+                    asdemo.options.tinyMCEID = id;
+                }
+                if(asdemo.options.params.isNew){
+                    if(isNewDialog){
+                        asdemo.options.params.subject = "";
+                        asdemo.options.params.body = "";
+                        asdemo.options.params.attachmentURL = "";
+                        s.push("<span>Тема</span><input type='text' class='form-control usNewSubject' /><br />");
+                        s.push("<span>Содержание</span><br /><textarea class='as-html usText usNewBody' id='"+asdemo.options.tinyMCEID+"'></textarea><br />");
+                        s.push("<input type='button' data-type='attachment' data-code='MailFiles' class='btn btn-primary as-file-editor' value='Прикрепить файл' /> ");
+                    }
+                    else{
+                        s.push("<span>Тема</span><input type='text' class='form-control usNewSubject' value='"+asdemo.options.params.subject+"' /><br />");
+                        s.push("<span>Содержание</span><br /><textarea class='as-html usText usNewBody' id='"+asdemo.options.tinyMCEID+"'>"+asdemo.options.params.body+"</textarea><br />");
+                        s.push("<input type='button' data-type='attachment' data-code='MailFiles' class='btn btn-primary as-file-editor' value='Прикрепить файл' /> ");
+                        s.push("<span class='attachName'>"+asdemo.options.attachName+"</span>&nbsp;");
+                        s.push("<a href='#' class='attachNameBtn' Title='Delete'><i class='glyphicon glyphicon-remove'></i></a>");
+                    }
+
+
+                }
+                else{
+                    s.push("<span>Тема</span><input type='text' class='form-control usNewSubject' value='"+asdemo.options.params.subject+"' /><br />");
+                    s.push("<span>Содержание</span><br /><textarea class='as-html usText usNewBody' id='"+asdemo.options.tinyMCEID+"'>"+asdemo.options.params.body+"</textarea><br />");
+                    s.push("<input type='button' data-type='attachment' data-code='MailFiles' class='btn btn-primary as-file-editor' value='Прикрепить файл' /> ");
+                    if(asdemo.options.attachName != ""){
+                        s.push("<span class='attachName'>"+asdemo.options.attachName+"</span>&nbsp;");
+                        s.push("<a href='#' class='attachNameBtn' Title='Delete'><i class='glyphicon glyphicon-remove'></i></a>");
+                    }
+
+                }
+
+                s.push("<br /><br /><div class='btn-group' data-toggle='buttons-radio'>");
+                s.push("<button type='button' data-type = 'Roles' class='btn btn-primary active'>Роли</button>");
+                s.push("<button type='button' data-type = 'Users' class='btn btn-primary'>Пользователи</button>");
+                s.push("</div>");
+                s.push("<br /><br />");
+                s.push("<div class='itemsTable'></div>");
+
+
+                as.sys.showDialog( "Отправка письма", s.join(""),  "Отправить", function () {
+
+
+                    var addresseeItems = [];
+                    // if(asdemo.options.params.isNew){
+                    var mce = $('.usText.usNewBody')
+                    //var body = tinyMCE.get( mce.attr('id'));
+                    asdemo.options.params.subject = $("#asModal .usNewSubject").val();
+                    asdemo.options.params.body = tinyMCE.get(asdemo.options.tinyMCEID).getContent();
+                    console.log(asdemo.options.tinyMCEID);
+
+                    // }
+
+                    var dataType = $("#asModal .btn-group .btn.active").attr("data-type");
+                    if(dataType == "Roles"){
+                        $(".crdSelect:checked").closest("tr").find("td[data-code='role']").each(function (item) {
+                            addresseeItems.push($(this).html());
+                        });
+                        asdemo.options.params.isRole = true;
+                    }
+
+                    if(dataType == "Users"){
+                        $(".crdSelect:checked").closest("tr").find("td[data-code='id']").each(function (item) {
+                            addresseeItems.push($(this).html());
+                        });
+                        asdemo.options.params.isRole = false;
+                    }
+                    asdemo.options.params.items = addresseeItems;
+
+                    if(asdemo.options.params.subject == "")
+                    {
+                        as.sys.bootstrapAlert("Укажите параметр 'Тема'!", { type: 'warning' });
+                        $(".usNewSubject").focus();
+                        return;
+                    }
+
+                    if(asdemo.options.params.body == "")
+                    {
+                        as.sys.bootstrapAlert("Укажите параметр 'Текст письма'!", { type: 'warning' });
+                        tinyMCE.get(asdemo.options.tinyMCEID).focus();
+                        return;
+                    }else
+                    {
+                        if(asdemo.options.params.items.length <1){as.sys.bootstrapAlert("Не выбраны адресаты!", { type: 'warning' });}
+                        else
+                        {
+                            as.sys.ajaxSend("/Admin/SendMail", asdemo.options.params, function (data)
+                            {
+                                console.log(data.status);
+                                if(data.status){as.sys.bootstrapAlert("Успешно отправлено!", { type: 'success' });}
+                                else{as.sys.bootstrapAlert("Произошла ошибка!", { type: 'error' });}
+                                as.crud.getItems();
+                                as.sys.closeDialog($('#asModal'));
+                            },
+                                     false);
+
+
+
+                        }
+                    }
+                    console.log(asdemo.options.params);
+
+
+
+                },
+                    true, function () {asdemo.initPopUpTableRoles("up"); }, $('#asModal'));
+            }
+        }
+        $(function () {
+
+            asdemo.init();
+
+        });
+    </script>
+
+    <script src="~/js/jQueryFileUpload/js/vendor/jquery.ui.widget.js"></script>
+    <script src="~/js/jQueryFileUpload/js/jquery.iframe-transport.js"></script>
+    <script src="~/js/jQueryFileUpload/js/jquery.fileupload.js"></script>
+
+    <script src="~/js/AS/controls/as.fileEditor.js"></script>
+    <script src="~/js/fancy/source/jquery.fancybox.js"></script>
+    <script src="~/js/CodeMirror/lib/codemirror.js"></script>
+    <script src="~/js/CodeMirror/lib/require.js"></script>
+    <script src="~/js/cm.sys.js"></script>
+}
+
+
+
+

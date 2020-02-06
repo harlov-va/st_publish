@@ -1,0 +1,191 @@
+﻿@using arkAS.Models;
+@{
+    Layout = arkAS.BLL.Core.CoreManager.GetCabinetLayout();
+    ViewBag.Title = "Тексты";    
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+
+<select class='usCategoriesTemplate hide'>
+    <option value="0">Не выбрано</option>
+    @foreach (var item in (List<arkAS.BLL.as_categories>)ViewBag.Categories)
+    {
+        <option value='@item.id'>@item.name</option>
+    }
+</select>
+
+<div class='usCont'>
+</div>
+@section js{
+<script type="text/javascript">
+var categoriesSource = @Html.Raw(js.Serialize(((List<arkAS.BLL.as_categories>)ViewBag.Categories).Select(x => new { value = x.id, text = x.name })));
+   
+var us = {
+    init: function () {
+        us.initMainTable();
+        $(document).delegate('.usCreateText', 'click', function (e) {
+            e.preventDefault();
+            us.createText();
+        });  
+        $(document).delegate('.usCloseText', 'click', function (e) {
+            e.preventDefault();
+            $(this).closest("tr").hide(250, function () { $(this).remove() });
+        });  
+        $(document).delegate('.usSaveText', 'click', function (e) {
+            e.preventDefault();
+            us.saveText($(this));
+        });  
+    },
+    initMainTable: function () {
+        as.crud.init({
+            cont: $('.usCont'),
+            title: 'Тексты',
+            toolbarAdditional: '<a href="#" class="btn btn-primary usCreateText">Создать текст</a>&nbsp;&nbsp;',
+            groupOperationsToolbar: '',
+            ajaxURLFormat: '/Admin/Texts_{0}',
+            inlineAjaxURL: "/Admin/TextsInline",
+            pageSize: 150,
+            cookiePrefix: "as-crud-textsTable-",
+            emptyText: 'Нет элементов',
+            createLinkTitle: 'Создать',
+            filterLinkTitle: 'Найти',
+            filterTitle: 'Фильтрация данных',
+            showChecksCol: false,
+            showNumsCol: true,
+            showToolbar: true,
+            showColSettings: false,
+            showReplaceTool: false,
+            showExcelExport: false,
+            additionalSort: false,
+            cols: [
+                { code: "id", title: "ID", tooltip: "Идентификатор", isVisible: false, isPK: true, datatype: "int", isRequired: false },
+                {
+                     code: "name", title: "Название", tooltip: "Название", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                     editable: { type: "text", format: "{0}", callback: function (el, newValue) { } }
+                },
+                {
+                    code: "code", title: "Код", tooltip: "Код", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                    editable: { type: "text", format: "{0}", callback: function (el, newValue) { } }
+                },
+                {
+                    code: "categoryName", title: "Категория", tooltip: "Категория", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                    editable: { type: "select", format: "{0}", source: categoriesSource, callback: function (el, newValue) { } }
+                }
+            ],
+            operations: {
+                create: false,
+                remove: true,
+                edit: false,
+                other: [
+                    { linkClass: 'crdTo2', iconClass: 'glyphicon glyphicon-pencil', title: 'Редактировать текст', callback:us.editValue }
+                ]
+            },
+            getFilterMakeup: function (filter) {
+                var s = [];
+                s.push("<span class='gCap'>Текст</span><input type='text' class='usText' value='" + (filter.text || '') + "' /><br /><br />");
+               
+                $('.usCategoriesTemplate option').removeAttr('selected');
+                $('.usCategoriesTemplate option[value=' + filter.categoryID + ']').attr('selected', 'selected');
+                s.push("<span class='gCap'>Категория</span><select class='usCategories'>" + $('.usCategoriesTemplate').html() + "</select><br /><br />");
+
+                return s.join("");
+            },
+            filter: function () {
+               
+                var filter = {
+                    text: $('.usText').val() || "",
+                    categoryID: $('.usCategories option:selected').val()
+                };
+                return filter;
+            }
+        });
+    },
+    createText: function () {
+        var s = [];
+        s.push("<span>Название</span><input type='text' class='form-control usNewName' /><br />");
+        s.push("<span>Код (латиница)</span><input type='text' class='form-control usNewCode' /><br />");
+
+        $('.usCategoriesTemplate option').removeAttr('selected');
+        $('.usCategoriesTemplate option:first').attr('selected', 'selected');        
+        s.push("<span>Категория</span><select class='form-control usNewCategoryID' >"+ $('.usCategoriesTemplate').html() + "</select><br />");
+
+        setTimeout(function () { $('.usNewName').focus(); }, 200);
+        as.sys.showDialog("Новый текст", s.join(""), "Сохранить", function () {
+            var name = $('.usNewName').val();
+            var code = $('.usNewCode').val();
+            var categoryID = $('.usNewCategoryID option:selected').val();            
+            
+            if (!name) {
+                as.sys.bootstrapAlert("Укажите пожалуйста название", { type: 'warning' });
+                $('.usNewName').focus();
+                return;
+            }
+            if (!code) {
+                as.sys.bootstrapAlert("Укажите пожалуйста код", { type: 'warning' });
+                $('.usNewCode').focus();
+                return;
+            }
+
+            var params = { name: name, code: code, categoryID: categoryID };
+            as.sys.ajaxSend("/Admin/CreateText", params, function (data) {
+                if (typeof (data) != "object") data = eval('(' + data + ')');
+                if (data.result) {
+                    as.sys.bootstrapAlert("Элемент сохранен", { type: 'success' });
+                    as.sys.closeDialog();
+                    as.crud.getItems();
+                    setTimeout(function () {
+                        as.crud.gotoItem(data.textID);
+                    }, 1000);
+                } else {
+                    as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                }
+            });
+        });
+    },   
+    editValue: function(e){
+        e.preventDefault();
+        var btn = $(this);
+        var tr = btn.closest('tr');
+        if (tr.next().hasClass('crdAddRow')) {
+            tr.next().hide(50, function () { $(this).remove() });
+        } else {
+            var s = [];
+            s.push("<tr class='crdAddRow'><td colspan='5'>");
+            s.push("<div class='well well-sm'><a href='#' class='btn btn-success usSaveText'>Сохранить</a>&nbsp;&nbsp;<a href='#' class='btn btn-default usCloseText'>Закрыть</a></div>");
+            s.push("<textarea class='as-html usText' rows='15' cols='120' style='max-width:  1600px;'></textarea>");
+            s.push("</td></tr>");
+            $(s.join("")).insertAfter(tr);            
+            var params = { code: tr.find("td[data-code=code]>a").text() };
+            as.sys.ajaxSend("/Admin/GetText", params, function (data) {
+                if (typeof (data) != "object") data = eval('(' + data + ')');
+                if (data.result) {
+                    var t = tr.next().find('.usText')
+                    var mce = tinyMCE.get( t.attr('id'));        
+                    mce.setContent ? mce.setContent(data.text) : t.val(data.text);       
+                             
+                } else {
+                    as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                }
+            });
+        }
+    },
+    saveText: function(btn){       
+        var tr = btn.closest("tr").prev();       
+        var t = btn.closest("tr").find('.usText')
+        var mce = tinyMCE.get( t.attr('id'));        
+        var text = mce.getContent ? mce.getContent() : t.val();       
+        var params = { pk: tr.attr('data-itemID'), value: text, name: "text" };
+        as.sys.ajaxSend("/Admin/TextsInline", params, function (data) {
+            if (typeof (data) != "object") data = eval('(' + data + ')');
+            if (data.result) {
+                as.sys.bootstrapAlert("Сохранено", { type: 'success' });              
+            } else {
+                as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+            }
+        });
+    }
+}
+$(function () {
+    us.init();
+});
+</script>
+}

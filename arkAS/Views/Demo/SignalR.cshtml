@@ -1,0 +1,98 @@
+﻿
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Пример использования Signal R</h1>
+<div class="row">
+    <form class="form-horizontal">        
+        <div class="form-inline form-group">
+            <input id="userData" class="form-control" type="text" value="John"/>
+            <input id="connect" class="btn btn-success" type="button" value="Подключить"/>
+        </div>
+        <div class="form-inline form-group">
+            <select id="connections" class="form-control" style="display: none"></select>
+            <input id="updateConnections" class="btn" type="button" value="Обновить список подключений" />
+        </div>
+        <div class="form-inline form-group">
+            <textarea id="message" class="form-control"></textarea>
+            <input id="send" class="btn" type="button" value="Отправить данные" />
+            <input id="sendCommand" class="btn" type="button" value="Отправить команду" />
+        </div>
+        <div class="form-group">
+            <input id="invokeUserMethod" class="btn" type="button" value="Вызвать пользовательский метод"/>
+        </div>
+        <div class="form-group">
+            <input id="sendAll" class="btn" type="button" value="Отправить данные всем"/>
+            <input id="sendCommandAll" class="btn" type="button" value="Отправить команду всем"/>
+            <ul id="messages"></ul>
+        </div>
+    </form>
+</div>
+
+@section js{
+<script type="text/javascript">
+    $(function() {
+        as.signalR.init({
+            hubName: "signalRHub",
+            connected: function () {
+                $('#send').click(function () {
+                    as.signalR.sendData($('#connections').val(), $('#message').val());
+                    $('#message').val("");
+                });
+                $('#sendAll').click(function() {
+                    as.signalR.sendDataAll($('#message').val());
+                    $('#message').val("");
+                });
+                $('#sendCommand').click(function () {
+                    as.signalR.sendCommand($('#connections').val(), 'showAlertMessage', 'Это сообщение от другого клиента');
+                });
+                $('#sendCommandAll').click(function () {
+                    as.signalR.sendCommandAll('showAlertMessage', 'Это сообщение от другого клиента');
+                });
+                $('#updateConnections').click(function () {
+                    as.signalR.getConnections();
+                });
+                $('#invokeUserMethod').click(function() {
+                    as.signalR.getServerProxy().userMethod('пример данных');
+                });
+            },
+            callbacks: {
+                showAlertMessage: function(message) {
+                    alert(message);
+                },
+                userMethodReceived: function() {
+                    alert('user method executed successfull');
+                }
+            },
+            dataReceived: function(data) {
+                var li = $('<li/>').text(data);
+                $('#messages').append(li);
+            },
+            connectionsReceived: function (connections) {
+                $('#connections').empty();
+                if (connections.length == 0) {
+                    $('#connections').hide();
+                }
+                else {
+                    $('#connections').show();
+                    connections.forEach(function (i) {
+                        var option = $('<option/>').val(i.id).text(i.data);
+                        $('#connections').append(option);
+                    });
+                }
+            }
+        });
+
+        as.signalR.getClientProxy().userMethodReceived = function(data) {
+            console.log(data);
+        }
+
+        $('#connect').click(function() {
+            as.signalR.connect($('#userData').val());
+        });
+
+    });
+</script>
+}

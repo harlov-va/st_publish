@@ -1,0 +1,201 @@
+﻿<error errorId="06f0e0f7-9070-4ec2-a61a-00e341d777ba" host="DESKTOP-DEJBQGL" type="System.Web.HttpException" message="The controller for path '/favicon.ico' was not found or does not implement IController." source="System.Web.Mvc" detail="System.Web.HttpException (0x80004005): The controller for path '/favicon.ico' was not found or does not implement IController.&#xD;&#xA;   в System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)&#xD;&#xA;   в System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)&#xD;&#xA;   в Castle.Proxies.Invocations.IControllerFactory_CreateController.InvokeMethodOnTarget()&#xD;&#xA;   в Castle.DynamicProxy.AbstractInvocation.Proceed()&#xD;&#xA;   в Glimpse.Core.Extensibility.CastleInvocationToAlternateMethodContextAdapter.Proceed()&#xD;&#xA;   в Glimpse.Core.Extensions.AlternateMethodContextExtensions.TryProceedWithTimer(IAlternateMethodContext context, TimerResult&amp; timerResult)&#xD;&#xA;   в Glimpse.Core.Extensibility.AlternateMethod.NewImplementation(IAlternateMethodContext context)&#xD;&#xA;   в Glimpse.Core.Extensibility.AlternateTypeToCastleInterceptorAdapter.Intercept(IInvocation invocation)&#xD;&#xA;   в Castle.DynamicProxy.AbstractInvocation.Proceed()&#xD;&#xA;   в Castle.Proxies.IControllerFactoryProxy.CreateController(RequestContext requestContext, String controllerName)&#xD;&#xA;   в System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController&amp; controller, IControllerFactory&amp; factory)&#xD;&#xA;   в System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)&#xD;&#xA;   в System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)&#xD;&#xA;   в System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)&#xD;&#xA;   в System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()&#xD;&#xA;   в System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)&#xD;&#xA;   в System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean&amp; completedSynchronously)" time="2018-10-17T13:48:04.6028415Z" statusCode="404">
+  <serverVariables>
+    <item name="ALL_HTTP">
+      <value string="HTTP_CONNECTION:keep-alive&#xD;&#xA;HTTP_ACCEPT:image/webp,image/apng,image/*,*/*;q=0.8&#xD;&#xA;HTTP_ACCEPT_ENCODING:gzip, deflate, br&#xD;&#xA;HTTP_ACCEPT_LANGUAGE:ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7&#xD;&#xA;HTTP_COOKIE:_ym_uid=153182028197807084; _ym_d=1531820281; userGuid=10ed5388-e47a-48c2-b6ad-40320b04eeb5; ASP.NET_SessionId=miwzlyxjou5zlys4rbnof43p; as-crud-settingsTable-selectParams_usCont={&quot;page&quot;:1,&quot;pageSize&quot;:150,&quot;filter&quot;:{&quot;text&quot;:&quot;blockMsgBody&quot;,&quot;categoryID&quot;:&quot;0&quot;},&quot;sort&quot;:&quot;&quot;,&quot;direction&quot;:&quot;&quot;}; CountryISO=ua; CountryISOFirstLoad=false; as-crud-ChaptersStudentsTable-selectParams_usCont={&quot;page&quot;:1,&quot;pageSize&quot;:20,&quot;filter&quot;:{&quot;username&quot;:&quot;glushko.alina@gmail.com&quot;,&quot;course&quot;:&quot;0&quot;,&quot;chapter&quot;:&quot;0&quot;,&quot;created&quot;:&quot;&quot;,&quot;createdBy&quot;:&quot;0&quot;,&quot;completed&quot;:&quot;&quot;,&quot;closedBy&quot;:&quot;0&quot;},&quot;sort&quot;:&quot;completed&quot;,&quot;direction&quot;:&quot;down&quot;}; as-crud-usersTable-selectParams_usCont={&quot;page&quot;:1,&quot;pageSize&quot;:150,&quot;filter&quot;:{&quot;username&quot;:&quot;core-admin@mail.ru&quot;,&quot;roles&quot;:[]},&quot;sort&quot;:&quot;&quot;,&quot;direction&quot;:&quot;&quot;}; __RequestVerificationToken=B-YHFHh7gA1Qm5BUvsmGN2ZtFcA8_CLGWDCHP7pILIAeUvCYZ5JGB_wV7Nc8qR1k_oCKmy4Yu4oQ1CW6Z-OAESq7hdk1; lang=en-us; arkAS=6DD25EB68AC8EE6FD8B340418EDDB54C54A6471D4955E3AB0CF593103DD1F7FA6AA496B62F4CA40BA23514A984ACEAAF15A4B8FDA2320253743EB7ED617D23E6EFFE7404A68DBC501B38D22C0AA4CEC2A5CD8677EF9453E12EADD721AC19998D4E4EC2F7; as-crud-studentsTable-selectParams_usCont={&quot;page&quot;:1,&quot;pageSize&quot;:20,&quot;filter&quot;:{&quot;course&quot;:&quot;31&quot;,&quot;completed&quot;:&quot;0&quot;,&quot;isBlocked&quot;:&quot;0&quot;,&quot;text&quot;:&quot;&quot;},&quot;sort&quot;:&quot;,&quot;,&quot;direction&quot;:&quot;,&quot;}; _ym_visorc_32000186=w; _ym_isad=2&#xD;&#xA;HTTP_HOST:localhost:52390&#xD;&#xA;HTTP_REFERER:http://localhost:52390/&#xD;&#xA;HTTP_USER_AGENT:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.67 Safari/537.36&#xD;&#xA;" />
+    </item>
+    <item name="ALL_RAW">
+      <value string="Connection: keep-alive&#xD;&#xA;Accept: image/webp,image/apng,image/*,*/*;q=0.8&#xD;&#xA;Accept-Encoding: gzip, deflate, br&#xD;&#xA;Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7&#xD;&#xA;Cookie: _ym_uid=153182028197807084; _ym_d=1531820281; userGuid=10ed5388-e47a-48c2-b6ad-40320b04eeb5; ASP.NET_SessionId=miwzlyxjou5zlys4rbnof43p; as-crud-settingsTable-selectParams_usCont={&quot;page&quot;:1,&quot;pageSize&quot;:150,&quot;filter&quot;:{&quot;text&quot;:&quot;blockMsgBody&quot;,&quot;categoryID&quot;:&quot;0&quot;},&quot;sort&quot;:&quot;&quot;,&quot;direction&quot;:&quot;&quot;}; CountryISO=ua; CountryISOFirstLoad=false; as-crud-ChaptersStudentsTable-selectParams_usCont={&quot;page&quot;:1,&quot;pageSize&quot;:20,&quot;filter&quot;:{&quot;username&quot;:&quot;glushko.alina@gmail.com&quot;,&quot;course&quot;:&quot;0&quot;,&quot;chapter&quot;:&quot;0&quot;,&quot;created&quot;:&quot;&quot;,&quot;createdBy&quot;:&quot;0&quot;,&quot;completed&quot;:&quot;&quot;,&quot;closedBy&quot;:&quot;0&quot;},&quot;sort&quot;:&quot;completed&quot;,&quot;direction&quot;:&quot;down&quot;}; as-crud-usersTable-selectParams_usCont={&quot;page&quot;:1,&quot;pageSize&quot;:150,&quot;filter&quot;:{&quot;username&quot;:&quot;core-admin@mail.ru&quot;,&quot;roles&quot;:[]},&quot;sort&quot;:&quot;&quot;,&quot;direction&quot;:&quot;&quot;}; __RequestVerificationToken=B-YHFHh7gA1Qm5BUvsmGN2ZtFcA8_CLGWDCHP7pILIAeUvCYZ5JGB_wV7Nc8qR1k_oCKmy4Yu4oQ1CW6Z-OAESq7hdk1; lang=en-us; arkAS=6DD25EB68AC8EE6FD8B340418EDDB54C54A6471D4955E3AB0CF593103DD1F7FA6AA496B62F4CA40BA23514A984ACEAAF15A4B8FDA2320253743EB7ED617D23E6EFFE7404A68DBC501B38D22C0AA4CEC2A5CD8677EF9453E12EADD721AC19998D4E4EC2F7; as-crud-studentsTable-selectParams_usCont={&quot;page&quot;:1,&quot;pageSize&quot;:20,&quot;filter&quot;:{&quot;course&quot;:&quot;31&quot;,&quot;completed&quot;:&quot;0&quot;,&quot;isBlocked&quot;:&quot;0&quot;,&quot;text&quot;:&quot;&quot;},&quot;sort&quot;:&quot;,&quot;,&quot;direction&quot;:&quot;,&quot;}; _ym_visorc_32000186=w; _ym_isad=2&#xD;&#xA;Host: localhost:52390&#xD;&#xA;Referer: http://localhost:52390/&#xD;&#xA;User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.67 Safari/537.36&#xD;&#xA;" />
+    </item>
+    <item name="APPL_MD_PATH">
+      <value string="/LM/W3SVC/2/ROOT" />
+    </item>
+    <item name="APPL_PHYSICAL_PATH">
+      <value string="D:\Core\arkAS\" />
+    </item>
+    <item name="AUTH_TYPE">
+      <value string="" />
+    </item>
+    <item name="AUTH_USER">
+      <value string="" />
+    </item>
+    <item name="AUTH_PASSWORD">
+      <value string="" />
+    </item>
+    <item name="LOGON_USER">
+      <value string="" />
+    </item>
+    <item name="REMOTE_USER">
+      <value string="" />
+    </item>
+    <item name="CERT_COOKIE">
+      <value string="" />
+    </item>
+    <item name="CERT_FLAGS">
+      <value string="" />
+    </item>
+    <item name="CERT_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SERIALNUMBER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CERT_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CONTENT_LENGTH">
+      <value string="0" />
+    </item>
+    <item name="CONTENT_TYPE">
+      <value string="" />
+    </item>
+    <item name="GATEWAY_INTERFACE">
+      <value string="CGI/1.1" />
+    </item>
+    <item name="HTTPS">
+      <value string="off" />
+    </item>
+    <item name="HTTPS_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="INSTANCE_ID">
+      <value string="2" />
+    </item>
+    <item name="INSTANCE_META_PATH">
+      <value string="/LM/W3SVC/2" />
+    </item>
+    <item name="LOCAL_ADDR">
+      <value string="::1" />
+    </item>
+    <item name="PATH_INFO">
+      <value string="/favicon.ico" />
+    </item>
+    <item name="PATH_TRANSLATED">
+      <value string="D:\Core\arkAS\favicon.ico" />
+    </item>
+    <item name="QUERY_STRING">
+      <value string="" />
+    </item>
+    <item name="REMOTE_ADDR">
+      <value string="::1" />
+    </item>
+    <item name="REMOTE_HOST">
+      <value string="::1" />
+    </item>
+    <item name="REMOTE_PORT">
+      <value string="49603" />
+    </item>
+    <item name="REQUEST_METHOD">
+      <value string="GET" />
+    </item>
+    <item name="SCRIPT_NAME">
+      <value string="/favicon.ico" />
+    </item>
+    <item name="SERVER_NAME">
+      <value string="localhost" />
+    </item>
+    <item name="SERVER_PORT">
+      <value string="52390" />
+    </item>
+    <item name="SERVER_PORT_SECURE">
+      <value string="0" />
+    </item>
+    <item name="SERVER_PROTOCOL">
+      <value string="HTTP/1.1" />
+    </item>
+    <item name="SERVER_SOFTWARE">
+      <value string="Microsoft-IIS/10.0" />
+    </item>
+    <item name="URL">
+      <value string="/favicon.ico" />
+    </item>
+    <item name="HTTP_CONNECTION">
+      <value string="keep-alive" />
+    </item>
+    <item name="HTTP_ACCEPT">
+      <value string="image/webp,image/apng,image/*,*/*;q=0.8" />
+    </item>
+    <item name="HTTP_ACCEPT_ENCODING">
+      <value string="gzip, deflate, br" />
+    </item>
+    <item name="HTTP_ACCEPT_LANGUAGE">
+      <value string="ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7" />
+    </item>
+    <item name="HTTP_COOKIE">
+      <value string="_ym_uid=153182028197807084; _ym_d=1531820281; userGuid=10ed5388-e47a-48c2-b6ad-40320b04eeb5; ASP.NET_SessionId=miwzlyxjou5zlys4rbnof43p; as-crud-settingsTable-selectParams_usCont={&quot;page&quot;:1,&quot;pageSize&quot;:150,&quot;filter&quot;:{&quot;text&quot;:&quot;blockMsgBody&quot;,&quot;categoryID&quot;:&quot;0&quot;},&quot;sort&quot;:&quot;&quot;,&quot;direction&quot;:&quot;&quot;}; CountryISO=ua; CountryISOFirstLoad=false; as-crud-ChaptersStudentsTable-selectParams_usCont={&quot;page&quot;:1,&quot;pageSize&quot;:20,&quot;filter&quot;:{&quot;username&quot;:&quot;glushko.alina@gmail.com&quot;,&quot;course&quot;:&quot;0&quot;,&quot;chapter&quot;:&quot;0&quot;,&quot;created&quot;:&quot;&quot;,&quot;createdBy&quot;:&quot;0&quot;,&quot;completed&quot;:&quot;&quot;,&quot;closedBy&quot;:&quot;0&quot;},&quot;sort&quot;:&quot;completed&quot;,&quot;direction&quot;:&quot;down&quot;}; as-crud-usersTable-selectParams_usCont={&quot;page&quot;:1,&quot;pageSize&quot;:150,&quot;filter&quot;:{&quot;username&quot;:&quot;core-admin@mail.ru&quot;,&quot;roles&quot;:[]},&quot;sort&quot;:&quot;&quot;,&quot;direction&quot;:&quot;&quot;}; __RequestVerificationToken=B-YHFHh7gA1Qm5BUvsmGN2ZtFcA8_CLGWDCHP7pILIAeUvCYZ5JGB_wV7Nc8qR1k_oCKmy4Yu4oQ1CW6Z-OAESq7hdk1; lang=en-us; arkAS=6DD25EB68AC8EE6FD8B340418EDDB54C54A6471D4955E3AB0CF593103DD1F7FA6AA496B62F4CA40BA23514A984ACEAAF15A4B8FDA2320253743EB7ED617D23E6EFFE7404A68DBC501B38D22C0AA4CEC2A5CD8677EF9453E12EADD721AC19998D4E4EC2F7; as-crud-studentsTable-selectParams_usCont={&quot;page&quot;:1,&quot;pageSize&quot;:20,&quot;filter&quot;:{&quot;course&quot;:&quot;31&quot;,&quot;completed&quot;:&quot;0&quot;,&quot;isBlocked&quot;:&quot;0&quot;,&quot;text&quot;:&quot;&quot;},&quot;sort&quot;:&quot;,&quot;,&quot;direction&quot;:&quot;,&quot;}; _ym_visorc_32000186=w; _ym_isad=2" />
+    </item>
+    <item name="HTTP_HOST">
+      <value string="localhost:52390" />
+    </item>
+    <item name="HTTP_REFERER">
+      <value string="http://localhost:52390/" />
+    </item>
+    <item name="HTTP_USER_AGENT">
+      <value string="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.67 Safari/537.36" />
+    </item>
+  </serverVariables>
+  <cookies>
+    <item name="_ym_uid">
+      <value string="153182028197807084" />
+    </item>
+    <item name="_ym_d">
+      <value string="1531820281" />
+    </item>
+    <item name="userGuid">
+      <value string="10ed5388-e47a-48c2-b6ad-40320b04eeb5" />
+    </item>
+    <item name="ASP.NET_SessionId">
+      <value string="miwzlyxjou5zlys4rbnof43p" />
+    </item>
+    <item name="as-crud-settingsTable-selectParams_usCont">
+      <value string="{&quot;page&quot;:1,&quot;pageSize&quot;:150,&quot;filter&quot;:{&quot;text&quot;:&quot;blockMsgBody&quot;,&quot;categoryID&quot;:&quot;0&quot;},&quot;sort&quot;:&quot;&quot;,&quot;direction&quot;:&quot;&quot;}" />
+    </item>
+    <item name="CountryISO">
+      <value string="ua" />
+    </item>
+    <item name="CountryISOFirstLoad">
+      <value string="false" />
+    </item>
+    <item name="as-crud-ChaptersStudentsTable-selectParams_usCont">
+      <value string="{&quot;page&quot;:1,&quot;pageSize&quot;:20,&quot;filter&quot;:{&quot;username&quot;:&quot;glushko.alina@gmail.com&quot;,&quot;course&quot;:&quot;0&quot;,&quot;chapter&quot;:&quot;0&quot;,&quot;created&quot;:&quot;&quot;,&quot;createdBy&quot;:&quot;0&quot;,&quot;completed&quot;:&quot;&quot;,&quot;closedBy&quot;:&quot;0&quot;},&quot;sort&quot;:&quot;completed&quot;,&quot;direction&quot;:&quot;down&quot;}" />
+    </item>
+    <item name="as-crud-usersTable-selectParams_usCont">
+      <value string="{&quot;page&quot;:1,&quot;pageSize&quot;:150,&quot;filter&quot;:{&quot;username&quot;:&quot;core-admin@mail.ru&quot;,&quot;roles&quot;:[]},&quot;sort&quot;:&quot;&quot;,&quot;direction&quot;:&quot;&quot;}" />
+    </item>
+    <item name="__RequestVerificationToken">
+      <value string="B-YHFHh7gA1Qm5BUvsmGN2ZtFcA8_CLGWDCHP7pILIAeUvCYZ5JGB_wV7Nc8qR1k_oCKmy4Yu4oQ1CW6Z-OAESq7hdk1" />
+    </item>
+    <item name="lang">
+      <value string="en-us" />
+    </item>
+    <item name="as-crud-studentsTable-selectParams_usCont">
+      <value string="{&quot;page&quot;:1,&quot;pageSize&quot;:20,&quot;filter&quot;:{&quot;course&quot;:&quot;31&quot;,&quot;completed&quot;:&quot;0&quot;,&quot;isBlocked&quot;:&quot;0&quot;,&quot;text&quot;:&quot;&quot;},&quot;sort&quot;:&quot;,&quot;,&quot;direction&quot;:&quot;,&quot;}" />
+    </item>
+    <item name="_ym_visorc_32000186">
+      <value string="w" />
+    </item>
+    <item name="_ym_isad">
+      <value string="2" />
+    </item>
+  </cookies>
+</error>

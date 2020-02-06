@@ -1,0 +1,53 @@
+﻿
+body {
+    padding: 0 !important;
+}
+
+.content {
+    min-height: 600px;
+}
+
+.as-loginStatus {
+    position: relative;
+}
+
+    .as-loginStatus a {
+        text-decoration: none;
+    }
+
+.as-cap, .gCap {
+    display: inline-block;
+    width: 140px;
+}
+
+input[type=checkbox] + label {
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.as-markedRow {
+    background: #aaffaa !important;
+}
+
+.as-select {
+    height: 20px;
+    width: 254px;
+}
+
+.crdFilterItem select {
+    height: 20px;
+    width: 250px;
+}
+
+.crdFilterItem input {
+    height: 20px;
+    width: 250px;
+}
+
+.crdFilterItem input.as-daterange {
+    width: 250px;
+}
+
+#logoutForm{
+    margin: 10px 25px 10px 10px;
+}

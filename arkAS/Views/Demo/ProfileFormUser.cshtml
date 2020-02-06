@@ -1,0 +1,123 @@
+﻿@{
+    ViewBag.Title = "Форма профиля пользователя";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section css {
+    <link href="~/js/intl-tel-input-master/build/css/intlTelInput.css" rel="stylesheet" />
+    <style type="text/css">
+        div#AvatarUser {
+            width: 100%;
+            height: 20%;
+        }
+
+        img#AvatarUser {
+            width: 20%;
+            height: 20%;
+        }
+
+        .as-simpleImage-item {
+            margin-top: 50px;
+            height: 242px;
+            width: 162px;
+            border: 1px dashed;
+            margin-bottom: 20px;
+        }
+
+        div#UserName {
+            text-align: center;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        div#Download {
+            text-align: center;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        div#userData {
+            margin-bottom: 20px;
+            margin-top: 20px;
+            margin-right: 20px;
+            margin-left: 20px;
+        }
+
+        input {
+            width: 100%;
+            max-width: 100% !important;
+        }
+
+        .modal-body {
+            height: 330px;
+        }
+
+        .intl-tel-input {
+            width: 100%;
+        }
+
+        .focus {
+            border: 2px solid #AA88FF;
+            background-color: #FFEEAA;
+        }
+
+        .has-success {
+            border: 2px solid #99FF66;
+            background-color: #bbff99;
+        }
+
+        .has-error {
+            border: 2px solid #c66565;
+            background-color: #fdafaf;
+        }
+
+        div.modal-body div.row {
+            height: 44px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+    </style>
+}
+
+<div class="row">
+    <h1>Управление элементами профиля пользователя</h1>
+    <div class="well well-sm">
+        <p>
+            <ul>
+                Элементы профиля пользователя:
+                <li>вывод публичной части профиля (фото, ник)</li>
+                <li>при нажатии на картинку - email, скайп, телефон  </li>
+                <li>управление картинкой для аватарки</li>
+            </ul>  
+        </p>        
+                  
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        <div class="as-simpleImage-manager" data-userguid="@ViewBag.UserGuid">
+            <div class="as-simpleImage-item img-responsive center-block">
+                <img id="as-simpleImage" src=@ViewBag.Avatar style="height:240px; width:160px;" />
+            </div>
+        </div>
+        <div id="UserName">
+            <h4>@ViewBag.UserName</h4>
+        </div>
+        <div id="Download">
+            <div class="hide"> <input id="imagesFileUpload" type="file" accept="image/png,image/jpeg" name="imagesFileUpload" class="imagesFileUpload" /></div>
+            <div><button id="BtnDownload" type="button" class="btn btn-primary">Загрузить фото</button></div>
+            <div>изображение формата jpg или png, не более 2 мб</div>
+        </div>
+    </div>
+</div>
+@section js{
+    <script src="~/js/AS/controls/as.profile.js"></script>
+    <script src="~/js/intl-tel-input-master/build/js/intlTelInput.js"></script>
+    <script src="~/js/jquery.inputmask-3.x/dist/jquery.inputmask.bundle.js"></script>
+    <script type="text/javascript">
+               
+        $(function () {
+            as.profile.init();
+        });
+
+    </script>
+}

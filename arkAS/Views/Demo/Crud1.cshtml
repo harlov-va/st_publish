@@ -1,0 +1,125 @@
+﻿
+@{
+    ViewBag.Title = "Пример таблицы с редактированием полей";
+}
+
+<h2>Пример таблицы с редактированием полей</h2>
+<div class='incCont'>
+
+</div>
+<script type="text/javascript">
+    var billedForClosingSource = [];
+    billedForClosingSource.push({ value: -1, text: 'Не задано' });
+    billedForClosingSource.push({ value: 0, text: 'Нет' });
+    billedForClosingSource.push({ value: 1, text: 'Да' });
+    var supplyTypeSource = [];
+    supplyTypeSource.push({ value: 3, text: 'Flat Rate' });
+    supplyTypeSource.push({ value: 5, text: 'Гарантийная поставка' });
+    supplyTypeSource.push({ value: 2, text: 'Обмен' });
+    supplyTypeSource.push({ value: 3, text: 'Продажа' });
+    var inc = {
+        init: function () {
+            inc.initMainTable();
+        },
+        filter: function () {
+                            
+            var filter = {
+                part: $('.incPart').val() || "",
+                customer: $('.incCustomer').val() || "",
+                invoicenum: $('.incInvoicenum').val() || "",
+                closingID: $('.incClosing option:selected').val(),
+                destinationID: $('.incDestinations option:selected').val(),
+                supplierID: $('.incSuppliers option:selected').val(),
+                supplyTypeID: $('.incSupplyTypes option:selected').val(),
+                statusIDs: statusIDs
+
+            };
+            console.log(filter);
+            return filter;
+        },
+        getFilterMakeup: function (filter) { return filter; },
+
+        initMainTable: function () {
+            as.crud.init({
+                cont: $('.incCont'),
+                title: '',
+                showChecksCol: false,
+                showNumsCol: true,
+                ajaxURLFormat: '/Demo/Crud1_{0}',
+                inlineAjaxURL: "/serv/MotivationInline.ashx",
+                pageSize: 150,
+                cookiePrefix: "as-crud-motivation-",
+                cols: [
+                   { code: "id", title: "ID", tooltip: "Идентификатор", isVisible: false, isPK: true, datatype: "int", isRequired: false },
+
+
+                    {
+                        code: "reqPart", title: "Requested P/N", tooltip: "Requested P/N", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+
+                    },
+                      {
+                          code: "description", title: "Описание", tooltip: "Описание", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                      },
+                    { code: "invoicenum", title: "Номер инвойса", tooltip: "Номер инвойса", isVisible: true, isPK: false, datatype: "int", isRequired: false, isSort: true, callback: null },
+
+
+
+                  {
+                      code: "supplyType", title: "Тип поставки", tooltip: "Тип поставки (продажа, обмен, flat rate)", isVisible: true, isPK: false, datatype: "string", isRequired: false, isSort: true, callback: null,
+                      editable: { type: "select", format: "{0}", source: supplyTypeSource, callback: function (el, newValue) { } },
+                  },
+
+
+                { code: "isOur", title: "Наша деталь", tooltip: "Наша деталь", isVisible: true, isPK: false, datatype: "bool", isRequired: false, isSort: true, callback: null },
+
+                   {
+                       code: "priceAfter", title: "Закупочная цена", tooltip: "Закупочная цена", isVisible: true, isPK: false, datatype: "float", isRequired: false, isSort: true, callback: null,
+                       editable: { type: "number", format: "{0}", callback: function (el, newValue) { } }
+                   },
+
+                    {
+                        code: "salePrice", title: "Продажная цена", tooltip: "Продажная цена", isVisible: true, isPK: false, datatype: "float", isRequired: false, isSort: true, callback: null,
+                        editable: { type: "number", format: "{0}", callback: function (el, newValue) { } }
+                    },
+
+                  {
+                      code: "deposit", title: "Стоимость ремонта", tooltip: "Стоимость ремонта", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                      editable: { type: "text", format: "{0}", placement: 'left', callback: function (el, newValue) { } }
+                  },
+                   {
+                       code: "supCount", title: "Кол-во", tooltip: "Кол-во", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                       editable: { type: "text", format: "{0}", placement: 'left', callback: function (el, newValue) { } }
+                   },
+
+                   {
+                       code: "smena", title: "Смена", tooltip: "Смена", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+
+                   },
+
+
+
+
+                ],
+                operations: {
+                    create: false,
+                    remove: false,
+                    edit: false,
+                    other: [
+
+                    ]
+                }
+            });
+
+        }
+    }
+
+    jQuery(function () {
+        inc.init();
+    });
+</script>
+
+
+
+
+
+

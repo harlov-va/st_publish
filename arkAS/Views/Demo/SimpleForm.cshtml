@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Быстрое создание простых форм";
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+
+<h1>Быстрое создание форм</h1>
+<p>Очень часто форма содержит следующие поля: Имя, Телефон, Email, комментарий. Для таких форм мы придумали простой способ их установки</p>
+<p>
+    Вы можете использовать форму на странице:
+</p>
+<div class="as-form-simple"
+     data-email="E-mail *" data-name="Ваше имя *" data-phone="Телефон" data-text="Дополнительно" data-code="example"
+     data-email-placeholder="ivanov@mail.ru" data-name-placeholder="Иванов Иван Иванович" data-phone-placeholder="+7 900 800 7777" data-text-placeholder="Комментарии к заявке"
+     data-button="Подать заявку" data-title="Отправка заявки" data-subtitle="Пожалуйста, укажите следующие поля, и мы свяжемся с Вами в ближайшее время"></div>
+<p>
+    Либо использовать ссылку для модального окна. 
+    <a href="#" class="as-form-simple" data-code="example"
+       data-email="E-mail *" data-name="Ваше имя *" data-phone="Телефон" data-text="Дополнительно"
+       data-email-placeholder="ivanov@mail.ru" data-name-placeholder="Иванов Иван Иванович" data-phone-placeholder="+7 900 800 7777" data-text-placeholder="Комментарии к заявке"
+       data-button="Подать заявку" data-title="Отправка заявки" data-subtitle="Пожалуйста, укажите следующие поля, и мы свяжемся с Вами в ближайшее время">Показать форму</a>
+</p>
+<p>Все параметры устанавливаются декларативно в разметке элемента. Это названия полей, подсказки, заголовки и название кнопок. Если вы хотите, чтобы элемент был обязательным - 
+    просто добавьте звездочку в описание. </p>
+<p>Если вам не нужно какое-либо из полей - просто оставьте его описание пустым.</p>
+
+@Html.Raw(arkAS.BLL.Core.CoreManager.GetMainFormLink());
+
+
+
+
+
+
+

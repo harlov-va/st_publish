@@ -1,0 +1,37 @@
+﻿@model arkAS.BLL.art_news
+@{
+    ViewBag.Title = "Новости  Ark AS  " + Model.title;
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8 col-md-8 col-lg-8">
+            <div class="thumbnail">
+                <div class="row">
+                    @if (Model.imgPath != null)
+                    {
+                        <div class="col-sm-6 col-md-5">
+                            <img src="@Model.imgPath" alt="Picture">
+                        </div>                   
+                        <div class="col-sm-6 col-md-7">
+                            <div class="caption">
+                                <h4>@Model.title</h4>
+                                <div>@Html.Raw(Model.text)</div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-sm-12 col-md-11">
+                            <div class="caption">
+                                <h4>@Model.title</h4>
+                                <div>@Html.Raw(Model.text)</div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                @Html.ActionLink("Все новости", "GetArticleItems")
+            </div>
+        </div>
+    </div>
+</div>

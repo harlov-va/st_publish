@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Тестирование мобильного представления Ark AS";
+}
+
+<ul data-role="listview" data-filter="true">
+    <li>@Html.ActionLink("Все демо", "Index", "Demo")</li>
+    <li><a href="~/Content/sb-admin-2-1.0.5/index.html" target="_blank">Шаблон панели управления</a></li>
+    <li>@Html.ActionLink("Просто вывод таблицы с сортировкой и фильтрами", "SimpleTable", "Demo")</li>
+    <li>@Html.ActionLink("Фильтрация данных", "FilterTable", "Demo")</li>
+    <li>@Html.ActionLink("Inline редактирование", "InlineEditTable", "Demo")</li>
+    <li>@Html.ActionLink("Редактирование через модальную форму", "FullEditTable", "Demo")</li>
+    <li>@Html.ActionLink("Галочки для групповых операций", "GroupOperationTable", "Demo")</li>
+    <li>@Html.ActionLink("Двойная сортировка", "DoubleSortTable", "Demo")</li>
+    <li>@Html.ActionLink("Управляющие кнопки и показ вложенных элементов", "RowButtonsTable", "Demo")</li>
+    <li>@Html.ActionLink("Показ вложенной статистики по дням", "ShowStatTable", "Demo")</li>
+    <li>@Html.ActionLink("Настройка столбцов", "ColSettingsTable", "Demo")</li>
+    <li>@Html.ActionLink("Комментарии к элементам таблицы", "CommentsTable", "Demo")</li>
+    <li>@Html.ActionLink("Копирование другой строки", "CopyRowTable", "Demo")</li>
+    <li>@Html.ActionLink("Экспорт в Excel и PDF", "ExportExcelTable", "Demo")</li>
+    <li>@Html.ActionLink("Инструмент замены в определенных полях", "ReplaceToolTable", "Demo")</li>
+    <li>@Html.ActionLink("AS Form - создание форм различной сложности", "ASForm", "Demo")</li>
+    <li>@Html.ActionLink("Cоздание простой формы", "SimpleForm", "Demo")</li>
+    <li>@Html.ActionLink("Файловый менеджер", "Example", "FileEditor")</li>
+    <li>@Html.ActionLink("Новости", "GetArticleItems", "Article")</li>
+    <li>@Html.ActionLink("Компонент контроля действий", "AsCtrl", "Demo")</li>
+    <li>@Html.ActionLink("Графики", "Graphic", "Graphic")</li>
+    <li>@Html.ActionLink("AS Info - отображение уточняющего контента для элемента", "PopupInfo", "Demo")</li>
+    <li>@Html.ActionLink("Пример использования Signal R", "SignalR", "Demo")</li>
+    <li>@Html.ActionLink("Пример компонента одиночной замены картинки", "Index", "AsImage")</li>
+    <li>@Html.ActionLink("Пример элемента профиля пользователя", "ProfileFormUser", "Demo")</li>
+    <li>@Html.ActionLink("Обратный счетчик", "CountDown", "Demo")</li>
+    <li>@Html.ActionLink("Видео на фоне", "VideoBackground", "Demo")</li>
+</ul>

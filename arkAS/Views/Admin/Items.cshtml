@@ -1,0 +1,76 @@
+﻿@{
+    Layout = arkAS.BLL.Core.CoreManager.GetCabinetLayout();
+    ViewBag.Title = "Действия";
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+<div class='usCont'>
+</div>
+
+@section js{
+    <script type="text/javascript">
+    var asdemo = {
+        init: function () {
+            asdemo.initMainTable();
+        },
+        initMainTable: function () {
+            as.crud.init({
+                cont: $('.usCont'),
+                title: 'Действия',
+                toolbarAdditional: '',
+                groupOperationsToolbar: '',
+                ajaxURLFormat: '/Admin/Items_{0}',
+                inlineAjaxURL: "",
+                pageSize: 150,
+                cookiePrefix: "as-crud-ItemsDict-",
+                emptyText: 'Нет элементов',
+                createLinkTitle: 'Создать',
+                filterLinkTitle: 'Найти',
+                filterTitle: 'Фильтрация данных',
+                showChecksCol: false,
+                showNumsCol: true,
+                showToolbar: true,
+                showColSettings: false,
+                showReplaceTool: false,
+                showExcelExport: false,
+                additionalSort: false,
+                cols: [
+                    { code: "id", title: "ID", tooltip: "Идентификатор", isVisible: false, isPK: true, datatype: "int", isRequired: false, editHide: true },
+                    { code: "name", title: "Название действия", tooltip: "Название действия", isVisible: true, isPK: false, datatype: "string", isRequired: true, format: "{0}", isSort: true, callback: null },
+                    { code: "code", title: "Код", tooltip: "Код", isVisible: true, isPK: false, datatype: "string", isRequired: true, format: "{0}", isSort: true, callback: null },
+                    { code: "datatable", title: "Таблица", tooltip: "Таблица", isVisible: true, isPK: false, datatype: "string", isRequired: true, format: "{0}", isSort: true, callback: null },
+                    { code: "sqlInsert", title: "Insert", tooltip: "Insert", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null },
+                    { code: "sqlUpdate", title: "Update", tooltip: "Update", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null },
+                    { code: "sqlDelete", title: "Delete", tooltip: "Delete", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null }
+                ],
+                operations: {
+                    create: true,
+                    remove: true,
+                    edit: true,
+                    other: [
+                    ]
+                },
+                getFilterMakeup: function (filter) {
+                    var s = [];
+                    s.push("<div class='crdFilterItem'><span class='gCap'>Название</span><input type='text' class='usName' value='" + (filter.name || '') + "' /></div>");
+                    return s.join("");
+                },
+                filter: function () {
+
+                    var filter = {
+                        name: $('.usName').val() || ""
+                    };
+                    return filter;
+                }
+            });
+        }
+    }
+    $(function () {
+        asdemo.init();
+    });
+    </script>
+
+}
+
+
+
+

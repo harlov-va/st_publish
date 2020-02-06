@@ -1,0 +1,79 @@
+﻿@{
+    Layout = arkAS.BLL.Core.CoreManager.GetCabinetLayout();
+    ViewBag.Title = "Категории";
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+<div class="list">
+    <button class="b">Купить!</button>
+</div>
+@section js{
+    <script type="text/javascript">
+ 
+        var us = {
+            init: function () {               
+                $(document).delegate('.b', 'click', function () {
+                    us.ajaxSend('/Demo/AsCtrlSave', { datacode: "1", datatype: "1" }, function (data) { alert('ccc') });
+                });
+            },           
+            ajaxSend: function (url, data, callback) {
+                var params = data;                               
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    cache: false,
+                    traditional: true,
+                    dataType: "json",
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(params),
+                    success: function (data, status) {
+                        var response = data;
+                        if (data.d != undefined) response = data.d;
+                        if (typeof (response) != "object") response = eval('(' + response + ')');
+                        if (callback) callback(response);
+                    },
+                    complete: function () {                       
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {                       
+                    },
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+                    }
+                });
+            }
+        }
+        $(function () {
+            us.init();
+        });
+    </script>
+}
+
+@*@section js{
+       
+    <script type="text/javascript">
+    var d = {
+        init: function () {
+            $('.b').click(d.viewList);
+        },
+        viewList: function() {
+            var params = { datacode: "1", datatype: "1" };
+
+           
+            as.sys.ajaxSend('/Demo/AsCtrlSave', params, function (data) {
+                data = eval('(' + data + ')');
+                alert('fhfh');
+                //if (data.result) {
+                //    var s = [];
+                //    $.each(data.items, function (i, item) {
+                //        var t = "<li>" + item.Text + "</li>";
+                //        s.push(t);
+                //    });
+                //    $('.list').html('<ul>' + s.join("") + '</ul>');
+                //}
+            });
+        }        
+    };
+    $(function () {
+        d.init();
+    });
+    </script>
+}*@

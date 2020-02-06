@@ -1,0 +1,139 @@
+﻿@{
+    ViewBag.Title = "Курсы валют";
+}
+@section css{
+    <style>
+        /*currencies*/
+        #currencies .currency {
+            display: inline-block;
+        }
+        #currencies .currency-title {
+            text-transform: uppercase;
+            white-space: nowrap;
+            font-weight: 700;
+            font-size: 92.3%;
+            margin-right: 6px;
+            color: red;
+        }
+        #currencies .currency-value {
+            white-space: nowrap;
+            color: green;
+        }
+        #currencies .row {
+            display: block;
+        }
+        #currencies .currency:hover {
+            cursor: default;
+        }
+        #currencies .wrapper-canvas {
+            position: absolute;
+            display: none;
+            z-index: 100;
+        }
+        #currencies .currency-canvas {
+            border: 1px solid gray;
+            border-radius: 4px;
+            background: white;
+        }
+
+        /*converter*/
+        #converter {
+            margin: 0 auto;
+        }
+
+        #converter input, select {
+            max-width: 100%;
+        }
+
+        #converter .currency-title {
+            min-width: 80px;
+        }
+
+        #converter .currency-line {
+            margin-top: 4px;
+        }
+
+        #converter .currency-line input {
+            background-color: #fafafa !important;
+        }
+
+        #currency-from {
+            min-width: 81px;
+        }
+
+        
+
+    </style>
+}
+<script src="~/js/AS/controls/mics/as.currency.js"></script>
+<script src="~/js/AS/controls/mics/as.currencyConverter.js"></script>
+
+
+<h1>Курсы валют</h1>
+<div class="well">
+    Данный компонент показывает курсы валют
+</div>
+
+<div class="div_block one">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Курсы валют на @DateTime.Now.Date.ToShortDateString()</h3>
+        </div>
+        <div id="currencies" class="panel-body">
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <div id="currency-usd" class="currency"></div>
+                    <div id="tootip-usd"></div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div id="currency-eur" class="currency"></div>
+                    <div id="tootip-eur"></div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div id="currency-uah" class="currency"></div>
+                    <div id="tootip-uah"></div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div id="currency-byr" class="currency"></div>
+                    <div id="tootip-byr"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="div_block two">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Конвертер валют</h3>
+        </div>
+        <div id="converter" class="panel-body">
+        </div>
+    </div>
+</div>
+
+
+@section js
+{
+    <script>
+        $(function () {
+            as.currency.init({
+                currency: [
+                { title: 'USD ЦБ', code: 'R01235', appendTo: '#currency-usd', tooltip: "#tootip-usd" },
+                { title: 'EUR ЦБ', code: 'R01239', appendTo: '#currency-eur', tooltip: "#tootip-eur" },
+                { title: 'UAH ЦБ', code: 'R01720', appendTo: '#currency-uah', tooltip: "#tootip-uah" },
+                { title: 'BYR ЦБ', code: 'R01090', appendTo: '#currency-byr', tooltip: "#tootip-byr" },
+                
+                ]
+            });
+
+            $(".currency").mouseover(function () {
+                $(this).parent().find(".wrapper-canvas").show();
+            })
+            $(".currency").mouseout(function () {
+                $(this).parent().find(".wrapper-canvas").hide();
+            })
+
+            as.currencyConverter.init({ appendTo: '#converter', currencies: ["RUB", "USD", "EUR", "UAH", "BYR"] });
+        });
+    </script>
+}

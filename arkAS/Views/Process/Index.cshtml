@@ -1,0 +1,203 @@
+﻿@{
+    Layout = arkAS.BLL.Core.CoreManager.GetCabinetLayout();
+    ViewBag.Title = "Процессы - Задачи";
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+@section css{
+    <style type="text/css">
+        .crdFilterItem input {
+            height: inherit;
+            width: inherit;
+        }
+    </style>
+}
+
+<select class='prProcessesTemplate hide'>
+    @foreach (var item in js.Deserialize<dynamic>((string)ViewBag.processesNameSource))
+    {
+        <option value='@item["Value"]'>@item["Text"]</option>
+    }
+</select>
+<select class='prProcessItemRolesTemplate hide' multiple>
+    @foreach (var item in js.Deserialize<dynamic>((string)ViewBag.rolesNameSource))
+    {
+        <option value='@item["Value"]'>@item["Text"]</option>
+    }
+</select>
+<select class='prProcessItemUsersTemplate hide' multiple>
+    @foreach (var item in js.Deserialize<dynamic>((string)ViewBag.usersNameSource))
+    {
+        <option value='@item["Value"]'>@item["Text"]</option>
+    }
+</select>
+
+<div class='procCont'>
+</div>
+@section js{
+    <script type="text/javascript">
+
+        var processesNameSource = @Html.Raw(ViewBag.processesNameSource);
+        var processesItemStatusSource = @Html.Raw(ViewBag.processesItemStatusSource);
+
+        var processesNameSourceInLine = @Html.Raw(ViewBag.processesNameSourceInLine);
+        var processesItemStatusSourceInLine = @Html.Raw(ViewBag.processesItemStatusSourceInLine);
+
+        var rolesNameSource = @Html.Raw(ViewBag.rolesNameSource);
+        var usersNameSource = @Html.Raw(ViewBag.usersNameSource);
+
+        var proc = {
+            init: function () {
+                proc.initMainTable();
+                $(document).delegate('.procCreateProcess', 'click', function (e) {
+                    e.preventDefault();
+                    proc.createProcessItem();
+                });
+            },
+            initMainTable: function () {
+                as.crud.init({
+                    cont: $('.procCont'),
+                    title: 'Задачи',
+                    toolbarAdditional: '<a href="#" class="btn btn-primary procCreateProcess">Добавить задачу</a>&nbsp;&nbsp;',
+                    groupOperationsToolbar: '',
+                    ajaxURLFormat: '/Process/ProcessItem_{0}',
+                    inlineAjaxURL: "/Process/ProcessItemInline",
+                    pageSize: 150,
+                    cookiePrefix: "as-crud-processItemsTable-",
+                    emptyText: 'Задачи не найдены',
+                    createLinkTitle: 'Создать',
+                    filterLinkTitle: 'Найти',
+                    filterTitle: 'Фильтрация данных',
+                    showChecksCol: false,
+                    showNumsCol: true,
+                    showToolbar: true,
+                    showColSettings: true,
+                    showReplaceTool: false,
+                    showExcelExport: false,
+                    additionalSort: true,
+                    cols: [
+                        { code: "id", title: "ID", tooltip: "Идентификатор", isVisible: false, isPK: true, datatype: "int", isRequired: false },
+                        {
+                            code: "name", title: "Наименование", tooltip: "Наименование", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                            filter: { type: "string"},
+                            editable: { type: "text", format: "{0}", callback: function (el, newValue) { }}
+                        },
+                        {
+                            code: "isFinish", title: "Статус", tooltip: "Статус", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                            filter: { type: "select", source: processesItemStatusSource},
+                            editable: { type: "select", source: processesItemStatusSourceInLine, format: "{0}", callback: function (el, newValue) { } }
+                        },
+                        {
+                            code: "roles", title: "Доступ для групп", tooltip: "Доступ для групп", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                            filter: { type: "checkboxes", source: rolesNameSource},
+                            editable: { type: "text", format: "{0}", callback: function (el, newValue) { }}
+                        },
+                        {
+                            code: "users", title: "Ответственные", tooltip: "Ответственные", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                            filter: { type: "checkboxes", source: usersNameSource},
+                            editable: { type: "text", format: "{0}", callback: function (el, newValue) { } }
+                        },
+                        {
+                            code: "processID", title: "Процесс", tooltip: "Процесс", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                            filter: { type: "select", source: processesNameSource, notSelected: "Не выбрано"},
+                            editable: { type: "select", source: processesNameSourceInLine, format: "{0}", callback: function (el, newValue) { } }
+                        }
+                    ],
+                    operations: {
+                        create: false,
+                        remove: true,
+                        edit: false,
+                        comments: false,
+                        other: [
+                        ]
+                    },
+
+                    processRowCallback: function (tr) {
+                        var statusID = $("td[data-code=statusID]", tr).text();
+                        proc.setItemColor(tr, statusID);
+                    }
+
+                });
+            },
+            setItemColor: function(tr, statusID){
+                var color = $('.usClientStatusChTemplate input[type=checkbox][data-value='+statusID+']').attr('data-color');
+                if(!color) color = "transparent";
+                $(tr).css("background-color", color);
+            },
+            createProcessItem: function () {
+                var s = [];
+                s.push("<span>Наименование</span><input type='text' class='form-control prNewName' /><br />");
+
+                $('.prProcessesTemplate option').removeAttr('selected');
+                $('.prProcessesTemplate option:first').attr('selected', 'selected');
+                s.push("<span>Процесс</span><select class='form-control prNewProcessID' >"+ $('.prProcessesTemplate').html() + "</select><br />");
+
+                s.push("<span>Описание</span><br /><textarea class='crdCommentText prNewDesc'></textarea><br />");
+
+                $('.prProcessItemRolesTemplate option').removeAttr('selected');
+                $('.prProcessItemRolesTemplate option:first').attr('selected', 'selected');
+                s.push("<span>Доступ для групп</span><select class='form-control prNewRoles' multiple>"+ $('.prProcessItemRolesTemplate').html() + "</select><br />");
+
+                $('.prProcessItemUsersTemplate option').removeAttr('selected');
+                $('.prProcessItemUsersTemplate option:first').attr('selected', 'selected');
+                s.push("<span>Ответственные</span><select class='form-control prNewUsers' multiple>"+ $('.prProcessItemUsersTemplate').html() + "</select><br />");
+
+                setTimeout(function () { $('.usNewFio').focus(); }, 200);
+                as.sys.showDialog("Новая задача", s.join(""), "Создать задачу", function () {
+                    var Name = $('.prNewName').val();
+                    var ProcessID = $('.prNewProcessID').val();
+                    var Desc = $('.prNewDesc').val();
+                    var Roles = [];
+                    var Users = [];
+ 
+                    $('.prNewRoles :selected').each(function(i, selected){
+                        Roles.push($(selected).text()); 
+                    });
+                    $('.prNewUsers :selected').each(function(i, selected){ 
+                        Users.push($(selected).text()); 
+                    });
+
+                    if (!Name) {
+                        as.sys.bootstrapAlert("Укажите, пожалуйста, наименование задачи", { type: 'warning' });
+                        $('.prNewName').focus();
+                        return;
+                    }
+                    if (!ProcessID) {
+                        as.sys.bootstrapAlert("Укажите, пожалуйста, процесс", { type: 'warning' });
+                        $('.prNewProcessID').focus();
+                        return;
+                    }
+                    if (Roles.length == 0) {
+                        as.sys.bootstrapAlert("Укажите, пожалуйста, группы доступа", { type: 'warning' });
+                        $('.prNewRoles').focus();
+                        return;
+                    }
+                    if (Users.length == 0) {
+                        as.sys.bootstrapAlert("Укажите, пожалуйста, ответственных", { type: 'warning' });
+                        $('.prNewUsers').focus();
+                        return;
+                    }
+
+                    var params = { name: Name, processID: ProcessID, desc: Desc, roles: Roles.join(","), users: Users.join(",")};
+                    as.sys.ajaxSend("/Process/CreateProcessItem", params, function (data) {
+                        if (typeof (data) != "object") data = eval('(' + data + ')');
+                        if (data.result) {
+                            as.sys.bootstrapAlert("Задача успешно добавлена", { type: 'success' });
+                            as.sys.closeDialog();
+                            as.crud.getItems();
+                            setTimeout(function () {
+                                as.crud.gotoItem(data.itemID);
+                            }, 1000);
+                        } else {
+                            as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                        }
+                    });
+                });
+            }
+
+        }
+        $(function () {
+            proc.init();
+        });
+    </script>
+}
+

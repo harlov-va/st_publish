@@ -1,0 +1,12 @@
+﻿@{
+    ViewBag.Title = "Тестирование мобильного представления Ark AS";
+}
+<div class="row">
+    <div class="col-md-8">
+        <div class="as-text" data-code="defaultFirstParagraph" data-seotext="1">@Html.Raw(arkAS.BLL.Core.TextManager.Get("defaultFirstParagraph"))</div>
+    </div>
+    <div class="col-md-4" style=" margin-bottom: -40px; text-align: center; ">
+        <div class="as-text" data-code="defaultBook" data-seotext="1">@Html.Raw(arkAS.BLL.Core.TextManager.Get("defaultBook"))</div>
+        @Html.Raw(arkAS.BLL.Core.CoreManager.GetDownloadBookLink(""))
+    </div>
+</div>

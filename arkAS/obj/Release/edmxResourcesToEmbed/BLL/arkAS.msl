@@ -1,0 +1,2530 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="arkASModelStoreContainer" CdmEntityContainer="LocalSqlServer">
+    <EntitySetMapping Name="as_categories">
+      <EntityTypeMapping TypeName="IsTypeOf(arkASModel.as_categories)">
+        <MappingFragment StoreEntitySet="as_categories">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="typeCode" ColumnName="typeCode" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="parentID" ColumnName="parentID" />
+          <ScalarProperty Name="desc" ColumnName="desc" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="as_dataTypes">
+      <EntityTypeMapping TypeName="IsTypeOf(arkASModel.as_dataTypes)">
+        <MappingFragment StoreEntitySet="as_dataTypes">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="code" ColumnName="code" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="as_menu">
+      <EntityTypeMapping TypeName="IsTypeOf(arkASModel.as_menu)">
+        <MappingFragment StoreEntitySet="as_menu">
+          <ScalarProperty Name="cssclass" ColumnName="cssclass" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="url" ColumnName="url" />
+          <ScalarProperty Name="pattern" ColumnName="pattern" />
+          <ScalarProperty Name="parentID" ColumnName="parentID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="as_menuRoles">
+      <EntityTypeMapping TypeName="IsTypeOf(arkASModel.as_menuRoles)">
+        <MappingFragment StoreEntitySet="as_menuRoles">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="itemID" ColumnName="itemID" />
+          <ScalarProperty Name="role" ColumnName="role" />
+          <ScalarProperty Name="ord" ColumnName="ord" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="as_profileProperties">
+      <EntityTypeMapping TypeName="IsTypeOf(arkASModel.as_profileProperties)">
+        <MappingFragment StoreEntitySet="as_profileProperties">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="code" ColumnName="code" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="as_profilePropertyValues">
+      <EntityTypeMapping TypeName="IsTypeOf(arkASModel.as_profilePropertyValues)">
+        <MappingFragment StoreEntitySet="as_profilePropertyValues">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="propertyID" ColumnName="propertyID" />
+          <ScalarProperty Name="value" ColumnName="value" />
+          <ScalarProperty Name="userGuid" ColumnName="userGuid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="as_rights">
+      <EntityTypeMapping TypeName="IsTypeOf(arkASModel.as_rights)">
+        <MappingFragment StoreEntitySet="as_rights">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="as_rightsRoles">
+      <EntityTypeMapping TypeName="IsTypeOf(arkASModel.as_rightsRoles)">
+        <MappingFragment StoreEntitySet="as_rightsRoles">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="rightID" ColumnName="rightID" />
+          <ScalarProperty Name="role" ColumnName="role" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="as_settingAvailableValues">
+      <EntityTypeMapping TypeName="IsTypeOf(arkASModel.as_settingAvailableValues)">
+        <MappingFragment StoreEntitySet="as_settingAvailableValues">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="value" ColumnName="value" />
+          <ScalarProperty Name="settingID" ColumnName="settingID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="as_settingCategories">
+      <EntityTypeMapping TypeName="IsTypeOf(arkASModel.as_settingCategories)">
+        <MappingFragment StoreEntitySet="as_settingCategories">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="ord" ColumnName="ord" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="as_settings">
+      <EntityTypeMapping TypeName="IsTypeOf(arkASModel.as_settings)">
+        <MappingFragment StoreEntitySet="as_settings">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="value" ColumnName="value" />
+          <ScalarProperty Name="categoryID" ColumnName="categoryID" />
+          <ScalarProperty Name="typeID" ColumnName="typeID" />
+          <ScalarProperty Name="value2" ColumnName="value2" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="as_statuses">
+      <EntityTypeMapping TypeName="IsTypeOf(arkASModel.as_statuses)">
+        <MappingFragment StoreEntitySet="as_statuses">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="color" ColumnName="color" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="desc" ColumnName="desc" />
+          <ScalarProperty Name="typeCode" ColumnName="typeCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="as_statusLog">
+      <EntityTypeMapping TypeName="IsTypeOf(arkASModel.as_statusLog)">
+        <MappingFragment StoreEntitySet="as_statusLog">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="statusID" ColumnName="statusID" />
+          <ScalarProperty Name="itemID" ColumnName="itemID" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="typeCode" ColumnName="typeCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="as_trace">
+      <EntityTypeMapping TypeName="IsTypeOf(arkASModel.as_trace)">
+        <MappingFragment StoreEntitySet="as_trace">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="header" ColumnName="header" />
+          <ScalarProperty Name="text" ColumnName="text" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="itemID" ColumnName="itemID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="as_rightCategories">
+      <EntityTypeMapping TypeName="arkASModel.as_rightCategories">
+        <MappingFragment StoreEntitySet="as_rightCategories">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="crm_clients">
+      <EntityTypeMapping TypeName="arkASModel.crm_clients">
+        <MappingFragment StoreEntitySet="crm_clients">
+          <ScalarProperty Name="nextContact" ColumnName="nextContact" />
+          <ScalarProperty Name="leadSeller" ColumnName="leadSeller" />
+          <ScalarProperty Name="needActive" ColumnName="needActive" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="subchannel" ColumnName="subchannel" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="addedBy" ColumnName="addedBy" />
+          <ScalarProperty Name="statusID" ColumnName="statusID" />
+          <ScalarProperty Name="sourceID" ColumnName="sourceID" />
+          <ScalarProperty Name="city" ColumnName="city" />
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="fio" ColumnName="fio" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="crm_clientStatuses">
+      <EntityTypeMapping TypeName="arkASModel.crm_clientStatuses">
+        <MappingFragment StoreEntitySet="crm_clientStatuses">
+          <ScalarProperty Name="state" ColumnName="state" />
+          <ScalarProperty Name="color" ColumnName="color" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="crm_orderItems">
+      <EntityTypeMapping TypeName="arkASModel.crm_orderItems">
+        <MappingFragment StoreEntitySet="crm_orderItems">
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="count" ColumnName="count" />
+          <ScalarProperty Name="productID" ColumnName="productID" />
+          <ScalarProperty Name="orderID" ColumnName="orderID" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="crm_orders">
+      <EntityTypeMapping TypeName="arkASModel.crm_orders">
+        <MappingFragment StoreEntitySet="crm_orders">
+          <ScalarProperty Name="clientID" ColumnName="clientID" />
+          <ScalarProperty Name="statusID" ColumnName="statusID" />
+          <ScalarProperty Name="orderNum" ColumnName="orderNum" />
+          <ScalarProperty Name="addedBy" ColumnName="addedBy" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="crm_orderStatuses">
+      <EntityTypeMapping TypeName="arkASModel.crm_orderStatuses">
+        <MappingFragment StoreEntitySet="crm_orderStatuses">
+          <ScalarProperty Name="color" ColumnName="color" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="crm_sources">
+      <EntityTypeMapping TypeName="arkASModel.crm_sources">
+        <MappingFragment StoreEntitySet="crm_sources">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="desc" ColumnName="desc" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ct_products">
+      <EntityTypeMapping TypeName="arkASModel.ct_products">
+        <MappingFragment StoreEntitySet="ct_products">
+          <ScalarProperty Name="desc" ColumnName="desc" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="as_comments">
+      <EntityTypeMapping TypeName="arkASModel.as_comments">
+        <MappingFragment StoreEntitySet="as_comments">
+          <ScalarProperty Name="audio" ColumnName="audio" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="itemID" ColumnName="itemID" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="text" ColumnName="text" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="as_texts">
+      <EntityTypeMapping TypeName="arkASModel.as_texts">
+        <MappingFragment StoreEntitySet="as_texts">
+          <ScalarProperty Name="categoryID" ColumnName="categoryID" />
+          <ScalarProperty Name="text" ColumnName="text" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="as_userActions">
+      <EntityTypeMapping TypeName="arkASModel.as_userActions">
+        <MappingFragment StoreEntitySet="as_userActions">
+          <ScalarProperty Name="params" ColumnName="params" />
+          <ScalarProperty Name="url" ColumnName="url" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="hr_humans">
+      <EntityTypeMapping TypeName="arkASModel.hr_humans">
+        <MappingFragment StoreEntitySet="hr_humans">
+          <ScalarProperty Name="hourRate" ColumnName="hourRate" />
+          <ScalarProperty Name="pay" ColumnName="pay" />
+          <ScalarProperty Name="sourceGuid" ColumnName="sourceGuid" />
+          <ScalarProperty Name="needActive" ColumnName="needActive" />
+          <ScalarProperty Name="city" ColumnName="city" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="subchannel" ColumnName="subchannel" />
+          <ScalarProperty Name="addedBy" ColumnName="addedBy" />
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="fio" ColumnName="fio" />
+          <ScalarProperty Name="contacts" ColumnName="contacts" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="statusID" ColumnName="statusID" />
+          <ScalarProperty Name="sourceID" ColumnName="sourceID" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="hr_humanSpecializations">
+      <EntityTypeMapping TypeName="arkASModel.hr_humanSpecializations">
+        <MappingFragment StoreEntitySet="hr_humanSpecializations">
+          <ScalarProperty Name="specializationID" ColumnName="specializationID" />
+          <ScalarProperty Name="humanID" ColumnName="humanID" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="hr_sources">
+      <EntityTypeMapping TypeName="arkASModel.hr_sources">
+        <MappingFragment StoreEntitySet="hr_sources">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="hr_specializations">
+      <EntityTypeMapping TypeName="arkASModel.hr_specializations">
+        <MappingFragment StoreEntitySet="hr_specializations">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="hr_statuses">
+      <EntityTypeMapping TypeName="arkASModel.hr_statuses">
+        <MappingFragment StoreEntitySet="hr_statuses">
+          <ScalarProperty Name="state" ColumnName="state" />
+          <ScalarProperty Name="color" ColumnName="color" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="fin_channels">
+      <EntityTypeMapping TypeName="arkASModel.fin_channels">
+        <MappingFragment StoreEntitySet="fin_channels">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="fin_contragents">
+      <EntityTypeMapping TypeName="arkASModel.fin_contragents">
+        <MappingFragment StoreEntitySet="fin_contragents">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="clientID" ColumnName="clientID" />
+          <ScalarProperty Name="humanID" ColumnName="humanID" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="fin_finances">
+      <EntityTypeMapping TypeName="arkASModel.fin_finances">
+        <MappingFragment StoreEntitySet="fin_finances">
+          <ScalarProperty Name="statusID" ColumnName="statusID" />
+          <ScalarProperty Name="typeID" ColumnName="typeID" />
+          <ScalarProperty Name="projectID" ColumnName="projectID" />
+          <ScalarProperty Name="sum" ColumnName="sum" />
+          <ScalarProperty Name="channelID" ColumnName="channelID" />
+          <ScalarProperty Name="desc" ColumnName="desc" />
+          <ScalarProperty Name="toID" ColumnName="toID" />
+          <ScalarProperty Name="fromID" ColumnName="fromID" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="fin_statuses">
+      <EntityTypeMapping TypeName="arkASModel.fin_statuses">
+        <MappingFragment StoreEntitySet="fin_statuses">
+          <ScalarProperty Name="color" ColumnName="color" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="fin_types">
+      <EntityTypeMapping TypeName="arkASModel.fin_types">
+        <MappingFragment StoreEntitySet="fin_types">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tt_projects">
+      <EntityTypeMapping TypeName="arkASModel.tt_projects">
+        <MappingFragment StoreEntitySet="tt_projects">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="aspnet_Users">
+      <EntityTypeMapping TypeName="arkASModel.aspnet_Users">
+        <MappingFragment StoreEntitySet="aspnet_Users">
+          <ScalarProperty Name="LastActivityDate" ColumnName="LastActivityDate" />
+          <ScalarProperty Name="IsAnonymous" ColumnName="IsAnonymous" />
+          <ScalarProperty Name="MobileAlias" ColumnName="MobileAlias" />
+          <ScalarProperty Name="LoweredUserName" ColumnName="LoweredUserName" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="art_newsType">
+      <EntityTypeMapping TypeName="arkASModel.art_newsType">
+        <MappingFragment StoreEntitySet="art_newsType">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="as_profileMenu">
+      <EntityTypeMapping TypeName="arkASModel.as_profileMenu">
+        <MappingFragment StoreEntitySet="as_profileMenu">
+          <ScalarProperty Name="userGuid" ColumnName="userGuid" />
+          <ScalarProperty Name="cssClass" ColumnName="cssClass" />
+          <ScalarProperty Name="href" ColumnName="href" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="as_mail">
+      <EntityTypeMapping TypeName="arkASModel.as_mail">
+        <MappingFragment StoreEntitySet="as_mail">
+          <ScalarProperty Name="userName" ColumnName="userName" />
+          <ScalarProperty Name="create" ColumnName="create" />
+          <ScalarProperty Name="attachmentID" ColumnName="attachmentID" />
+          <ScalarProperty Name="body" ColumnName="body" />
+          <ScalarProperty Name="subject" ColumnName="subject" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="as_mailAttachment">
+      <EntityTypeMapping TypeName="arkASModel.as_mailAttachment">
+        <MappingFragment StoreEntitySet="as_mailAttachment">
+          <ScalarProperty Name="previewLink" ColumnName="previewLink" />
+          <ScalarProperty Name="link" ColumnName="link" />
+          <ScalarProperty Name="typeID" ColumnName="typeID" />
+          <ScalarProperty Name="mailID" ColumnName="mailID" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="as_mailAttachmentType">
+      <EntityTypeMapping TypeName="arkASModel.as_mailAttachmentType">
+        <MappingFragment StoreEntitySet="as_mailAttachmentType">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="as_mailLog">
+      <EntityTypeMapping TypeName="arkASModel.as_mailLog">
+        <MappingFragment StoreEntitySet="as_mailLog">
+          <ScalarProperty Name="create" ColumnName="create" />
+          <ScalarProperty Name="mailID" ColumnName="mailID" />
+          <ScalarProperty Name="userName" ColumnName="userName" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="art_news">
+      <EntityTypeMapping TypeName="arkASModel.art_news">
+        <MappingFragment StoreEntitySet="art_news">
+          <ScalarProperty Name="anouns" ColumnName="anouns" />
+          <ScalarProperty Name="imgPath" ColumnName="imgPath" />
+          <ScalarProperty Name="typeID" ColumnName="typeID" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="text" ColumnName="text" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="as_favorites">
+      <EntityTypeMapping TypeName="arkASModel.as_favorites">
+        <MappingFragment StoreEntitySet="as_favorites">
+          <ScalarProperty Name="userGuid" ColumnName="userGuid" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="appName" ColumnName="appName" />
+          <ScalarProperty Name="itemID" ColumnName="itemID" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="as_mt_metrics">
+      <EntityTypeMapping TypeName="arkASModel.as_mt_metrics">
+        <MappingFragment StoreEntitySet="as_mt_metrics">
+          <ScalarProperty Name="roles" ColumnName="roles" />
+          <ScalarProperty Name="users" ColumnName="users" />
+          <ScalarProperty Name="isSP" ColumnName="isSP" />
+          <ScalarProperty Name="typeID" ColumnName="typeID" />
+          <ScalarProperty Name="ord" ColumnName="ord" />
+          <ScalarProperty Name="parentID" ColumnName="parentID" />
+          <ScalarProperty Name="parName" ColumnName="parName" />
+          <ScalarProperty Name="sql" ColumnName="sql" />
+          <ScalarProperty Name="subtitle" ColumnName="subtitle" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="as_mt_metricTypes">
+      <EntityTypeMapping TypeName="arkASModel.as_mt_metricTypes">
+        <MappingFragment StoreEntitySet="as_mt_metricTypes">
+          <ScalarProperty Name="ord" ColumnName="ord" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="as_images">
+      <EntityTypeMapping TypeName="arkASModel.as_images">
+        <MappingFragment StoreEntitySet="as_images">
+          <ScalarProperty Name="typeCode" ColumnName="typeCode" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="url" ColumnName="url" />
+          <ScalarProperty Name="ord" ColumnName="ord" />
+          <ScalarProperty Name="filename" ColumnName="filename" />
+          <ScalarProperty Name="itemID" ColumnName="itemID" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="as_textMistakes">
+      <EntityTypeMapping TypeName="arkASModel.as_textMistakes">
+        <MappingFragment StoreEntitySet="as_textMistakes">
+          <ScalarProperty Name="correct" ColumnName="correct" />
+          <ScalarProperty Name="comment" ColumnName="comment" />
+          <ScalarProperty Name="url" ColumnName="url" />
+          <ScalarProperty Name="selectText" ColumnName="selectText" />
+          <ScalarProperty Name="userID" ColumnName="userID" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="as_userCheckItems">
+      <EntityTypeMapping TypeName="arkASModel.as_userCheckItems">
+        <MappingFragment StoreEntitySet="as_userCheckItems">
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="setID" ColumnName="setID" />
+          <ScalarProperty Name="emailSubject" ColumnName="emailSubject" />
+          <ScalarProperty Name="emailText" ColumnName="emailText" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="as_userChecks">
+      <EntityTypeMapping TypeName="arkASModel.as_userChecks">
+        <MappingFragment StoreEntitySet="as_userChecks">
+          <ScalarProperty Name="itemID" ColumnName="itemID" />
+          <ScalarProperty Name="modifiedDate" ColumnName="modifiedDate" />
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="isClosed" ColumnName="isClosed" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="as_userCheckSet">
+      <EntityTypeMapping TypeName="arkASModel.as_userCheckSet">
+        <MappingFragment StoreEntitySet="as_userCheckSet">
+          <ScalarProperty Name="roles" ColumnName="roles" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="as_files">
+      <EntityTypeMapping TypeName="arkASModel.as_files">
+        <MappingFragment StoreEntitySet="as_files">
+          <ScalarProperty Name="ord" ColumnName="ord" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="filename" ColumnName="filename" />
+          <ScalarProperty Name="itemID" ColumnName="itemID" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="as_ctrl">
+      <EntityTypeMapping TypeName="arkASModel.as_ctrl">
+        <MappingFragment StoreEntitySet="as_ctrl">
+          <ScalarProperty Name="guid" ColumnName="guid" />
+          <ScalarProperty Name="referrer" ColumnName="referrer" />
+          <ScalarProperty Name="url" ColumnName="url" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="calc_calcs">
+      <EntityTypeMapping TypeName="arkASModel.calc_calcs">
+        <MappingFragment StoreEntitySet="calc_calcs">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="calcFunction" ColumnName="calcFunction" />
+          <ScalarProperty Name="resultFunction" ColumnName="resultFunction" />
+          <ScalarProperty Name="makeup" ColumnName="makeup" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="calc_parameters">
+      <EntityTypeMapping TypeName="arkASModel.calc_parameters">
+        <MappingFragment StoreEntitySet="calc_parameters">
+          <ScalarProperty Name="defaultValue" ColumnName="defaultValue" />
+          <ScalarProperty Name="datatypeID" ColumnName="datatypeID" />
+          <ScalarProperty Name="tooltip" ColumnName="tooltip" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="calcID" ColumnName="calcID" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="recl_items">
+      <EntityTypeMapping TypeName="arkASModel.recl_items">
+        <MappingFragment StoreEntitySet="recl_items">
+          <ScalarProperty Name="report" ColumnName="report" />
+          <ScalarProperty Name="haveWOW" ColumnName="haveWOW" />
+          <ScalarProperty Name="projectID" ColumnName="projectID" />
+          <ScalarProperty Name="statusID" ColumnName="statusID" />
+          <ScalarProperty Name="reportDate" ColumnName="reportDate" />
+          <ScalarProperty Name="addedBy" ColumnName="addedBy" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="whatToDo" ColumnName="whatToDo" />
+          <ScalarProperty Name="customerText" ColumnName="customerText" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="recl_itemStatuses">
+      <EntityTypeMapping TypeName="arkASModel.recl_itemStatuses">
+        <MappingFragment StoreEntitySet="recl_itemStatuses">
+          <ScalarProperty Name="color" ColumnName="color" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="as_hotkeys">
+      <EntityTypeMapping TypeName="arkASModel.as_hotkeys">
+        <MappingFragment StoreEntitySet="as_hotkeys">
+          <ScalarProperty Name="roles" ColumnName="roles" />
+          <ScalarProperty Name="js" ColumnName="js" />
+          <ScalarProperty Name="url" ColumnName="url" />
+          <ScalarProperty Name="isCtrl" ColumnName="isCtrl" />
+          <ScalarProperty Name="isAlt" ColumnName="isAlt" />
+          <ScalarProperty Name="isShift" ColumnName="isShift" />
+          <ScalarProperty Name="keyCode" ColumnName="keyCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="aspnet_Applications">
+      <EntityTypeMapping TypeName="arkASModel.aspnet_Applications">
+        <MappingFragment StoreEntitySet="aspnet_Applications">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+          <ScalarProperty Name="LoweredApplicationName" ColumnName="LoweredApplicationName" />
+          <ScalarProperty Name="ApplicationName" ColumnName="ApplicationName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="aspnet_Membership">
+      <EntityTypeMapping TypeName="arkASModel.aspnet_Membership">
+        <MappingFragment StoreEntitySet="aspnet_Membership">
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="FailedPasswordAnswerAttemptWindowStart" ColumnName="FailedPasswordAnswerAttemptWindowStart" />
+          <ScalarProperty Name="FailedPasswordAnswerAttemptCount" ColumnName="FailedPasswordAnswerAttemptCount" />
+          <ScalarProperty Name="FailedPasswordAttemptWindowStart" ColumnName="FailedPasswordAttemptWindowStart" />
+          <ScalarProperty Name="FailedPasswordAttemptCount" ColumnName="FailedPasswordAttemptCount" />
+          <ScalarProperty Name="LastLockoutDate" ColumnName="LastLockoutDate" />
+          <ScalarProperty Name="LastPasswordChangedDate" ColumnName="LastPasswordChangedDate" />
+          <ScalarProperty Name="LastLoginDate" ColumnName="LastLoginDate" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="IsLockedOut" ColumnName="IsLockedOut" />
+          <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+          <ScalarProperty Name="PasswordAnswer" ColumnName="PasswordAnswer" />
+          <ScalarProperty Name="PasswordQuestion" ColumnName="PasswordQuestion" />
+          <ScalarProperty Name="LoweredEmail" ColumnName="LoweredEmail" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="MobilePIN" ColumnName="MobilePIN" />
+          <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
+          <ScalarProperty Name="PasswordFormat" ColumnName="PasswordFormat" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="aspnet_Paths">
+      <EntityTypeMapping TypeName="arkASModel.aspnet_Paths">
+        <MappingFragment StoreEntitySet="aspnet_Paths">
+          <ScalarProperty Name="LoweredPath" ColumnName="LoweredPath" />
+          <ScalarProperty Name="Path" ColumnName="Path" />
+          <ScalarProperty Name="PathId" ColumnName="PathId" />
+          <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="aspnet_PersonalizationAllUsers">
+      <EntityTypeMapping TypeName="arkASModel.aspnet_PersonalizationAllUsers">
+        <MappingFragment StoreEntitySet="aspnet_PersonalizationAllUsers">
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+          <ScalarProperty Name="PageSettings" ColumnName="PageSettings" />
+          <ScalarProperty Name="PathId" ColumnName="PathId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="aspnet_PersonalizationPerUser">
+      <EntityTypeMapping TypeName="arkASModel.aspnet_PersonalizationPerUser">
+        <MappingFragment StoreEntitySet="aspnet_PersonalizationPerUser">
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+          <ScalarProperty Name="PageSettings" ColumnName="PageSettings" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="PathId" ColumnName="PathId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="aspnet_Profile">
+      <EntityTypeMapping TypeName="arkASModel.aspnet_Profile">
+        <MappingFragment StoreEntitySet="aspnet_Profile">
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+          <ScalarProperty Name="PropertyValuesBinary" ColumnName="PropertyValuesBinary" />
+          <ScalarProperty Name="PropertyValuesString" ColumnName="PropertyValuesString" />
+          <ScalarProperty Name="PropertyNames" ColumnName="PropertyNames" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="aspnet_Roles">
+      <EntityTypeMapping TypeName="arkASModel.aspnet_Roles">
+        <MappingFragment StoreEntitySet="aspnet_Roles">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="LoweredRoleName" ColumnName="LoweredRoleName" />
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="aspnet_SchemaVersions">
+      <EntityTypeMapping TypeName="arkASModel.aspnet_SchemaVersions">
+        <MappingFragment StoreEntitySet="aspnet_SchemaVersions">
+          <ScalarProperty Name="IsCurrentVersion" ColumnName="IsCurrentVersion" />
+          <ScalarProperty Name="CompatibleSchemaVersion" ColumnName="CompatibleSchemaVersion" />
+          <ScalarProperty Name="Feature" ColumnName="Feature" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="aspnet_WebEvent_Events">
+      <EntityTypeMapping TypeName="arkASModel.aspnet_WebEvent_Events">
+        <MappingFragment StoreEntitySet="aspnet_WebEvent_Events">
+          <ScalarProperty Name="Details" ColumnName="Details" />
+          <ScalarProperty Name="ExceptionType" ColumnName="ExceptionType" />
+          <ScalarProperty Name="RequestUrl" ColumnName="RequestUrl" />
+          <ScalarProperty Name="MachineName" ColumnName="MachineName" />
+          <ScalarProperty Name="ApplicationVirtualPath" ColumnName="ApplicationVirtualPath" />
+          <ScalarProperty Name="ApplicationPath" ColumnName="ApplicationPath" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="EventDetailCode" ColumnName="EventDetailCode" />
+          <ScalarProperty Name="EventCode" ColumnName="EventCode" />
+          <ScalarProperty Name="EventOccurrence" ColumnName="EventOccurrence" />
+          <ScalarProperty Name="EventSequence" ColumnName="EventSequence" />
+          <ScalarProperty Name="EventType" ColumnName="EventType" />
+          <ScalarProperty Name="EventTime" ColumnName="EventTime" />
+          <ScalarProperty Name="EventTimeUtc" ColumnName="EventTimeUtc" />
+          <ScalarProperty Name="EventId" ColumnName="EventId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="arkASModel.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="definition" ColumnName="definition" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Locations">
+      <EntityTypeMapping TypeName="arkASModel.Location">
+        <MappingFragment StoreEntitySet="Locations">
+          <ScalarProperty Name="Place" ColumnName="Place" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="aspnet_UsersInRoles" TypeName="arkASModel.aspnet_UsersInRoles" StoreEntitySet="aspnet_UsersInRoles">
+      <EndProperty Name="aspnet_Users">
+        <ScalarProperty Name="UserId" ColumnName="UserId" />
+      </EndProperty>
+      <EndProperty Name="aspnet_Roles">
+        <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <EntitySetMapping Name="as_opinion">
+      <EntityTypeMapping TypeName="arkASModel.as_opinion">
+        <MappingFragment StoreEntitySet="as_opinion">
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="comment" ColumnName="comment" />
+          <ScalarProperty Name="like" ColumnName="like" />
+          <ScalarProperty Name="itemID" ColumnName="itemID" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ps_specsPartners">
+      <EntityTypeMapping TypeName="arkASModel.ps_specsPartners">
+        <MappingFragment StoreEntitySet="ps_specsPartners">
+          <ScalarProperty Name="partnerID" ColumnName="partnerID" />
+          <ScalarProperty Name="specID" ColumnName="specID" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ps_partners">
+      <EntityTypeMapping TypeName="arkASModel.ps_partners">
+        <MappingFragment StoreEntitySet="ps_partners">
+          <ScalarProperty Name="statusID" ColumnName="statusID" />
+          <ScalarProperty Name="specID" ColumnName="specID" />
+          <ScalarProperty Name="conditions" ColumnName="conditions" />
+          <ScalarProperty Name="technologies" ColumnName="technologies" />
+          <ScalarProperty Name="experience" ColumnName="experience" />
+          <ScalarProperty Name="desc" ColumnName="desc" />
+          <ScalarProperty Name="url" ColumnName="url" />
+          <ScalarProperty Name="fio" ColumnName="fio" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ps_specs">
+      <EntityTypeMapping TypeName="arkASModel.ps_specs">
+        <MappingFragment StoreEntitySet="ps_specs">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="GetPartners" FunctionName="arkASModel.Store.GetPartners">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="arkASModel.GetPartners_Result">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="fio" ColumnName="fio" />
+          <ScalarProperty Name="url" ColumnName="url" />
+          <ScalarProperty Name="desc" ColumnName="desc" />
+          <ScalarProperty Name="experience" ColumnName="experience" />
+          <ScalarProperty Name="technologies" ColumnName="technologies" />
+          <ScalarProperty Name="conditions" ColumnName="conditions" />
+          <ScalarProperty Name="statusName" ColumnName="statusName" />
+          <ScalarProperty Name="statusID" ColumnName="statusID" />
+          <ScalarProperty Name="number" ColumnName="number" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="ps_statuses">
+      <EntityTypeMapping TypeName="arkASModel.ps_statuses">
+        <MappingFragment StoreEntitySet="ps_statuses">
+          <ScalarProperty Name="order" ColumnName="order" />
+          <ScalarProperty Name="color" ColumnName="color" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="imp_itemLog">
+      <EntityTypeMapping TypeName="arkASModel.imp_itemLog">
+        <MappingFragment StoreEntitySet="imp_itemLog">
+          <ScalarProperty Name="isImport" ColumnName="isImport" />
+          <ScalarProperty Name="withBackup" ColumnName="withBackup" />
+          <ScalarProperty Name="durationSec" ColumnName="durationSec" />
+          <ScalarProperty Name="info" ColumnName="info" />
+          <ScalarProperty Name="errors" ColumnName="errors" />
+          <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="itemID" ColumnName="itemID" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="imp_items">
+      <EntityTypeMapping TypeName="arkASModel.imp_items">
+        <MappingFragment StoreEntitySet="imp_items">
+          <ScalarProperty Name="sqlDelete" ColumnName="sqlDelete" />
+          <ScalarProperty Name="sqlUpdate" ColumnName="sqlUpdate" />
+          <ScalarProperty Name="sqlInsert" ColumnName="sqlInsert" />
+          <ScalarProperty Name="datatable" ColumnName="datatable" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="GetMailByDays" FunctionName="arkASModel.Store.GetMailByDays" />
+    <FunctionImportMapping FunctionImportName="GetMail" FunctionName="arkASModel.Store.GetMail">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="arkASModel.GetMail_Result">
+          <ScalarProperty Name="typeValue" ColumnName="typeValue" />
+          <ScalarProperty Name="value" ColumnName="value" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetMailByMonth" FunctionName="arkASModel.Store.GetMailByMonth" />
+    <FunctionImportMapping FunctionImportName="GetMailByWeeks" FunctionName="arkASModel.Store.GetMailByWeeks">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="arkASModel.GetMailByWeeks_Result">
+          <ScalarProperty Name="week" ColumnName="week" />
+          <ScalarProperty Name="cnt" ColumnName="cnt" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="gr_site">
+      <EntityTypeMapping TypeName="arkASModel.gr_site">
+        <MappingFragment StoreEntitySet="gr_site">
+          <ScalarProperty Name="pay" ColumnName="pay" />
+          <ScalarProperty Name="cheque" ColumnName="cheque" />
+          <ScalarProperty Name="query" ColumnName="query" />
+          <ScalarProperty Name="download" ColumnName="download" />
+          <ScalarProperty Name="visit" ColumnName="visit" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="GetSite" FunctionName="arkASModel.Store.GetSite">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="arkASModel.GetSite_Result">
+          <ScalarProperty Name="visit" ColumnName="visit" />
+          <ScalarProperty Name="download" ColumnName="download" />
+          <ScalarProperty Name="query" ColumnName="query" />
+          <ScalarProperty Name="cheque" ColumnName="cheque" />
+          <ScalarProperty Name="pay" ColumnName="pay" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="doc_docLogs">
+      <EntityTypeMapping TypeName="arkASModel.doc_docLogs">
+        <MappingFragment StoreEntitySet="doc_docLogs">
+          <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="isDownload" ColumnName="isDownload" />
+          <ScalarProperty Name="docID" ColumnName="docID" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="doc_docVersions">
+      <EntityTypeMapping TypeName="arkASModel.doc_docVersions">
+        <MappingFragment StoreEntitySet="doc_docVersions">
+          <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="decs" ColumnName="decs" />
+          <ScalarProperty Name="docID" ColumnName="docID" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="doc_docStatuses">
+      <EntityTypeMapping TypeName="arkASModel.doc_docStatuses">
+        <MappingFragment StoreEntitySet="doc_docStatuses">
+          <ScalarProperty Name="color" ColumnName="color" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="doc_docTypes">
+      <EntityTypeMapping TypeName="arkASModel.doc_docTypes">
+        <MappingFragment StoreEntitySet="doc_docTypes">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="doc_docTypeTemplates">
+      <EntityTypeMapping TypeName="arkASModel.doc_docTypeTemplates">
+        <MappingFragment StoreEntitySet="doc_docTypeTemplates">
+          <ScalarProperty Name="ord" ColumnName="ord" />
+          <ScalarProperty Name="path" ColumnName="path" />
+          <ScalarProperty Name="typeID" ColumnName="typeID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="doc_docs">
+      <EntityTypeMapping TypeName="arkASModel.doc_docs">
+        <MappingFragment StoreEntitySet="doc_docs">
+          <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+          <ScalarProperty Name="typeID" ColumnName="typeID" />
+          <ScalarProperty Name="statusID" ColumnName="statusID" />
+          <ScalarProperty Name="contragentID" ColumnName="contragentID" />
+          <ScalarProperty Name="projectID" ColumnName="projectID" />
+          <ScalarProperty Name="path" ColumnName="path" />
+          <ScalarProperty Name="number" ColumnName="number" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="as_sqlGet">
+      <EntityTypeMapping TypeName="arkASModel.as_sqlGet">
+        <MappingFragment StoreEntitySet="as_sqlGet">
+          <ScalarProperty Name="users" ColumnName="users" />
+          <ScalarProperty Name="sql" ColumnName="sql" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="as_sqlRole">
+      <EntityTypeMapping TypeName="arkASModel.as_sqlRole">
+        <MappingFragment StoreEntitySet="as_sqlRole">
+          <ScalarProperty Name="role" ColumnName="role" />
+          <ScalarProperty Name="sqlID" ColumnName="sqlID" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="cl_listInstanceItems">
+      <EntityTypeMapping TypeName="arkASModel.cl_listInstanceItems">
+        <MappingFragment StoreEntitySet="cl_listInstanceItems">
+          <ScalarProperty Name="isGood" ColumnName="isGood" />
+          <ScalarProperty Name="value" ColumnName="value" />
+          <ScalarProperty Name="listItemID" ColumnName="listItemID" />
+          <ScalarProperty Name="listInstanceID" ColumnName="listInstanceID" />
+          <ScalarProperty Name="modifiedBy" ColumnName="modifiedBy" />
+          <ScalarProperty Name="modified" ColumnName="modified" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="cl_listInstances">
+      <EntityTypeMapping TypeName="arkASModel.cl_listInstances">
+        <MappingFragment StoreEntitySet="cl_listInstances">
+          <ScalarProperty Name="users" ColumnName="users" />
+          <ScalarProperty Name="roles" ColumnName="roles" />
+          <ScalarProperty Name="listID" ColumnName="listID" />
+          <ScalarProperty Name="itemID" ColumnName="itemID" />
+          <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="cl_listItems">
+      <EntityTypeMapping TypeName="arkASModel.cl_listItems">
+        <MappingFragment StoreEntitySet="cl_listItems">
+          <ScalarProperty Name="listID" ColumnName="listID" />
+          <ScalarProperty Name="ord" ColumnName="ord" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="cl_lists">
+      <EntityTypeMapping TypeName="arkASModel.cl_lists">
+        <MappingFragment StoreEntitySet="cl_lists">
+          <ScalarProperty Name="users" ColumnName="users" />
+          <ScalarProperty Name="roles" ColumnName="roles" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SmallDataTest">
+      <EntityTypeMapping TypeName="arkASModel.SmallDataTest">
+        <MappingFragment StoreEntitySet="SmallDataTest">
+          <ScalarProperty Name="visitedDate" ColumnName="visitedDate" />
+          <ScalarProperty Name="productID" ColumnName="productID" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="proc_processes">
+      <EntityTypeMapping TypeName="arkASModel.proc_processes">
+        <MappingFragment StoreEntitySet="proc_processes">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="desc" ColumnName="desc" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="proc_processItems">
+      <EntityTypeMapping TypeName="arkASModel.proc_processItems">
+        <MappingFragment StoreEntitySet="proc_processItems">
+          <ScalarProperty Name="color" ColumnName="color" />
+          <ScalarProperty Name="isFinish" ColumnName="isFinish" />
+          <ScalarProperty Name="users" ColumnName="users" />
+          <ScalarProperty Name="roles" ColumnName="roles" />
+          <ScalarProperty Name="desc" ColumnName="desc" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="ord" ColumnName="ord" />
+          <ScalarProperty Name="processID" ColumnName="processID" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Mikhailova_contagents">
+      <EntityTypeMapping TypeName="arkASModel.Mikhailova_contagents">
+        <MappingFragment StoreEntitySet="Mikhailova_contagents">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Mikhailova_contracts">
+      <EntityTypeMapping TypeName="arkASModel.Mikhailova_contracts">
+        <MappingFragment StoreEntitySet="Mikhailova_contracts">
+          <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+          <ScalarProperty Name="typeID" ColumnName="typeID" />
+          <ScalarProperty Name="path" ColumnName="path" />
+          <ScalarProperty Name="statusID" ColumnName="statusID" />
+          <ScalarProperty Name="desc" ColumnName="desc" />
+          <ScalarProperty Name="summa" ColumnName="summa" />
+          <ScalarProperty Name="contagentID" ColumnName="contagentID" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="number" ColumnName="number" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Mikhailova_invoices">
+      <EntityTypeMapping TypeName="arkASModel.Mikhailova_invoices">
+        <MappingFragment StoreEntitySet="Mikhailova_invoices">
+          <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+          <ScalarProperty Name="statusID" ColumnName="statusID" />
+          <ScalarProperty Name="desc" ColumnName="desc" />
+          <ScalarProperty Name="contagentID" ColumnName="contagentID" />
+          <ScalarProperty Name="number" ColumnName="number" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Mikhailova_mails">
+      <EntityTypeMapping TypeName="arkASModel.Mikhailova_mails">
+        <MappingFragment StoreEntitySet="Mikhailova_mails">
+          <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+          <ScalarProperty Name="dateReplay" ColumnName="dateReplay" />
+          <ScalarProperty Name="treckNumberReplay" ColumnName="treckNumberReplay" />
+          <ScalarProperty Name="statusID" ColumnName="statusID" />
+          <ScalarProperty Name="treckNumber" ColumnName="treckNumber" />
+          <ScalarProperty Name="systemMail" ColumnName="systemMail" />
+          <ScalarProperty Name="desc" ColumnName="desc" />
+          <ScalarProperty Name="to" ColumnName="to" />
+          <ScalarProperty Name="from" ColumnName="from" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Mikhailova_statuses_contracts">
+      <EntityTypeMapping TypeName="arkASModel.Mikhailova_statuses_contracts">
+        <MappingFragment StoreEntitySet="Mikhailova_statuses_contracts">
+          <ScalarProperty Name="color" ColumnName="color" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Mikhailova_statuses_invoces">
+      <EntityTypeMapping TypeName="arkASModel.Mikhailova_statuses_invoces">
+        <MappingFragment StoreEntitySet="Mikhailova_statuses_invoces">
+          <ScalarProperty Name="color" ColumnName="color" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Mikhailova_statuses_mails">
+      <EntityTypeMapping TypeName="arkASModel.Mikhailova_statuses_mails">
+        <MappingFragment StoreEntitySet="Mikhailova_statuses_mails">
+          <ScalarProperty Name="color" ColumnName="color" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Mikhailova_docTypes">
+      <EntityTypeMapping TypeName="arkASModel.Mikhailova_docTypes">
+        <MappingFragment StoreEntitySet="Mikhailova_docTypes">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Mikhailova_docTypeTemplates">
+      <EntityTypeMapping TypeName="arkASModel.Mikhailova_docTypeTemplates">
+        <MappingFragment StoreEntitySet="Mikhailova_docTypeTemplates">
+          <ScalarProperty Name="ord" ColumnName="ord" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="path" ColumnName="path" />
+          <ScalarProperty Name="typeID" ColumnName="typeID" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tst_cars">
+      <EntityTypeMapping TypeName="arkASModel.tst_cars">
+        <MappingFragment StoreEntitySet="tst_cars">
+          <ScalarProperty Name="driverID" ColumnName="driverID" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tst_drivers">
+      <EntityTypeMapping TypeName="arkASModel.tst_drivers">
+        <MappingFragment StoreEntitySet="tst_drivers">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="gl_docStatuses">
+      <EntityTypeMapping TypeName="arkASModel.gl_docStatuses">
+        <MappingFragment StoreEntitySet="gl_docStatuses">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="gl_docTypes">
+      <EntityTypeMapping TypeName="arkASModel.gl_docTypes">
+        <MappingFragment StoreEntitySet="gl_docTypes">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="gl_contragents">
+      <EntityTypeMapping TypeName="arkASModel.gl_contragents">
+        <MappingFragment StoreEntitySet="gl_contragents">
+          <ScalarProperty Name="userGuid" ColumnName="userGuid" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="gurevskiy_contracts">
+      <EntityTypeMapping TypeName="arkASModel.gurevskiy_contracts">
+        <MappingFragment StoreEntitySet="gurevskiy_contracts">
+          <ScalarProperty Name="link" ColumnName="link" />
+          <ScalarProperty Name="comment" ColumnName="comment" />
+          <ScalarProperty Name="sum" ColumnName="sum" />
+          <ScalarProperty Name="number" ColumnName="number" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="partnerID" ColumnName="partnerID" />
+          <ScalarProperty Name="statusID" ColumnName="statusID" />
+          <ScalarProperty Name="typeID" ColumnName="typeID" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="gurevskiy_contractStatuses">
+      <EntityTypeMapping TypeName="arkASModel.gurevskiy_contractStatuses">
+        <MappingFragment StoreEntitySet="gurevskiy_contractStatuses">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="gurevskiy_contractTypes">
+      <EntityTypeMapping TypeName="arkASModel.gurevskiy_contractTypes">
+        <MappingFragment StoreEntitySet="gurevskiy_contractTypes">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="gurevskiy_invoices">
+      <EntityTypeMapping TypeName="arkASModel.gurevskiy_invoices">
+        <MappingFragment StoreEntitySet="gurevskiy_invoices">
+          <ScalarProperty Name="comment" ColumnName="comment" />
+          <ScalarProperty Name="number" ColumnName="number" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="partnerID" ColumnName="partnerID" />
+          <ScalarProperty Name="statusID" ColumnName="statusID" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="gurevskiy_invoiceStatuses">
+      <EntityTypeMapping TypeName="arkASModel.gurevskiy_invoiceStatuses">
+        <MappingFragment StoreEntitySet="gurevskiy_invoiceStatuses">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="gurevskiy_mails">
+      <EntityTypeMapping TypeName="arkASModel.gurevskiy_mails">
+        <MappingFragment StoreEntitySet="gurevskiy_mails">
+          <ScalarProperty Name="dateBack" ColumnName="dateBack" />
+          <ScalarProperty Name="numberTrackBack" ColumnName="numberTrackBack" />
+          <ScalarProperty Name="numberTrack" ColumnName="numberTrack" />
+          <ScalarProperty Name="systemSending" ColumnName="systemSending" />
+          <ScalarProperty Name="desc" ColumnName="desc" />
+          <ScalarProperty Name="to" ColumnName="to" />
+          <ScalarProperty Name="from" ColumnName="from" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="statusID" ColumnName="statusID" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="gurevskiy_mailStatuses">
+      <EntityTypeMapping TypeName="arkASModel.gurevskiy_mailStatuses">
+        <MappingFragment StoreEntitySet="gurevskiy_mailStatuses">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="gurevskiy_partner">
+      <EntityTypeMapping TypeName="arkASModel.gurevskiy_partner">
+        <MappingFragment StoreEntitySet="gurevskiy_partner">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="pdv_contractors">
+      <EntityTypeMapping TypeName="arkASModel.pdv_contractors">
+        <MappingFragment StoreEntitySet="pdv_contractors">
+          <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="pdv_documentStatuses">
+      <EntityTypeMapping TypeName="arkASModel.pdv_documentStatuses">
+        <MappingFragment StoreEntitySet="pdv_documentStatuses">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="pdv_invoices">
+      <EntityTypeMapping TypeName="arkASModel.pdv_invoices">
+        <MappingFragment StoreEntitySet="pdv_invoices">
+          <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+          <ScalarProperty Name="documentID" ColumnName="documentID" />
+          <ScalarProperty Name="invoiceStatusID" ColumnName="invoiceStatusID" />
+          <ScalarProperty Name="comment" ColumnName="comment" />
+          <ScalarProperty Name="contractorID" ColumnName="contractorID" />
+          <ScalarProperty Name="number" ColumnName="number" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="pdv_mails">
+      <EntityTypeMapping TypeName="arkASModel.pdv_mails">
+        <MappingFragment StoreEntitySet="pdv_mails">
+          <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+          <ScalarProperty Name="reDateOfReceiving" ColumnName="reDateOfReceiving" />
+          <ScalarProperty Name="reTrackNumber" ColumnName="reTrackNumber" />
+          <ScalarProperty Name="deleveryStatusID" ColumnName="deleveryStatusID" />
+          <ScalarProperty Name="trackNumber" ColumnName="trackNumber" />
+          <ScalarProperty Name="deliveryServiceID" ColumnName="deliveryServiceID" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="contractorToID" ColumnName="contractorToID" />
+          <ScalarProperty Name="contractorFromID" ColumnName="contractorFromID" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vas_mails">
+      <EntityTypeMapping TypeName="arkASModel.vas_mails">
+        <MappingFragment StoreEntitySet="vas_mails">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="statusID" ColumnName="statusID" />
+          <ScalarProperty Name="dateReplay" ColumnName="dateReplay" />
+          <ScalarProperty Name="trackNumberRepay" ColumnName="trackNumberRepay" />
+          <ScalarProperty Name="trackNumber" ColumnName="trackNumber" />
+          <ScalarProperty Name="mailSystem" ColumnName="mailSystem" />
+          <ScalarProperty Name="comment" ColumnName="comment" />
+          <ScalarProperty Name="to" ColumnName="to" />
+          <ScalarProperty Name="from" ColumnName="from" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vas_mailStatuses">
+      <EntityTypeMapping TypeName="arkASModel.vas_mailStatuses">
+        <MappingFragment StoreEntitySet="vas_mailStatuses">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vas_docStatusesLog">
+      <EntityTypeMapping TypeName="arkASModel.vas_docStatusesLog">
+        <MappingFragment StoreEntitySet="vas_docStatusesLog">
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="documentID" ColumnName="documentID" />
+          <ScalarProperty Name="statusID" ColumnName="statusID" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vas_contractors">
+      <EntityTypeMapping TypeName="arkASModel.vas_contractors">
+        <MappingFragment StoreEntitySet="vas_contractors">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vas_docStatuses">
+      <EntityTypeMapping TypeName="arkASModel.vas_docStatuses">
+        <MappingFragment StoreEntitySet="vas_docStatuses">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vas_docTypes">
+      <EntityTypeMapping TypeName="arkASModel.vas_docTypes">
+        <MappingFragment StoreEntitySet="vas_docTypes">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vas_documents">
+      <EntityTypeMapping TypeName="arkASModel.vas_documents">
+        <MappingFragment StoreEntitySet="vas_documents">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+          <ScalarProperty Name="comment" ColumnName="comment" />
+          <ScalarProperty Name="contractorID" ColumnName="contractorID" />
+          <ScalarProperty Name="statusID" ColumnName="statusID" />
+          <ScalarProperty Name="typeID" ColumnName="typeID" />
+          <ScalarProperty Name="link" ColumnName="link" />
+          <ScalarProperty Name="sum" ColumnName="sum" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="number" ColumnName="number" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vas_invoices">
+      <EntityTypeMapping TypeName="arkASModel.vas_invoices">
+        <MappingFragment StoreEntitySet="vas_invoices">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="comment" ColumnName="comment" />
+          <ScalarProperty Name="statusID" ColumnName="statusID" />
+          <ScalarProperty Name="contractorID" ColumnName="contractorID" />
+          <ScalarProperty Name="number" ColumnName="number" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vas_invoiceStatuses">
+      <EntityTypeMapping TypeName="arkASModel.vas_invoiceStatuses">
+        <MappingFragment StoreEntitySet="vas_invoiceStatuses">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vas_invoiceStatusesLog">
+      <EntityTypeMapping TypeName="arkASModel.vas_invoiceStatusesLog">
+        <MappingFragment StoreEntitySet="vas_invoiceStatusesLog">
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="invoiceID" ColumnName="invoiceID" />
+          <ScalarProperty Name="statusID" ColumnName="statusID" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vas_mailStatusesLog">
+      <EntityTypeMapping TypeName="arkASModel.vas_mailStatusesLog">
+        <MappingFragment StoreEntitySet="vas_mailStatusesLog">
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="mailID" ColumnName="mailID" />
+          <ScalarProperty Name="statusID" ColumnName="statusID" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tsilurik_contractors">
+      <EntityTypeMapping TypeName="arkASModel.tsilurik_contractors">
+        <MappingFragment StoreEntitySet="tsilurik_contractors">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tsilurik_documents">
+      <EntityTypeMapping TypeName="arkASModel.tsilurik_documents">
+        <MappingFragment StoreEntitySet="tsilurik_documents">
+          <ScalarProperty Name="link" ColumnName="link" />
+          <ScalarProperty Name="typeID" ColumnName="typeID" />
+          <ScalarProperty Name="statusID" ColumnName="statusID" />
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="sum" ColumnName="sum" />
+          <ScalarProperty Name="contractorID" ColumnName="contractorID" />
+          <ScalarProperty Name="number" ColumnName="number" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tsilurik_invoices">
+      <EntityTypeMapping TypeName="arkASModel.tsilurik_invoices">
+        <MappingFragment StoreEntitySet="tsilurik_invoices">
+          <ScalarProperty Name="statusID" ColumnName="statusID" />
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="contractorID" ColumnName="contractorID" />
+          <ScalarProperty Name="number" ColumnName="number" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tsilurik_mails">
+      <EntityTypeMapping TypeName="arkASModel.tsilurik_mails">
+        <MappingFragment StoreEntitySet="tsilurik_mails">
+          <ScalarProperty Name="returnDate" ColumnName="returnDate" />
+          <ScalarProperty Name="returnTrackNumber" ColumnName="returnTrackNumber" />
+          <ScalarProperty Name="statusID" ColumnName="statusID" />
+          <ScalarProperty Name="trackNumber" ColumnName="trackNumber" />
+          <ScalarProperty Name="mailSystem" ColumnName="mailSystem" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="to" ColumnName="to" />
+          <ScalarProperty Name="from" ColumnName="from" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tsilurik_status">
+      <EntityTypeMapping TypeName="arkASModel.tsilurik_status">
+        <MappingFragment StoreEntitySet="tsilurik_status">
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tsilurik_statusLog">
+      <EntityTypeMapping TypeName="arkASModel.tsilurik_statusLog">
+        <MappingFragment StoreEntitySet="tsilurik_statusLog">
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="mailID" ColumnName="mailID" />
+          <ScalarProperty Name="documentID" ColumnName="documentID" />
+          <ScalarProperty Name="invoiceID" ColumnName="invoiceID" />
+          <ScalarProperty Name="statusID" ColumnName="statusID" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tsilurik_types">
+      <EntityTypeMapping TypeName="arkASModel.tsilurik_types">
+        <MappingFragment StoreEntitySet="tsilurik_types">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="gl_docs">
+      <EntityTypeMapping TypeName="arkASModel.gl_docs">
+        <MappingFragment StoreEntitySet="gl_docs">
+          <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="parentItemID" ColumnName="parentItemID" />
+          <ScalarProperty Name="docTypeID" ColumnName="docTypeID" />
+          <ScalarProperty Name="path" ColumnName="path" />
+          <ScalarProperty Name="docStatusID" ColumnName="docStatusID" />
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="sum" ColumnName="sum" />
+          <ScalarProperty Name="contragentID" ColumnName="contragentID" />
+          <ScalarProperty Name="number" ColumnName="number" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="pdv_documentType">
+      <EntityTypeMapping TypeName="arkASModel.pdv_documentType">
+        <MappingFragment StoreEntitySet="pdv_documentType">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="pdv_deliveryService">
+      <EntityTypeMapping TypeName="arkASModel.pdv_deliveryService">
+        <MappingFragment StoreEntitySet="pdv_deliveryService">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="pdv_deliveryMailStatuses">
+      <EntityTypeMapping TypeName="arkASModel.pdv_deliveryMailStatuses">
+        <MappingFragment StoreEntitySet="pdv_deliveryMailStatuses">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="pdv_invoiceStatuses">
+      <EntityTypeMapping TypeName="arkASModel.pdv_invoiceStatuses">
+        <MappingFragment StoreEntitySet="pdv_invoiceStatuses">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="PDV_GetDocs" FunctionName="arkASModel.Store.PDV_GetDocs">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="arkASModel.PDV_GetDocs_Result">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="number" ColumnName="number" />
+          <ScalarProperty Name="link" ColumnName="link" />
+          <ScalarProperty Name="documentTypeID" ColumnName="documentTypeID" />
+          <ScalarProperty Name="typeName" ColumnName="typeName" />
+          <ScalarProperty Name="documentStatusID" ColumnName="documentStatusID" />
+          <ScalarProperty Name="statusName" ColumnName="statusName" />
+          <ScalarProperty Name="contractorID" ColumnName="contractorID" />
+          <ScalarProperty Name="contractorName" ColumnName="contractorName" />
+          <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+          <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+          <ScalarProperty Name="numberPage" ColumnName="numberPage" />
+          <ScalarProperty Name="comment" ColumnName="comment" />
+          <ScalarProperty Name="sum" ColumnName="sum" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="pdv_documentStatusesLog">
+      <EntityTypeMapping TypeName="arkASModel.pdv_documentStatusesLog">
+        <MappingFragment StoreEntitySet="pdv_documentStatusesLog">
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="documentID" ColumnName="documentID" />
+          <ScalarProperty Name="statusID" ColumnName="statusID" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="pdv_documents">
+      <EntityTypeMapping TypeName="arkASModel.pdv_documents">
+        <MappingFragment StoreEntitySet="pdv_documents">
+          <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="documentID" ColumnName="documentID" />
+          <ScalarProperty Name="documentTypeID" ColumnName="documentTypeID" />
+          <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+          <ScalarProperty Name="link" ColumnName="link" />
+          <ScalarProperty Name="documentStatusID" ColumnName="documentStatusID" />
+          <ScalarProperty Name="comment" ColumnName="comment" />
+          <ScalarProperty Name="sum" ColumnName="sum" />
+          <ScalarProperty Name="contractorID" ColumnName="contractorID" />
+          <ScalarProperty Name="number" ColumnName="number" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="fedchenko_counterparty">
+      <EntityTypeMapping TypeName="arkASModel.fedchenko_counterparty">
+        <MappingFragment StoreEntitySet="fedchenko_counterparty">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="fedchenko_docStatus">
+      <EntityTypeMapping TypeName="arkASModel.fedchenko_docStatus">
+        <MappingFragment StoreEntitySet="fedchenko_docStatus">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="fedchenko_docTypes">
+      <EntityTypeMapping TypeName="arkASModel.fedchenko_docTypes">
+        <MappingFragment StoreEntitySet="fedchenko_docTypes">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="fedchenko_documents">
+      <EntityTypeMapping TypeName="arkASModel.fedchenko_documents">
+        <MappingFragment StoreEntitySet="fedchenko_documents">
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="ContractSum" ColumnName="ContractSum" />
+          <ScalarProperty Name="CounterpartyId" ColumnName="CounterpartyId" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="fedchenko_invoices">
+      <EntityTypeMapping TypeName="arkASModel.fedchenko_invoices">
+        <MappingFragment StoreEntitySet="fedchenko_invoices">
+          <ScalarProperty Name="InvoiceStaus" ColumnName="InvoiceStaus" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="CounterpartyId" ColumnName="CounterpartyId" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="fedchenko_invoiceStatus">
+      <EntityTypeMapping TypeName="arkASModel.fedchenko_invoiceStatus">
+        <MappingFragment StoreEntitySet="fedchenko_invoiceStatus">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="fedchenko_mail">
+      <EntityTypeMapping TypeName="arkASModel.fedchenko_mail">
+        <MappingFragment StoreEntitySet="fedchenko_mail">
+          <ScalarProperty Name="DateBack" ColumnName="DateBack" />
+          <ScalarProperty Name="TrackNumberBack" ColumnName="TrackNumberBack" />
+          <ScalarProperty Name="TrackNumber" ColumnName="TrackNumber" />
+          <ScalarProperty Name="SendingSystem" ColumnName="SendingSystem" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="To" ColumnName="To" />
+          <ScalarProperty Name="From" ColumnName="From" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="MailStatus" ColumnName="MailStatus" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="fedchenko_mailStatus">
+      <EntityTypeMapping TypeName="arkASModel.fedchenko_mailStatus">
+        <MappingFragment StoreEntitySet="fedchenko_mailStatus">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="motskin_contractors">
+      <EntityTypeMapping TypeName="arkASModel.motskin_contractors">
+        <MappingFragment StoreEntitySet="motskin_contractors">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="motskin_documents">
+      <EntityTypeMapping TypeName="arkASModel.motskin_documents">
+        <MappingFragment StoreEntitySet="motskin_documents">
+          <ScalarProperty Name="createdUnique" ColumnName="createdUnique" />
+          <ScalarProperty Name="documentStatusID" ColumnName="documentStatusID" />
+          <ScalarProperty Name="documentTypeID" ColumnName="documentTypeID" />
+          <ScalarProperty Name="contractorID" ColumnName="contractorID" />
+          <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+          <ScalarProperty Name="reference" ColumnName="reference" />
+          <ScalarProperty Name="comment" ColumnName="comment" />
+          <ScalarProperty Name="sum" ColumnName="sum" />
+          <ScalarProperty Name="number" ColumnName="number" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="motskin_documentStatuses">
+      <EntityTypeMapping TypeName="arkASModel.motskin_documentStatuses">
+        <MappingFragment StoreEntitySet="motskin_documentStatuses">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="motskin_documentStatusLog">
+      <EntityTypeMapping TypeName="arkASModel.motskin_documentStatusLog">
+        <MappingFragment StoreEntitySet="motskin_documentStatusLog">
+          <ScalarProperty Name="documentStatusID" ColumnName="documentStatusID" />
+          <ScalarProperty Name="documentID" ColumnName="documentID" />
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="motskin_documentTypes">
+      <EntityTypeMapping TypeName="arkASModel.motskin_documentTypes">
+        <MappingFragment StoreEntitySet="motskin_documentTypes">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="motskin_invoices">
+      <EntityTypeMapping TypeName="arkASModel.motskin_invoices">
+        <MappingFragment StoreEntitySet="motskin_invoices">
+          <ScalarProperty Name="createdUnique" ColumnName="createdUnique" />
+          <ScalarProperty Name="invoiceStatusID" ColumnName="invoiceStatusID" />
+          <ScalarProperty Name="contractorID" ColumnName="contractorID" />
+          <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+          <ScalarProperty Name="comment" ColumnName="comment" />
+          <ScalarProperty Name="number" ColumnName="number" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="motskin_invoiceStatuses">
+      <EntityTypeMapping TypeName="arkASModel.motskin_invoiceStatuses">
+        <MappingFragment StoreEntitySet="motskin_invoiceStatuses">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="motskin_invoiceStatusLog">
+      <EntityTypeMapping TypeName="arkASModel.motskin_invoiceStatusLog">
+        <MappingFragment StoreEntitySet="motskin_invoiceStatusLog">
+          <ScalarProperty Name="invoiceID" ColumnName="invoiceID" />
+          <ScalarProperty Name="invoiceStatusID" ColumnName="invoiceStatusID" />
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="motskin_mails">
+      <EntityTypeMapping TypeName="arkASModel.motskin_mails">
+        <MappingFragment StoreEntitySet="motskin_mails">
+          <ScalarProperty Name="createdUnique" ColumnName="createdUnique" />
+          <ScalarProperty Name="mailStatusID" ColumnName="mailStatusID" />
+          <ScalarProperty Name="sendSystemID" ColumnName="sendSystemID" />
+          <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+          <ScalarProperty Name="backDateReceived" ColumnName="backDateReceived" />
+          <ScalarProperty Name="backTrackNumber" ColumnName="backTrackNumber" />
+          <ScalarProperty Name="trackNumber" ColumnName="trackNumber" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="toAddress" ColumnName="toAddress" />
+          <ScalarProperty Name="fromAddress" ColumnName="fromAddress" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="motskin_mailStatuses">
+      <EntityTypeMapping TypeName="arkASModel.motskin_mailStatuses">
+        <MappingFragment StoreEntitySet="motskin_mailStatuses">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="motskin_mailStatusLog">
+      <EntityTypeMapping TypeName="arkASModel.motskin_mailStatusLog">
+        <MappingFragment StoreEntitySet="motskin_mailStatusLog">
+          <ScalarProperty Name="mailID" ColumnName="mailID" />
+          <ScalarProperty Name="mailStatusID" ColumnName="mailStatusID" />
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="motskin_sendSystems">
+      <EntityTypeMapping TypeName="arkASModel.motskin_sendSystems">
+        <MappingFragment StoreEntitySet="motskin_sendSystems">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="molchanov_contragents">
+      <EntityTypeMapping TypeName="arkASModel.molchanov_contragents">
+        <MappingFragment StoreEntitySet="molchanov_contragents">
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="molchanov_deliverySystems">
+      <EntityTypeMapping TypeName="arkASModel.molchanov_deliverySystems">
+        <MappingFragment StoreEntitySet="molchanov_deliverySystems">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="molchanov_docStatuses">
+      <EntityTypeMapping TypeName="arkASModel.molchanov_docStatuses">
+        <MappingFragment StoreEntitySet="molchanov_docStatuses">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="molchanov_docTypes">
+      <EntityTypeMapping TypeName="arkASModel.molchanov_docTypes">
+        <MappingFragment StoreEntitySet="molchanov_docTypes">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="molchanov_documents">
+      <EntityTypeMapping TypeName="arkASModel.molchanov_documents">
+        <MappingFragment StoreEntitySet="molchanov_documents">
+          <ScalarProperty Name="docParentID" ColumnName="docParentID" />
+          <ScalarProperty Name="docStatusID" ColumnName="docStatusID" />
+          <ScalarProperty Name="docTypeID" ColumnName="docTypeID" />
+          <ScalarProperty Name="contragentID" ColumnName="contragentID" />
+          <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+          <ScalarProperty Name="link" ColumnName="link" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="sum" ColumnName="sum" />
+          <ScalarProperty Name="number" ColumnName="number" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="uniqueCode" ColumnName="uniqueCode" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="molchanov_invoices">
+      <EntityTypeMapping TypeName="arkASModel.molchanov_invoices">
+        <MappingFragment StoreEntitySet="molchanov_invoices">
+          <ScalarProperty Name="contragentID" ColumnName="contragentID" />
+          <ScalarProperty Name="invStatusID" ColumnName="invStatusID" />
+          <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="number" ColumnName="number" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="uniqueCode" ColumnName="uniqueCode" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="molchanov_invoiceStatuses">
+      <EntityTypeMapping TypeName="arkASModel.molchanov_invoiceStatuses">
+        <MappingFragment StoreEntitySet="molchanov_invoiceStatuses">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="molchanov_mails">
+      <EntityTypeMapping TypeName="arkASModel.molchanov_mails">
+        <MappingFragment StoreEntitySet="molchanov_mails">
+          <ScalarProperty Name="mailStatusID" ColumnName="mailStatusID" />
+          <ScalarProperty Name="deliverySystemID" ColumnName="deliverySystemID" />
+          <ScalarProperty Name="backDateReceipt" ColumnName="backDateReceipt" />
+          <ScalarProperty Name="backTrackNumber" ColumnName="backTrackNumber" />
+          <ScalarProperty Name="trackNumber" ColumnName="trackNumber" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="toRecipient" ColumnName="toRecipient" />
+          <ScalarProperty Name="fromSender" ColumnName="fromSender" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="uniqueCode" ColumnName="uniqueCode" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="molchanov_mailStatuses">
+      <EntityTypeMapping TypeName="arkASModel.molchanov_mailStatuses">
+        <MappingFragment StoreEntitySet="molchanov_mailStatuses">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="udovika_contract">
+      <EntityTypeMapping TypeName="arkASModel.udovika_contract">
+        <MappingFragment StoreEntitySet="udovika_contract">
+          <ScalarProperty Name="link" ColumnName="link" />
+          <ScalarProperty Name="typeID" ColumnName="typeID" />
+          <ScalarProperty Name="statusID" ColumnName="statusID" />
+          <ScalarProperty Name="comment" ColumnName="comment" />
+          <ScalarProperty Name="total" ColumnName="total" />
+          <ScalarProperty Name="contractorID" ColumnName="contractorID" />
+          <ScalarProperty Name="number" ColumnName="number" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="udovika_contractor">
+      <EntityTypeMapping TypeName="arkASModel.udovika_contractor">
+        <MappingFragment StoreEntitySet="udovika_contractor">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="udovika_contractType">
+      <EntityTypeMapping TypeName="arkASModel.udovika_contractType">
+        <MappingFragment StoreEntitySet="udovika_contractType">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="udovika_documentStatusLog">
+      <EntityTypeMapping TypeName="arkASModel.udovika_documentStatusLog">
+        <MappingFragment StoreEntitySet="udovika_documentStatusLog">
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="statusID" ColumnName="statusID" />
+          <ScalarProperty Name="documentID" ColumnName="documentID" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="udovika_email">
+      <EntityTypeMapping TypeName="arkASModel.udovika_email">
+        <MappingFragment StoreEntitySet="udovika_email">
+          <ScalarProperty Name="backNum" ColumnName="backNum" />
+          <ScalarProperty Name="backDate" ColumnName="backDate" />
+          <ScalarProperty Name="trackNum" ColumnName="trackNum" />
+          <ScalarProperty Name="statusID" ColumnName="statusID" />
+          <ScalarProperty Name="system" ColumnName="system" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="to" ColumnName="to" />
+          <ScalarProperty Name="from" ColumnName="from" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="udovika_invoice">
+      <EntityTypeMapping TypeName="arkASModel.udovika_invoice">
+        <MappingFragment StoreEntitySet="udovika_invoice">
+          <ScalarProperty Name="statusID" ColumnName="statusID" />
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="contractorID" ColumnName="contractorID" />
+          <ScalarProperty Name="number" ColumnName="number" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="udovika_statusContract">
+      <EntityTypeMapping TypeName="arkASModel.udovika_statusContract">
+        <MappingFragment StoreEntitySet="udovika_statusContract">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="udovika_statusEmail">
+      <EntityTypeMapping TypeName="arkASModel.udovika_statusEmail">
+        <MappingFragment StoreEntitySet="udovika_statusEmail">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="udovika_statusInvoice">
+      <EntityTypeMapping TypeName="arkASModel.udovika_statusInvoice">
+        <MappingFragment StoreEntitySet="udovika_statusInvoice">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="molchanov_logContragents">
+      <EntityTypeMapping TypeName="arkASModel.molchanov_logContragents">
+        <MappingFragment StoreEntitySet="molchanov_logContragents">
+          <ScalarProperty Name="contragentID" ColumnName="contragentID" />
+          <ScalarProperty Name="userName" ColumnName="userName" />
+          <ScalarProperty Name="notice" ColumnName="notice" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="molchanov_logDeliverySystems">
+      <EntityTypeMapping TypeName="arkASModel.molchanov_logDeliverySystems">
+        <MappingFragment StoreEntitySet="molchanov_logDeliverySystems">
+          <ScalarProperty Name="mailDeliverySystemID" ColumnName="mailDeliverySystemID" />
+          <ScalarProperty Name="userName" ColumnName="userName" />
+          <ScalarProperty Name="notice" ColumnName="notice" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="molchanov_logDocStatuses">
+      <EntityTypeMapping TypeName="arkASModel.molchanov_logDocStatuses">
+        <MappingFragment StoreEntitySet="molchanov_logDocStatuses">
+          <ScalarProperty Name="docStatusID" ColumnName="docStatusID" />
+          <ScalarProperty Name="userName" ColumnName="userName" />
+          <ScalarProperty Name="notice" ColumnName="notice" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="molchanov_logDocTypes">
+      <EntityTypeMapping TypeName="arkASModel.molchanov_logDocTypes">
+        <MappingFragment StoreEntitySet="molchanov_logDocTypes">
+          <ScalarProperty Name="docTypeID" ColumnName="docTypeID" />
+          <ScalarProperty Name="userName" ColumnName="userName" />
+          <ScalarProperty Name="notice" ColumnName="notice" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="molchanov_logDocuments">
+      <EntityTypeMapping TypeName="arkASModel.molchanov_logDocuments">
+        <MappingFragment StoreEntitySet="molchanov_logDocuments">
+          <ScalarProperty Name="documentID" ColumnName="documentID" />
+          <ScalarProperty Name="userName" ColumnName="userName" />
+          <ScalarProperty Name="notice" ColumnName="notice" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="molchanov_logInvoices">
+      <EntityTypeMapping TypeName="arkASModel.molchanov_logInvoices">
+        <MappingFragment StoreEntitySet="molchanov_logInvoices">
+          <ScalarProperty Name="invoiceID" ColumnName="invoiceID" />
+          <ScalarProperty Name="userName" ColumnName="userName" />
+          <ScalarProperty Name="notice" ColumnName="notice" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="molchanov_logInvoiceStatuses">
+      <EntityTypeMapping TypeName="arkASModel.molchanov_logInvoiceStatuses">
+        <MappingFragment StoreEntitySet="molchanov_logInvoiceStatuses">
+          <ScalarProperty Name="invoiceStatusID" ColumnName="invoiceStatusID" />
+          <ScalarProperty Name="userName" ColumnName="userName" />
+          <ScalarProperty Name="notice" ColumnName="notice" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="molchanov_logMails">
+      <EntityTypeMapping TypeName="arkASModel.molchanov_logMails">
+        <MappingFragment StoreEntitySet="molchanov_logMails">
+          <ScalarProperty Name="mailID" ColumnName="mailID" />
+          <ScalarProperty Name="userName" ColumnName="userName" />
+          <ScalarProperty Name="notice" ColumnName="notice" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="molchanov_logMailStatuses">
+      <EntityTypeMapping TypeName="arkASModel.molchanov_logMailStatuses">
+        <MappingFragment StoreEntitySet="molchanov_logMailStatuses">
+          <ScalarProperty Name="mailStatusID" ColumnName="mailStatusID" />
+          <ScalarProperty Name="userName" ColumnName="userName" />
+          <ScalarProperty Name="notice" ColumnName="notice" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="rosh_contragents">
+      <EntityTypeMapping TypeName="arkASModel.rosh_contragents">
+        <MappingFragment StoreEntitySet="rosh_contragents">
+          <ScalarProperty Name="nextContact" ColumnName="nextContact" />
+          <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+          <ScalarProperty Name="needActive" ColumnName="needActive" />
+          <ScalarProperty Name="contragentStatusID" ColumnName="contragentStatusID" />
+          <ScalarProperty Name="sourceID" ColumnName="sourceID" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="phoneNumber" ColumnName="phoneNumber" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="rosh_contragentSources">
+      <EntityTypeMapping TypeName="arkASModel.rosh_contragentSources">
+        <MappingFragment StoreEntitySet="rosh_contragentSources">
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="rosh_contragentStatuses">
+      <EntityTypeMapping TypeName="arkASModel.rosh_contragentStatuses">
+        <MappingFragment StoreEntitySet="rosh_contragentStatuses">
+          <ScalarProperty Name="color" ColumnName="color" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="rosh_docLogs">
+      <EntityTypeMapping TypeName="arkASModel.rosh_docLogs">
+        <MappingFragment StoreEntitySet="rosh_docLogs">
+          <ScalarProperty Name="changes" ColumnName="changes" />
+          <ScalarProperty Name="documentID" ColumnName="documentID" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="rosh_docStatuses">
+      <EntityTypeMapping TypeName="arkASModel.rosh_docStatuses">
+        <MappingFragment StoreEntitySet="rosh_docStatuses">
+          <ScalarProperty Name="color" ColumnName="color" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="rosh_docTypes">
+      <EntityTypeMapping TypeName="arkASModel.rosh_docTypes">
+        <MappingFragment StoreEntitySet="rosh_docTypes">
+          <ScalarProperty Name="parentID" ColumnName="parentID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="rosh_documents">
+      <EntityTypeMapping TypeName="arkASModel.rosh_documents">
+        <MappingFragment StoreEntitySet="rosh_documents">
+          <ScalarProperty Name="contragentID" ColumnName="contragentID" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="docStatusID" ColumnName="docStatusID" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="orderID" ColumnName="orderID" />
+          <ScalarProperty Name="docNumber" ColumnName="docNumber" />
+          <ScalarProperty Name="docDate" ColumnName="docDate" />
+          <ScalarProperty Name="docTypeID" ColumnName="docTypeID" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="rosh_mailLogs">
+      <EntityTypeMapping TypeName="arkASModel.rosh_mailLogs">
+        <MappingFragment StoreEntitySet="rosh_mailLogs">
+          <ScalarProperty Name="changes" ColumnName="changes" />
+          <ScalarProperty Name="mailID" ColumnName="mailID" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="rosh_mails">
+      <EntityTypeMapping TypeName="arkASModel.rosh_mails">
+        <MappingFragment StoreEntitySet="rosh_mails">
+          <ScalarProperty Name="backReceivedDate" ColumnName="backReceivedDate" />
+          <ScalarProperty Name="backTruckNumber" ColumnName="backTruckNumber" />
+          <ScalarProperty Name="mailStatusID" ColumnName="mailStatusID" />
+          <ScalarProperty Name="truckNumber" ColumnName="truckNumber" />
+          <ScalarProperty Name="sendingSystemID" ColumnName="sendingSystemID" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="toAdress" ColumnName="toAdress" />
+          <ScalarProperty Name="fromAdress" ColumnName="fromAdress" />
+          <ScalarProperty Name="orderID" ColumnName="orderID" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="rosh_mailStatuses">
+      <EntityTypeMapping TypeName="arkASModel.rosh_mailStatuses">
+        <MappingFragment StoreEntitySet="rosh_mailStatuses">
+          <ScalarProperty Name="color" ColumnName="color" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="rosh_orderLogs">
+      <EntityTypeMapping TypeName="arkASModel.rosh_orderLogs">
+        <MappingFragment StoreEntitySet="rosh_orderLogs">
+          <ScalarProperty Name="changes" ColumnName="changes" />
+          <ScalarProperty Name="orderID" ColumnName="orderID" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="rosh_orders">
+      <EntityTypeMapping TypeName="arkASModel.rosh_orders">
+        <MappingFragment StoreEntitySet="rosh_orders">
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="orderStatusID" ColumnName="orderStatusID" />
+          <ScalarProperty Name="contragentID" ColumnName="contragentID" />
+          <ScalarProperty Name="orderNumber" ColumnName="orderNumber" />
+          <ScalarProperty Name="orderDate" ColumnName="orderDate" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="rosh_orderStatuses">
+      <EntityTypeMapping TypeName="arkASModel.rosh_orderStatuses">
+        <MappingFragment StoreEntitySet="rosh_orderStatuses">
+          <ScalarProperty Name="color" ColumnName="color" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="rosh_sendingSystems">
+      <EntityTypeMapping TypeName="arkASModel.rosh_sendingSystems">
+        <MappingFragment StoreEntitySet="rosh_sendingSystems">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="rosh_CalendarEvents">
+      <EntityTypeMapping TypeName="arkASModel.rosh_CalendarEvents">
+        <MappingFragment StoreEntitySet="rosh_CalendarEvents">
+          <ScalarProperty Name="eventTypeID" ColumnName="eventTypeID" />
+          <ScalarProperty Name="endEvent" ColumnName="endEvent" />
+          <ScalarProperty Name="startEvent" ColumnName="startEvent" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="rosh_sqlQueriesTable">
+      <EntityTypeMapping TypeName="arkASModel.rosh_sqlQueriesTable">
+        <MappingFragment StoreEntitySet="rosh_sqlQueriesTable">
+          <ScalarProperty Name="rowsLimit" ColumnName="rowsLimit" />
+          <ScalarProperty Name="timeLimit" ColumnName="timeLimit" />
+          <ScalarProperty Name="manager" ColumnName="manager" />
+          <ScalarProperty Name="con" ColumnName="con" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="h_contragents">
+      <EntityTypeMapping TypeName="arkASModel.h_contragents">
+        <MappingFragment StoreEntitySet="h_contragents">
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="h_deliverySystems">
+      <EntityTypeMapping TypeName="arkASModel.h_deliverySystems">
+        <MappingFragment StoreEntitySet="h_deliverySystems">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="h_docStatuses">
+      <EntityTypeMapping TypeName="arkASModel.h_docStatuses">
+        <MappingFragment StoreEntitySet="h_docStatuses">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="h_docTypes">
+      <EntityTypeMapping TypeName="arkASModel.h_docTypes">
+        <MappingFragment StoreEntitySet="h_docTypes">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="h_invoiceStatuses">
+      <EntityTypeMapping TypeName="arkASModel.h_invoiceStatuses">
+        <MappingFragment StoreEntitySet="h_invoiceStatuses">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="h_mailStatuses">
+      <EntityTypeMapping TypeName="arkASModel.h_mailStatuses">
+        <MappingFragment StoreEntitySet="h_mailStatuses">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="h_invoices">
+      <EntityTypeMapping TypeName="arkASModel.h_invoices">
+        <MappingFragment StoreEntitySet="h_invoices">
+          <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+          <ScalarProperty Name="contragentID" ColumnName="contragentID" />
+          <ScalarProperty Name="invStatusID" ColumnName="invStatusID" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="number" ColumnName="number" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="uniqueCode" ColumnName="uniqueCode" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="h_mails">
+      <EntityTypeMapping TypeName="arkASModel.h_mails">
+        <MappingFragment StoreEntitySet="h_mails">
+          <ScalarProperty Name="mailStatusID" ColumnName="mailStatusID" />
+          <ScalarProperty Name="deliverySystemID" ColumnName="deliverySystemID" />
+          <ScalarProperty Name="backDateRecipient" ColumnName="backDateRecipient" />
+          <ScalarProperty Name="backTrackNumber" ColumnName="backTrackNumber" />
+          <ScalarProperty Name="trackNumber" ColumnName="trackNumber" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="toRecipient" ColumnName="toRecipient" />
+          <ScalarProperty Name="fromSender" ColumnName="fromSender" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="uniqueCode" ColumnName="uniqueCode" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="h_logMails">
+      <EntityTypeMapping TypeName="arkASModel.h_logMails">
+        <MappingFragment StoreEntitySet="h_logMails">
+          <ScalarProperty Name="mailID" ColumnName="mailID" />
+          <ScalarProperty Name="userName" ColumnName="userName" />
+          <ScalarProperty Name="notice" ColumnName="notice" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="h_documents">
+      <EntityTypeMapping TypeName="arkASModel.h_documents">
+        <MappingFragment StoreEntitySet="h_documents">
+          <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+          <ScalarProperty Name="docParentID" ColumnName="docParentID" />
+          <ScalarProperty Name="docStatusID" ColumnName="docStatusID" />
+          <ScalarProperty Name="docTypeID" ColumnName="docTypeID" />
+          <ScalarProperty Name="contragentID" ColumnName="contragentID" />
+          <ScalarProperty Name="link" ColumnName="link" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="sum" ColumnName="sum" />
+          <ScalarProperty Name="number" ColumnName="number" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="uniqueCode" ColumnName="uniqueCode" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

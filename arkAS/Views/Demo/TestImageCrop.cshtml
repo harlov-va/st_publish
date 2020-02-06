@@ -1,0 +1,45 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<script src="/js/jquery-ui-1.11.4/external/jquery/jquery.js"></script>*@
+@*<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>*@
+@*<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>*@
+
+@*<link href="https://cdn.rawgit.com/fengyuanchen/cropper/v1.0.0/dist/cropper.min.css" rel="stylesheet">
+<script src="https://cdn.rawgit.com/fengyuanchen/cropper/v1.0.0/dist/cropper.min.js"></script>*@
+
+@*<link rel="stylesheet" href="~/js/cropper/cropper.min.css" />
+<script src="~/js/cropper/cropper.min.js"></script>*@
+
+
+<div class="cropper-example">
+    <img src="/Content/images/controls/jubilee2.jpg" alt="Picture">
+</div>
+
+<script type="text/javascript">
+
+    var cr = {
+        init: function () {
+            console.log("init start");
+            var $image = $('.cropper-example > img');
+            console.log("target image", $image);
+
+            try {
+                $image.cropper({
+                    movable: false,
+                    zoomable: false,
+                    rotatable: false,
+                    scalable: false
+                });
+            } catch (e) {
+                console.log(e)
+            }
+            console.log("init done");
+        }
+    };
+
+    $(function () {
+        cr.init();
+    });
+</script>

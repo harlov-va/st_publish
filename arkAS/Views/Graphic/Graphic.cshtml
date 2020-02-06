@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "График";
+}
+
+<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script src="~/js/AS/controls/as.graphic.js"></script>
+
+<h1>Работа с компонентом График</h1>
+
+<br />
+<label>Выберите тип графика: </label>
+<select id="search" class="search">
+    <option value="as-graphic">График с маркерами</option>
+    <option value="as-funnel">Воронка</option>
+    <option value="as-graphic-pie">Круговая диаграмма</option>
+</select>
+
+<br />
+<br />
+<div id="as-graphic" class="graphic" as-graphic-width="500" as-graphic-height="300" as-graphic-title="График писем по неделям"
+     as-graphic-showlegent="true" as-graphic-xtitle="Количество писем" as-graphic-ytitle="Недели">
+</div>
+
+<br />
+<div id="as-funnel" class="graphic" as-graphic-width="500" as-graphic-height="300" as-graphic-title="График использования сайта"
+     as-graphic-marginright="120" as-graphic-marginbottom="20">
+</div>
+
+<br />
+<div id="as-graphic-pie" class="graphic" as-graphic-width="500" as-graphic-height="300" as-graphic-title="Процентное отношение"
+     as-graphic-marginright="120" as-graphic-marginbottom="20">
+</div>
+
+<div class="row">
+</div>
+
+@section js{
+    <script type="text/javascript">
+        var ch = {
+            init: function () {
+                $(document).delegate('#search', 'change', ch.showGraphic);
+                    ch.showGraphic();
+                },
+
+            showGraphic: function() {
+                        switch ($('#search').val())
+                        {
+                            case 'as-graphic'     : as.graphic.init({ type: 'as-graphic', method: 'StatisticsByWeeks' }); break;
+                            case 'as-funnel'      : as.graphic.init({ type: 'as-funnel', method: 'GraphFunnel' }); break;
+                            case 'as-graphic-pie' : as.graphic.init({ type: 'as-graphic-pie', method: 'GraphFunnel' }); break;
+                        }
+                    }          
+        };
+
+        $(function () {
+            ch.init();
+        });
+    </script>
+}

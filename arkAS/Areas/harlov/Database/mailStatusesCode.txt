@@ -1,0 +1,7 @@
+﻿Created
+Shipment is agreed
+Sent
+Received
+Back
+Back received
+Closed

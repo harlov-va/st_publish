@@ -1,0 +1,288 @@
+﻿@{
+    ViewBag.Title = "Партнеры";
+    Layout = arkAS.BLL.Core.CoreManager.GetCabinetLayout();
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+@section css{
+    <style type="text/css">
+        .usStatusItem {
+            display: inline-block;
+            padding-right: 20px;
+        }
+
+        .crdFilterItem input {
+            height: auto;
+            width: 50px;
+        }
+
+        .usText {
+            width: 250px;
+        }
+
+        .as-checkboxes {
+            margin-left: 40px;
+        }
+
+        .crdFilterItem .as-checkboxes label {
+            font-size: 12px;
+        }
+    </style>
+}
+
+<select class='usPartnerStatusTemplate hide'>
+    <option value="0">Не выбрано</option>
+    @foreach (var item in (List<arkAS.BLL.ps_statuses>)ViewBag.statusName)
+    {
+        <option value='@item.id'>@item.name</option>
+    }
+</select>
+
+<div class='usPartnerSpecsTemplate hide'>
+    @foreach (var item in (List<arkAS.BLL.ps_specs>)ViewBag.specsName)
+    {
+       <br /> <label><input type="checkbox" class="usPartnerSpecItem" id="usPartnerSpec'@item.id'" value='@item.id'>@item.name</label>
+    }
+</div>
+
+<div class="usCont"></div>
+
+@section js {
+    <script type="text/javascript">
+        var statusName = @Html.Raw(js.Serialize(((List<arkAS.BLL.ps_statuses>)ViewBag.statusName).Select(x => new { Value = x.id, Text = x.name, Selected = false })));
+        var statusNameInLine = @Html.Raw(js.Serialize(((List<arkAS.BLL.ps_statuses>)ViewBag.statusName).Select(x => new { value = x.id, text = x.name })));
+
+        var specsName = @Html.Raw(js.Serialize(((List<arkAS.BLL.ps_specs>)ViewBag.specsName).Select(x => new { Value = x.id, Text = x.name, Selected = false })));
+
+        var partner = {
+            init: function () {
+                partner.initMainTable();
+                $(document).delegate('.usCreatePartner', 'click', function (e) {
+                    e.preventDefault();
+                    partner.createPartner();
+                });
+                
+                $(document).delegate('.usCont .crdItem input[type=checkbox]', 'change', function (e) {
+                    e.preventDefault();
+                        var tr= $(this).closest('tr');
+                        var params = {
+                            specID: $(this).attr('specid'),
+                            partnerID: $(this).closest('tr').attr('data-itemid'),
+                            turnOn: $(this).prop('checked')
+                        };
+                        as.sys.ajaxSend("/Partners/ChangePartnersSpecs", params, function (data) {
+                            if (typeof (data) != "object") data = eval('(' + data + ')');
+
+                            if (data.result) {
+                                as.sys.bootstrapAlert("Специализации изменены", { type: 'success' });                    
+                            } else {
+                                as.sys.bootstrapAlert("Возникли ошибки при выполнении операции!", { type: 'danger' });
+                            }
+                        });
+                });
+            },
+
+            initMainTable: function () {
+                as.crud.init({
+                    cont: $('.usCont'),
+                    title: 'Партнеры',
+                    toolbarAdditional: '<a href="#" class="btn btn-primary usCreatePartner">Добавить партнера</a>&nbsp;&nbsp;',
+                    groupOperationsToolbar: '',
+                    ajaxURLFormat: "/Partners/Partners_{0}",
+                    inlineAjaxURL: "/Partners/PartnersInline",
+                    pageSize: 150,
+                    cookiePrefix: "as-crud-partnersTable-",
+                    emptyText: 'Нет записей',
+                    createLinkTitle: 'Создать',
+                    filterLinkTitle: 'Найти',
+                    filterTitle: 'Фильтрация данных',
+                    showChecksCol: false,
+                    showNumsCol: true,
+                    showToolbar: true,
+                    showColSettings: true,
+                    showReplaceTool: false,
+                    showExcelExport: false,
+                    additionalSort: true,
+                    cols: [
+                        {   code: "partnerID", title: "ID", tooltip: "Идентификатор", isVisible: false, isPK: true, datatype: "int", isRequired: false },
+                        {
+                            code: "fio", title: "ФИО", tooltip: "ФИО", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                            editable: { type: "text", format: "{0}", callback: function (el, newValue) { } }
+                        },
+                        {
+                            code: "statusName", title: "Статус", tooltip: "Статус партнера", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                            filter: { type: "checkboxes", source: statusName, notSelected: "Не установлено"},
+                            editable: { type: "select", format: "{0}", source: statusNameInLine, callback: function (el, newValue) {
+                                partner.setItemColor($(el).closest("tr"), newValue);
+                            } }
+                        },
+                        {
+                            code: "url", title: "URL", tooltip: "URL", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                            editable: { type: "text", format: "{0}", callback: function (el, newValue) { } }
+                        },
+                        {
+                            code: "desc", title: "Цены,сроки,порядок работы", tooltip: "Цены, сроки, порядок работы", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: false, callback: null,
+                            editable: { type: "text", format: "{0}", callback: function (el, newValue) { }}
+                        },
+                        {
+                            code: "experience", title: "Опыт", tooltip: "Опыт работы", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: false, callback: null,
+                            editable: { type: "text", format: "{0}", callback: function (el, newValue) { }}
+                        },
+                        {
+                            code: "technologies", title: "Технологии", tooltip: "Технологии", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: false, callback: null,
+                            editable: { type: "text", format: "{0}", callback: function (el, newValue) { }}
+                        },
+                        {
+                            code: "conditions", title: "Условия партнерства,скидки", tooltip: "Условия партнерства, скидки", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: false, callback: null,
+                            editable: { type: "text", format: "{0}", callback: function (el, newValue) { }}
+                        },
+                        {
+                            code: "specs", title: "Специализации", tooltip: "Специализации партнера", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: false, callback: null,
+                            filter: { type: "checkboxes", source: specsName, notSelected: "Не установлено"},
+                        },
+                    ],
+                    operations: {
+                        create: false,
+                        remove: true,
+                        edit: false,
+                        comments: true,
+                        audioComments: true,
+                        other: [
+                        ]
+                    },
+
+                    getFilterMakeup: function (filter) {
+                        var s = [];
+                        s.push("<span class='gCap'>Текст</span><input type='text' class='usText' value='" + (filter.text || '') + "' /> <span class='badge badge-info'>ФИО/URL/Порядок работы/Опыт/Технологии</span><br />");
+                        return s.join("");
+                   
+                    },
+                    filter: function () {
+                        var statuses = [];
+                        
+                        $('.as-checkboxes input:checked', $('.crdFilterItem[data-code="statusName"]')).each(function (i, item ){
+                            statuses.push($(this).attr('value'));
+                        });
+                        var specs = [];
+                        $('.as-checkboxes input:checked', $('.crdFilterItem[data-code="specs"]')).each(function () {
+                            specs.push($(this).attr('value'));
+                        });
+                        var filter = {
+                            text: $('.usText').val() || "",
+                            statusIDs: statuses.join(','),
+                            specIDs: specs.join(',')
+                        }; 
+                        return filter;
+                    },
+                    
+                    getItemsCallback: function () {
+                        $('.usCont .usSpecs').each(function () {
+                            var id = ("," + $(this).text() + ",").split(",");                    
+                            $('.usPartnerSpecsTemplate input').removeAttr("checked");
+                            $('.usPartnerSpecsTemplate input').each(function () {
+                                if ($.inArray($(this).val(), id)>=0) {
+                                    $(this).attr("checked","checked");
+                                }
+                            });
+                            $(this).html($('.usPartnerSpecsTemplate').html());
+                        });
+                    }
+                    
+                });
+            },
+            
+            setItemColor: function(tr, statusName){
+                var color = $('.usPartnerStatusTemplate input[type=checkbox][data-value='+statusName+']').attr('data-color');
+                if(!color) color = "transparent";
+                $(tr).css("background-color", color);
+            },
+
+            createPartner: function () {
+                var s = [];
+                s.push("<span>ФИО:</span><input type='text' class='form-control usNewFio' /><br />");
+
+                $('.usPartnerStatusTemplate option').removeAttr('selected');
+                $('.usPartnerStatusTemplate option:first').attr('selected', 'selected');
+                s.push("<span>Статус:</span><select class='form-control usNewStatusID'>"+ $('.usPartnerStatusTemplate').html() + "</select><br />");
+
+                s.push("<span>URL:</span><input type='text' class='form-control usNewUrl' /><br />");
+                s.push("<span>Описание:</span><input type='text' class='form-control usNewDesc' /><br />");
+                s.push("<span>Опыт работы:</span><input type='text' class='form-control usNewExperience' /><br />");
+                s.push("<span>Технологии:</span><input type='text' class='form-control usNewTechnology' /><br />");
+                s.push("<span>Условия партнерства:</span><input type='text' class='form-control usNewConditions' /><br />");
+
+                $('.usPartnerSpecsTemplate option').removeAttr('selected');
+                $('.usPartnerSpecsTemplate option:first').attr('selected', 'selected');
+                s.push("<span>Специализации:</span>"+ $('.usPartnerSpecsTemplate').html() + "<br />");
+
+                setTimeout(function () { $('.usNewFio').focus(); }, 200);
+                as.sys.showDialog("Новый партнер", s.join(""), "Создать партнера", function () {
+                    var fio = $('.usNewFio').val();
+                    var statusID = $('.usNewStatusID option:selected').val();
+                    var url = $('.usNewUrl').val();
+                    var desc = $('.usNewDesc').val();
+                    var experience = $('.usNewExperience').val();
+                    var technologies = $('.usNewTechnology').val();
+                    var conditions = $('.usNewConditions').val();
+                    var specsChecked = $('.usPartnerSpecItem:checked');
+
+                    if (!fio) {
+                        as.sys.bootstrapAlert("Укажите, пожалуйста, ФИО", { type: 'warning' });
+                        $('.usNewFio').focus();
+                        return;
+                    }
+
+                    if (!url) {
+                        as.sys.bootstrapAlert("Укажите,пожалуйста, URL", { type: 'warning'});
+                        $('.usNewUrl').focus();
+                        return;
+                    }
+
+                    var params = { fio: fio, statusID: statusID, url: url, desc: desc, experience: experience, technologies: technologies, conditions: conditions};
+                    var index = 0;
+
+                    specsChecked.each (function(){
+                        params['specID['+(index++) +']'] = $(this).val();
+                    });
+
+                    as.sys.ajaxSend("/Partners/CreatePartner", params, function (data) {
+                        if (typeof (data) != "object") data = eval('(' + data + ')');
+                        if (data.result) {
+                            as.sys.bootstrapAlert("Партнер успешно добавлен", { type: 'success' });
+                            as.sys.closeDialog();
+                            as.crud.getItems();
+                            setTimeout(function () {
+                                as.crud.gotoItem(data.partnerID);
+                            }, 1000);
+                        } else {
+                            as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                        }
+                    });
+                });
+            },
+
+            editValue: function(el){
+
+                var tr = el.closest("tr");
+                as.sys.showDialog($("td[data-code=fio]", tr).text() + " ("+$("td[data-code=url]", tr).text()+
+                    " ("+$("td[data-code=desc]", tr).text()+ " ("+$("td[data-code=experience]", tr).text()+
+                    " ("+$("td[data-code=technology]", tr).text()+ " ("+$("td[data-code=conditions]", tr).text()+")", s.join(""), "Сохранить", function () {
+                        as.sys.ajaxSend("/Partners/PartnersInline", params, function (data) {
+                            if (typeof (data) != "object") data = eval('(' + data + ')');
+                            if (data.result) {
+                                as.sys.bootstrapAlert("Сохранено", { type: 'success' });
+                                as.sys.closeDialog();
+                            } else {
+                                as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                            }
+                        });
+                    });
+            }
+        }
+        $(function () {
+            partner.init();
+        });
+    </script>
+}
+
+
+

@@ -1,0 +1,72 @@
+﻿@{
+    ViewBag.Title = "Компонент контроля действий";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style type="text/css">
+    button {
+        width: 60%;
+        height: 50px;
+    }
+</style>
+
+<div id="CompMonitoring">
+    <h1>Компонент контроля действий </h1>
+    <div class="well well-sm">
+        <p>
+            Если у кнопки или ссылки есть стиль as-ctrl - она подпадает под контроль.<br />
+
+            <ul>
+                Варианты действия для контроля:
+                <li>load - запись в базу при загрузке этого элемента</li>
+                <li>click - пишем по клику событие</li>
+            </ul>
+        </p>
+    </div>
+
+    <button id="BtnLoad" class="btn btn-info as-ctrl" data-code="" data-type="load" data-info="BtnLoad Запись в базу данных - загрузка(load)" style="margin-top: 5px;">Обработка события загрузки(load)</button>
+    <button id="BtnClick" class="btn btn-info as-ctrl" data-code="hide" data-type="click" data-info="BtnClick Запуск события, которое записанно для клика(click)" style="margin-top: 10px;">Обработка события клика(click)</button>
+
+</div>
+
+@section js {
+    <script src="~/js/AS/controls/as.ctrl.js"></script>
+    <script type="text/javascript">
+
+        $(function () {
+
+            as.ctrl.init("button", "/Demo/AsCtrlSave");
+            for (var i = 0; i < as.ctrl.options.InfoLoad.length; i++) {
+                //alert("InfoLoad:\n" + as.ctrl.options.InfoLoad[i]);
+            }
+        });
+        $("#BtnLoad").click(function () {
+
+            for (var i = 0; i < as.ctrl.options.AjaxLoad.length; i++) {
+                if (as.ctrl.options.AjaxLoad[i] == "OK")
+                {
+                    alert("Для кнопки обработано событие загрузки(load) и информация об этом занесена в БД!");
+                }
+                else
+                {
+                    alert("Ошибка сохранения в базу данных!");
+                }
+            }
+        });
+        $("#BtnClick").click(function () {
+
+            for (var i = 0; i < as.ctrl.options.AjaxClick.length; i++) {
+
+                if (as.ctrl.options.AjaxClick[i] == "OK")
+                {
+                    alert("Для кнопки обработано событие клика(click) и информация об этом занесена в БД!");
+                }
+                else
+                {
+                    alert("Ошибка сохранения в базу данных!");
+                }
+            }
+
+        });
+    </script>
+}

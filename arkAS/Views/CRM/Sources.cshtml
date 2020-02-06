@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "Источники";
+    Layout = arkAS.BLL.Core.CoreManager.GetCabinetLayout();
+}
+
+<div class="sources">
+</div>
+
+@section js{
+    <script type="text/javascript">
+
+var sources = {
+    init: function () {
+        sources.initMainTable();
+    },
+    initMainTable: function () {
+        as.crud.init({
+            cont: $(".sources"),
+            title: "Источники",
+            toolbarAdditional: "",
+            groupOperationsToolbar: "",
+            ajaxURLFormat: "/CRM/Sources_{0}",
+            inlineAjaxURL: "/CRM/SourcesInline",
+            pageSize: 150,
+            cookiePrefix: "as-crud-sourcesTable-",
+            emptyText: "Source не задан",
+            createLinkTitle: "Создать",
+            filterLinkTitle: "",
+            filterTitle: "",
+            showChecksCol: false,
+            showNumsCol: true,
+            showToolbar: true,
+            showColSettings: false,
+            showReplaceTool: false,
+            showExcelExport: false,
+            additionalSort: false,
+            cols: [
+                { code: "id", title: "ID", tooltip: "Идентификатор", isVisible: false, isPK: true, datatype: "int", isRequired: false },
+                { code: "name", title: "Название", tooltip: "Название", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null },
+                { code: "code", title: "Код", tooltip: "Код", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null },
+                { code: "desc", title: "desc", tooltip: "desc", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null }
+            ],
+            operations: {
+                create: true,
+                remove: true,
+                edit: true,
+                other: [
+                ]
+            },
+            getFilterMakeup: function (filter) {
+                var s = [];
+                return s.join("");
+            },
+            filter: function () {
+                return {};
+            },
+            getItemsCallback: function () {
+            }
+        });
+    }
+}
+$(function () {
+    sources.init();
+});
+    </script>
+}

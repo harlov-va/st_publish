@@ -1,0 +1,311 @@
+﻿
+@{
+    ViewBag.Title = "Экспорт Pptx";
+    Layout = arkAS.BLL.Core.CoreManager.GetCabinetLayout();
+    var countSlide = ViewBag.CountSlide;
+    
+}
+
+@section css{
+    <style>
+        .no-gutter > [class*='col-'] {
+            padding-right: 0;
+            padding-left: 0;
+        }
+        .item_error {
+        margin-top:20px;
+        height:50px;
+        }
+        .Title {
+        height: 27px;
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom:10px;
+        }
+        .ContactInfo {
+        height: 35px;
+        background-color: blue;
+        text-align: center;
+        margin-bottom: 5px;
+        }
+            .ContactInfo > p {
+            font-size: x-large;
+            color: beige;
+            }
+        .Name,.Email {
+        background-color:blue;
+        height:35px;
+        text-align:center;
+        margin-bottom:5px;
+        }
+            .Name > p ,.Email > p {
+            font-size:x-large;
+            color:beige;
+            }
+        .FullName,.EmailAdress {
+        background-color:grey;
+        height:35px;
+        text-align:left;
+        }
+            .FullName > input,.EmailAdress > input {
+            margin-left:5px;
+            margin-top:4px;
+            }
+        .SallesSummary {
+        margin-top:15px;
+        }
+        .SettingsSales {
+        background-color:orange;
+        height:35px;
+        text-align:center;
+        margin-bottom:5px;
+        }
+            .SettingsSales > p {
+            font-size:x-large;
+            color:beige;
+            }
+        .SettingsSalesName {
+        background-color:grey;
+        height:35px;
+        text-align:left;
+        }
+            .SettingsSalesName > input {
+            margin-top:4px;
+            margin-left:5px;
+            }
+        .Extras {
+        margin-top:15px;
+        }
+        .SettingExtras {
+        background-color:pink;
+        height:35px;
+        text-align:center;
+        margin-bottom:5px;
+        }
+            .SettingExtras > p {
+            font-size:x-large;
+            color:beige;
+            }
+        .SettingExtrasName {
+        background-color:grey;
+        height:35px;
+        text-align:left;
+        }
+            .SettingExtrasName > input {
+            margin-top:4px;
+            margin-left:5px;
+            }
+        .numSlide,.numDelitSlide {
+        height:30px;
+        }
+    </style>    
+    }
+<div class="row">
+    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+        <h1>Экспорт в Pptx</h1>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3  item_error">       
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+        <div class="Title">
+            <input id="titleName" style="text-align:center;height:30px;font-weight:700;" type="text" name="FullName" placeholder="Full Name" />
+        </div>
+    </div>
+</div>
+<div class="row no-gutter">
+    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+        <div class="ContactInfo"><p>Contact Info</p></div>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+        <label style="margin-left:15px;">Кол-во слайдов:</label><p class="countSlide" style="float:right;">@countSlide</p>
+    </div>
+</div>
+<div class="row no-gutter">
+    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+        <div class="Name">
+            <p>Name</p>
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="FullName">
+            <input id="fullName" type="text" name="Name" />
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+        <button type="button" style="margin-left:15px;" class="btn btn-primary add-slide">Добавить слайд</button>
+    </div>
+</div>
+<div class="row no-gutter">
+    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+        <div class="Email">
+            <p>Email</p>
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="EmailAdress">
+            <input id="emailAdress" type="text" name="EmailAdress" />
+        </div>      
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+        <button type="button" style="margin-left:15px;" class="btn btn-primary delit-slide">Удалить слайд</button>
+        <select style="margin-left:10px;" id="myDelitSelect" class="numDelitSlide">
+            @for (int i = 1; i <= countSlide; i++)
+            {
+                <option value="@i">@i</option>
+            }
+        </select>
+    </div>
+</div>
+<!--Sales Summary-->
+<div class="row no-gutter">
+    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+        <div class=" SallesSummary SettingsSales"><p>Sales Summary</p></div>
+    </div>
+</div>
+<div class="row no-gutter">
+    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+        <div class="SettingsSales">
+            <p>Territory</p>
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="SettingsSalesName">
+            <input id="territoryName" type="text" name="TerritoryName" />
+        </div>
+    </div>
+</div>
+<div class="row no-gutter">
+    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+        <div class="SettingsSales">
+            <p>TotalSales</p>
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="SettingsSalesName">
+            <input id="totalSales" type="text" name="TotalSalesName" />
+        </div>
+    </div>
+</div>
+<div class="row no-gutter">
+    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+        <div class="SettingsSales">
+            <p>SalesQuota</p>
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="SettingsSalesName">
+            <input id="salesQuota" type="text" name="SalesQuotaName" />
+        </div>
+    </div>
+</div>
+<!--Extras-->
+<div class="row no-gutter">
+    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+        <div class="Extras SettingExtras"><p>Extras</p></div>
+    </div>
+</div>
+<div class="row no-gutter">
+    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+        <div class="SettingExtras">
+            <p>Bonus</p>
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="SettingExtrasName">
+            <input id="monusValue" type="text" name="MonusValue" />
+        </div>
+    </div>
+</div>
+<div class="row no-gutter">
+    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+        <div class="SettingExtras">
+            <p>Commission %</p>
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="SettingExtrasName">
+            <input id="commisionPct" type="text" name="CommissionPct" />
+        </div>
+    </div>
+</div>
+<button type="button" class="btn btn-primary item_btn">Экспортировать данные</button>
+<label>
+    в
+    <select id="mySelect" class="numSlide">
+        @for (int i = 1; i <= countSlide; i++)
+        {
+            <option value="@i">@i</option>
+        }
+    </select>
+     слайд
+</label>
+
+<script src="~/js/AS/controls/mics/as.pptx.js"></script>
+@section js{
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            as.pptx.init({
+                option: [
+                    { appendTo: '.item_error' },
+                    { appendTo: '#mySelect' },
+                    { appendTo: '.countSlide' },
+                    { appendTo: '.numDelitSlide' }
+                ]
+            });
+      
+            });
+
+
+        var TitleName;
+        var FullName;
+        var EmailAdress;
+        var TerritoryName;
+        var TotalSales;
+        var SalesQuota;
+        var BonusValue;
+        var CommisionPct;
+
+        $('.item_btn').click(function () {
+            TitleName = $('#titleName').val();
+            FullName = $('#fullName').val();
+            EmailAdress = $('#emailAdress').val();
+            TerritoryName = $('#territoryName').val();
+            TotalSales = $('#totalSales').val()
+            SalesQuota = $('#salesQuota').val();
+            BonusValue = $('#monusValue').val();
+            CommisionPct = $('#commisionPct').val();
+            ChekData();
+
+        });
+        function ChekData() {
+            if (TitleName == "" || FullName == "" || EmailAdress == "" || TerritoryName == "" || TotalSales == "" ||
+                SalesQuota == "" || BonusValue == "" || CommisionPct == "") {
+                as.pptx.chekData();
+            }
+            else {
+                var arrayParameters =[TitleName, FullName, EmailAdress, TerritoryName, TotalSales, SalesQuota, BonusValue, CommisionPct];
+                var numSlide = $('.numSlide option:selected').val();
+                as.pptx.setParameters(arrayParameters,numSlide);
+            }
+        }
+        $('.add-slide').click(function () {
+            var Count = $('.countSlide').html();
+            Count = parseInt(Count, 10);
+            var select = $("select[id=mySelect] option");
+            as.pptx.addSlide(Count,select);
+        });
+        $('.delit-slide').click(function () {
+            var Count = $('.countSlide').html();
+            Count = parseInt(Count, 10);
+            var select = $("#myDelitSelect option:selected");
+            var numDelitSelect = $("#myDelitSelect :last");
+            var numSelect = $("#mySelect :last");
+            as.pptx.delitSlide(Count,select,numSelect,numDelitSelect);
+        });
+
+
+    </script>  
+    }

@@ -1,0 +1,37 @@
+﻿@{
+    Layout = arkAS.BLL.Core.CoreManager.GetCabinetLayout();
+    ViewBag.Title = "Парсинг";
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+<div class="usCont"></div>
+
+@section js{
+<script type="text/javascript">
+
+    var pars = {
+        init: function () {
+            pars.initForm();               
+        },
+        initForm: function () {               
+            as.form.init({
+                editID: "0",
+                cont: $('.usCont'),
+                title: 'Профиль пользователя',
+                subtitle: '',
+                buttonText: 'Запустить парсинг',
+                ajaxURLFormat: "/Parsing/ParsingGo",
+                fields: [
+                    { code: "words", title: "Cлова", tooltip: "Укажите слова для поиска", example: "", datatype: "text", visible: true, isRequired: true },
+                ]
+            });
+        },
+    }
+    $(function () { 
+        pars.init();
+    });
+</script>
+}
+
+
+
+

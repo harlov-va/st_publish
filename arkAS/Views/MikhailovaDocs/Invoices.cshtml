@@ -1,0 +1,272 @@
+﻿@using arkAS.BLL
+
+@{
+    Layout = arkAS.BLL.Core.CoreManager.GetCabinetLayout();
+    ViewBag.Title = "Счета";
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+
+<select class='usCheckDocStatuses hide'>
+    <option value="0">Не выбрано</option>
+    @foreach (var item in ViewBag.ListStatuses)
+    {
+        <option value='@item.id'>@item.name</option>
+    }
+</select>
+
+<select class='usCheckListContagents hide'>
+    <option value="0">Не выбрано</option>
+    @foreach (var item in ViewBag.ListContagent)
+    {
+        <option value='@item.id'>@item.name</option>
+    }
+</select>
+
+<div class='usCont'></div>
+
+@section js{
+    <script type="text/javascript"> 
+        
+        var sourceListStatuses = @Html.Raw(js.Serialize(((List<Mikhailova_statuses_invoces>)ViewBag.ListStatuses).Select(x => new { Value = x.id, Text = x.name, Selected = false })));
+        var sourceListStatusesEditable = @Html.Raw(js.Serialize(((List<Mikhailova_statuses_invoces>)ViewBag.ListStatuses).Select(x => new { value = x.id, text = x.name })));
+
+        var sourceListContagent = @Html.Raw(js.Serialize(((List<Mikhailova_contagents>) ViewBag.ListContagent).Select(x => new {Value = x.id, Text = x.name, Selected = false})));
+        var sourceListContagentEditable = @Html.Raw(js.Serialize(((List<Mikhailova_contagents>) ViewBag.ListContagent).Select(x => new {value = x.id, text = x.name})));
+
+        var asdemo = {
+            init: function() {
+                asdemo.initMainTable();
+                $(document).delegate('.usCreateDoc', 'click', function(e) {
+                    e.preventDefault();
+                    asdemo.createItem();
+                });
+            },
+            initMainTable: function() {
+                as.crud.init({
+                    cont: $('.usCont'),
+                    title: 'Счета',
+                    toolbarAdditional: '<a href="#" class="btn btn-primary usCreateDoc">Создать</a>&nbsp;&nbsp;',
+                    groupOperationsToolbar: '',
+                    ajaxURLFormat: '/MikhailovaDocs/Invoices_{0}',
+                    inlineAjaxURL: "/MikhailovaDocs/InvoicesInline",
+                    pageSize: 150,
+                    cookiePrefix: "as-crud-invoices-",
+                    emptyText: 'Нет элементов',
+                    createLinkTitle: 'Создать',
+                    filterLinkTitle: 'Найти',
+                    filterTitle: 'Фильтрация данных',
+                    showChecksCol: false,
+                    showNumsCol: true,
+                    showToolbar: true,
+                    showColSettings: false,
+                    showReplaceTool: false,
+                    showExcelExport: false,
+                    additionalSort: false,
+                    cols: [
+                        { code: "id", title: "ID", tooltip: "Идентификатор", isVisible: false, isPK: true, datatype: "int", isRequired: false, editHide: true },
+                        {
+                            code: "number",title: "Номер", tooltip: "Номер", isVisible: true, isPK: false, datatype: "string", isRequired: true, format: "{0}", isSort: true, callback: null
+                        },
+                        { code: "date", filter: { type: "daterange" }, title: "Дата создания", editHide: true, tooltip: "Дата создания", isVisible: true, isPK: false, datatype: "date", isRequired: false, format: "{0}", isSort: true, callback: null },
+                        {
+                            code: "desc", title: "Описание", tooltip: "Описание", isVisible: true, isPK: false, datatype: "string", isRequired: true, format: "{0}", isSort: true, callback: null,
+                            editable: { type: "text", format: "{0}", callback: function(el, newValue) {} }
+                        },
+                        {
+                            code: "contagentName", title: "Контрагент", tooltip: "Контрагент", isVisible: true, isPK: false, datatype: "select", isRequired: false, format: "{0}", isSort: true, callback: null,
+                            editable: { type: "select", format: "{0}", source: sourceListContagentEditable, notSelected: "Не установлено", callback: function(el, newValue) {} },
+                        },
+                        {
+                            code: "contagentID", title: "Контрагент", tooltip: "Контрагент", isVisible: false, isPK: false, datatype: "int", isRequired: false, format: "{0}", callback: null
+                        },
+                        {
+                            code: "statusName", title: "Статус", tooltip: "Статус", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                            editable: { type: "select", format: "{0}", source: sourceListStatusesEditable, notSelected: "Не установлено", callback: function(el, newValue) {} },
+                        },
+                        {
+                            code: "statusID",  title: "Статус", tooltip: "Статус", isVisible: false, isPK: false, datatype: "int", isRequired: false, format: "{0}", callback: null
+                        }
+                    ],
+                    operations: {
+                        create: false,
+                        remove: true,
+                        edit: false,
+                        other: [
+                            { linkClass: 'crdTo2', iconClass: 'glyphicon glyphicon-pencil', title: 'Редактировать', callback: asdemo.editItem }
+                        ]
+                    },
+
+                    getFilterMakeup: function(filter) {
+                        var s = [];
+                        s.push("<div class='crdFilterItem'><span class='gCap'>Номер</span><input type='text' class='usNumber' value='" + (filter.number || '') + "' /></div>");
+
+                        $('.usCheckDocStatuses option').removeAttr('selected');
+                        $('.usCheckDocStatuses option[value=' + filter.statusID + ']').attr('selected', 'selected');
+                        s.push("<div class='crdFilterItem'><span class='gCap'>Статус</span><select class='usDocStatus'>" + $('.usCheckDocStatuses').html() + "</select></div>");
+
+                        $('.usCheckListContagents option').removeAttr('selected');
+                        $('.usCheckListContagents option[value=' + filter.contagentID + ']').attr('selected', 'selected');
+                        s.push("<div class='crdFilterItem'><span class='gCap'>Контрагент</span><select class='usListContagent'>" + $('.usCheckListContagents').html() + "</select></div>");
+
+                        return s.join("");
+                    },
+                    filter: function() {
+
+                        var filter = {
+                            number: $('.usNumber').val() || "",
+                            statusID: $('.usDocStatus option:selected').val(),
+                            contagentID: $('.usListContagent option:selected').val()
+                        };
+                        return filter;
+                    }
+                });
+            },
+
+            createItem: function() {
+                var s = [];
+                s.push("<span>Номер</span><input type='text' class='form-control usNewNumber' /><br />");
+                
+                $('.usCheckListContagents option').removeAttr('selected');
+                $('.usCheckListContagents option:first').attr('selected', 'selected');
+                s.push("<span>Контрагент</span><select class='form-control usNewContagentID' >" + $('.usCheckListContagents').html() + "</select><br />");
+
+                s.push("<textarea id='note' class='form-control' placeholder='Описание...' cols='30' rows='2'></textarea>");
+
+                setTimeout(function() { $('.usNewName').focus(); }, 200);
+                as.sys.showDialog("Создание", s.join(""), "Сохранить", function() {
+                    var number = $('.usNewNumber').val();
+                    var contagentID = $('.usNewContagentID option:selected').val();
+                    var desc = $('#note').val();
+
+                    if (!number) {
+                        as.sys.bootstrapAlert("Укажите пожалуйста номер", { type: 'warning' });
+                        $('.usNewNumber').focus();
+                        return;
+                    }
+                    if (!contagentID || contagentID == 0) {
+                        as.sys.bootstrapAlert("Укажите пожалуйста контрагента", { type: 'warning' });
+                        $('.usNewContagentID').focus();
+                        return;
+                    }
+                    if (!desc) {
+                        as.sys.bootstrapAlert("Укажите пожалуйста описание", { type: 'warning' });
+                        $('#note').focus();
+                        return;
+                    }
+
+                   
+                    var params = {
+                        number: number,
+                        contagentID: contagentID,
+                        desc:desc
+                    };
+                   
+                    as.sys.ajaxSend("/MikhailovaDocs/CreateInvoice", params, function(data) {
+                        if (typeof (data) != "object") data = eval('(' + data + ')');
+                        if (data.result) {
+                            as.sys.bootstrapAlert("Элемент сохранен", { type: 'success' });
+                            as.sys.closeDialog();
+                            as.crud.getItems();
+                            setTimeout(function() {
+                                as.crud.gotoItem(data.textID);
+                            }, 1000);
+                        } else {
+                            as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                        }
+                    });
+                });
+            },
+
+            editItem: function() {
+                var params = { id: $(this).closest('tr').attr('data-itemid') };
+                var p = params;
+                as.sys.ajaxSend("/MikhailovaDocs/GetInvoice", params, function(data) {
+                    if (typeof (data) != "object") data = eval('(' + data + ')');
+                    if (data.id) {
+                        var s = [];
+                        s.push("<input type='hidden' id='docId' value='" + data.id + "'/><br />");
+                        s.push("<span>Номер</span><input type='text' class='form-control usNewNumber' value='" + data.number + "' /><br />");
+
+                        var date = asdemo.formatDate(data.date);
+                        s.push("<input  type='hidden' disabled data-date-format='DD MM YYYY' value='" + date + "' class='form-control usCreated'/>");
+                        
+                        $('.usCheckDocStatuses option').removeAttr('selected');
+                        $(".usCheckDocStatuses option[value='" + data.statusID + "']").attr("selected", "selected");
+                        s.push("<span>Статус</span><select class='form-control usNewStatusID' >" + $('.usCheckDocStatuses').html() + "</select><br />");
+
+                        $('.usCheckListContagents option').removeAttr('selected');
+                        $(".usCheckListContagents  option[value='" + data.contagentID + "']").attr("selected", "selected");
+                        s.push("<span>Контрагент</span><select class='form-control usNewContagentID' >" + $('.usCheckListContagents').html() + "</select><br />");
+
+                        s.push("<textarea id='note' class='form-control' placeholder='Описание...' cols='30' rows='2'>" + data.desc+ "</textarea>");
+
+                        setTimeout(function() { $('.usNewName').focus(); }, 200);
+                        as.sys.showDialog("Редактирование", s.join(""), "Сохранить", function() {
+                            var id = parseInt(params.id);
+                            var desc = $('#note').val();
+                            var number = $('.usNewNumber').val();
+                            var date = $('.usCreated').val();
+                            var statusID = $('.usNewStatusID option:selected').val();
+                            var contagentID = $('.usNewContagentID option:selected').val();
+                           
+                            if (!number) {
+                                as.sys.bootstrapAlert("Укажите пожалуйста номер", { type: 'warning' });
+                                $('.usNewNumber').focus();
+                                return;
+                            }
+                            if (!statusID || statusID == 0) {
+                                as.sys.bootstrapAlert("Укажите пожалуйста статус", { type: 'warning' });
+                                $('.usNewStatusID').focus();
+                                return;
+                            }
+                            if (!contagentID || contagentID == 0) {
+                                as.sys.bootstrapAlert("Укажите пожалуйста контрагента", { type: 'warning' });
+                                $('.usNewContagentID').focus();
+                                return;
+                            }
+                            if (!desc) {
+                                as.sys.bootstrapAlert("Укажите пожалуйста описание", { type: 'warning' });
+                                $('#note').focus();
+                                return;
+                            }
+                           
+                            var paramsEdit = {
+                                id: id,
+                                desc: desc,
+                                number: number,
+                                statusID: statusID,
+                                contagentID: contagentID,
+                                date: date
+                            };
+
+                            as.sys.ajaxSend("/MikhailovaDocs/EditInvoice", paramsEdit, function(data) {
+                                if (typeof (data) != "object") data = eval('(' + data + ')');
+                                if (data.result) {
+                                    as.sys.bootstrapAlert("Документ успешно отредактирован", { type: 'success' });
+                                    as.sys.closeDialog();
+                                    as.crud.getItems();
+                                    setTimeout(function() {
+                                        as.crud.gotoItem(data.itemID);
+                                    }, 1000);
+                                } else {
+                                    as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                                }
+                            });
+                        });
+                    } else {
+                        as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                    }
+                });
+            },
+
+            formatDate: function(dateString) {
+                var date_mas = dateString.split('.');
+                return [date_mas[2], date_mas[1], date_mas[0]].join('-');
+            }
+        }
+
+        $(function() {
+            asdemo.init();
+        });
+    </script>
+}

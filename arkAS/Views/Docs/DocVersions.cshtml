@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewBag.Title = "Версия документации";
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+    Layout = "~/Views/Shared/_CabinetLayout.cshtml";
+}
+
+<div class='usCont'></div>
+@section js{
+    <script type="text/javascript">
+        var docSource = @Html.Raw(js.Serialize(((List<arkAS.BLL.doc_docs>) ViewBag.Docs).Select(x => new {Value = x.id, Text = x.name, Selected = false})));
+       var sourceUsers = @Html.Raw(js.Serialize(((List<MembershipUser>)Membership.GetAllUsers().Cast<MembershipUser>().AsQueryable().ToList()).Select(x => new { Value = x.UserName, Text = x.UserName, Selected = false })));
+        var doc = {
+            init: function() {
+                doc.initMainTable();
+
+            },
+            initMainTable: function() {
+                as.crud.init({
+                    cont: $('.usCont'),
+                    title: 'Версия документации',
+                    groupOperationsToolbar: '',
+                    ajaxURLFormat: '/Docs/DocVersions_{0}',
+                    inlineAjaxURL: "/Docs/DocVersionsInline",
+                    pageSize: 50,
+                    cookiePrefix: "as-crud-DocVersionsDict-",
+                    emptyText: 'Нет элементов',
+                    createLinkTitle: 'Создать',
+                    filterLinkTitle: 'Найти',
+                    filterTitle: 'Фильтрация данных',
+                    showChecksCol: false,
+                    showNumsCol: true,
+                    showToolbar: true,
+                    showColSettings: false,
+                    showReplaceTool: false,
+                    showExcelExport: false,
+                    additionalSort: false,
+                    cols: [
+                        { code: "id", title: "ID", tooltip: "Идентификатор", isVisible: false, isPK: true, datatype: "int", isRequired: false, editHide: true },
+                        { code: "created",filter: { type: "daterange" }, title: "Дата создания", tooltip: "Дата создания", isVisible: true, isPK: false,editHide:true, datatype: "date", isRequired: false, format: "{0}", isSort: true, callback: null },
+                        { code: "createdBy",filter: { type: "select", source: sourceUsers, notSelected: "Не выбрано" }, title: "Кем создан", tooltip: "Кем создан", isVisible: true, isPK: false,editHide:true, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null },
+                        { code: "name",
+                        title: "Название документа",
+                        tooltip: "Название документа",
+                            isVisible: true,
+                            isPK: false,
+                            datatype: "select",
+                            editSources: docSource,
+                            isRequired: true,
+                            format: "{0}",
+                            filter: { type: "select", source: docSource, notSelected: "Не выбрано" },
+                            isSort: true,
+                            callback: null},
+                        { code: "decs", title: "Описание", tooltip: "Описание", isVisible: true, isPK: false, datatype: "string", isRequired: true, format: "{0}", isSort: true}
+
+                    ],
+                    operations: {
+                        create: true,
+                        remove: true,
+                        edit: true,
+                        other: [
+                        ]
+                    }
+                });
+            }
+
+        }
+        $(function() {
+            doc.init();
+        });
+    </script>
+}
+
+

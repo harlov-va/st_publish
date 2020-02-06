@@ -1,0 +1,114 @@
+﻿@using arkAS.BLL
+@model List<SmallDataTest>
+@{
+    ViewBag.Title = "Small Data";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+    string d, m;
+}
+
+<h1>Small Data</h1>
+<p>Клиент посещает страницы с товарами, которые на данный момент имеют статус "Нет в наличии".</p>
+<p>Данные об этом записываются в таблицу. Если пара "имя клиента" - "id товара" уже записана, то обновляется дата в записи.</p>
+<p>Таким образом, когда товар появится в наличии, то пользователям, которые просматривали этот товар со статусом "Нет в наличии" будет отправлено письмо на e-mail о появлении товара.</p>
+<div class="panel-group">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title"><a data-toggle="collapse" data-parent="#crdFilter" href="#crdFilterPanel" aria-expanded="true" class="">Ссылки на страницы с товарами со статусом "Нет в наличии"</a></h4>
+        </div>
+        <div class="panel-collapse collapse in" aria-expanded="true">
+            <div class="panel-body">
+                <button class="btn btn-primary" id="product1" value="1">Посетить страницу с Товар 1</button>
+                <button class="btn btn-primary" id="product2" value="2">Посетить страницу с Товар 2</button>
+                <button class="btn btn-primary" id="product3" value="3">Посетить страницу с Товар 3</button> <br /><br />
+                <button class="btn btn-primary" id="product4" value="4">Посетить страницу с Товар 4</button> 
+                <button class="btn btn-primary" id="product5" value="5">Посетить страницу с Товар 5</button>
+                <button class="btn btn-primary" id="product6" value="6">Посетить страницу с Товар 6</button> <br /><br />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="panel-group">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title"><a data-toggle="collapse" data-parent="#crdFilter" href="#crdFilterPanel" aria-expanded="true" class="">Таблица о пользователях, которые посещали страницы с товарами со статусом "Нет в наличии"</a></h4>
+        </div>
+        <div class="panel-collapse collapse in" aria-expanded="true">
+            <div class="panel-body">
+                <div class="sdCont">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID товара</th>
+                                <th>Имя пользователя</th>
+                                <th>Дата посещения</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(var item in Model)
+                            {
+                                d = item.visitedDate.Value.Day < 10 ? "0" + Convert.ToString(item.visitedDate.Value.Day) : Convert.ToString(item.visitedDate.Value.Day);
+                                m = item.visitedDate.Value.Month < 10 ? "0" + Convert.ToString(item.visitedDate.Value.Month) : Convert.ToString(item.visitedDate.Value.Month);
+                            <tr>
+                                <td>@item.productID</td>
+                                <td>@item.UserName</td>
+                                <td>@d.@m.@item.visitedDate.Value.Year</td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section js {
+    <script type="text/javascript">
+            var sd = {
+                init: function () {
+                    $('#product1').on('click', { productID: 1 }, sd.ajaxSend);
+                    $('#product2').on('click', { productID: 2 }, sd.ajaxSend);
+                    $('#product3').on('click', { productID: 3 }, sd.ajaxSend);
+                    $('#product4').on('click', { productID: 4 }, sd.ajaxSend);
+                    $('#product5').on('click', { productID: 5 }, sd.ajaxSend);
+                    $('#product6').on('click', { productID: 6 }, sd.ajaxSend);
+                },
+                ajaxSend: function (event) {
+                    var params = {
+                        productID: event.data.productID
+                    }
+                    var url = "/SmallData/EditTable/";
+                    $.ajax({
+                        type: 'GET',
+                        url: url,
+                        dataType: 'json',
+                        cache: false,
+                        contentType: 'application/json; charset=utf8',
+                        data: params,
+                        success: function (data) {
+                            var s = [];
+                            s.push("<table class='table'><thead><tr><th>ID товара</th><th>Имя пользователя</th><th>Дата посещения</th></tr></thead><tbody>");
+                            var d;
+                            var m;
+                            for (var i = 0; i < data.length; i++)
+                            {
+                                if (data[i].d < 10) d = "0" + data[i].d; else d = data[i].d;
+                                if (data[i].m < 10) m = "0" + data[i].m; else m = data[i].m;
+                                s.push("<tr><td>" + data[i].productID + "</td><td>" + data[i].UserName + "</td><td>" + d + "." + m + "." + data[i].y + "</td></tr>");
+                            }
+                            s.push("</tbody></table>");
+                            $('.sdCont').empty().append(s.join(""));
+                        }
+                    });
+                    return false;
+                }
+            };
+            $(function () {
+                sd.init();
+            });
+    </script>
+}

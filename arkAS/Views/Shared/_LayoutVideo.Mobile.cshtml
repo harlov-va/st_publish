@@ -1,0 +1,46 @@
+﻿@using Glimpse.Mvc.Html
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title</title> 
+        @Styles.Render("~/bundles/css")
+        @Html.Raw(arkAS.BLL.Core.CoreManager.StyleForDev())
+        @RenderSection("css", false)
+        <meta name="viewport" content="width=device-width" />
+        @Scripts.Render("~/bundles/libs")
+        @Scripts.Render("~/bundles/as")
+        @Styles.Render("~/bundles/css")
+        @Styles.Render("~/Content/Mobile/css", "~/Content/jquerymobile/css")
+        @Scripts.Render("~/bundles/jquery", "~/bundles/jquerymobile")
+        @Scripts.Render("~/bundles/highcharts")
+
+    </head> 
+<body> 
+
+    <div data-role="page" data-theme="a">
+        @Html.Partial("_ViewSwitcher")
+
+        <div data-role="header">
+            <h1>@ViewBag.Title</h1>
+        </div>
+
+        <div class="container body-content">
+            <div class="body-content2">
+                @RenderBody()
+                <hr />
+                <footer>
+                    <p>&copy; @DateTime.Now.Year - Система разработки CRM (личных кабинетов) на заказ Ark AS (Web-automation.ru)</p>
+                    @Html.Partial("_ViewSwitcher")
+                </footer>
+            </div>
+        </div>
+
+    </div>
+    <script type="text/javascript"> (function (d, w, c) { (w[c] = w[c] || []).push(function () { try { w.yaCounter32000186 = new Ya.Metrika({ id: 32000186, clickmap: true, trackLinks: true, accurateTrackBounce: true, webvisor: true }); } catch (e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = "https://mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks");</script><noscript><div><img src="https://mc.yandex.ru/watch/32000186" style="position:absolute; left:-9999px;" alt="" /></div></noscript><!-- /Yandex.Metrika counter -->
+    @*@StackExchange.Profiling.MiniProfiler.RenderIncludes()*@
+    @Html.GlimpseClient()
+    @RenderSection("js", false)
+    <script src="~/signalr/hubs"></script>
+</body>
+</html>

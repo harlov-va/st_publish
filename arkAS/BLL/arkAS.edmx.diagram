@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b8cd3a4e23f44d91af580f6375decec8" Name="Diagram1" ZoomLevel="93">
+        <EntityTypeShape EntityType="arkASModel.as_categories" Width="1.5" PointX="7.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="arkASModel.as_dataTypes" Width="1.5" PointX="0.625" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="arkASModel.as_menu" Width="1.5" PointX="7.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="arkASModel.as_menuRoles" Width="1.5" PointX="10" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="arkASModel.as_profileProperties" Width="1.5" PointX="7.75" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="arkASModel.as_profilePropertyValues" Width="1.5" PointX="10" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="arkASModel.as_rights" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="arkASModel.as_rightsRoles" Width="1.5" PointX="3.125" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="arkASModel.as_settingAvailableValues" Width="1.25" PointX="5.25" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="arkASModel.as_settingCategories" Width="1.5" PointX="3" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="arkASModel.as_settings" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="arkASModel.as_statuses" Width="1.5" PointX="9.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="arkASModel.as_statusLog" Width="1.5" PointX="5.25" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="arkASModel.as_trace" Width="1.5" PointX="11.75" PointY="4.75" IsExpanded="true" />
+        <AssociationConnector Association="arkASModel.FK_as_categories_as_categories1" ManuallyRouted="false" />
+        <AssociationConnector Association="arkASModel.FK_as_settings_as_dataTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="arkASModel.FK_as_menu_as_menu" ManuallyRouted="false" />
+        <AssociationConnector Association="arkASModel.FK_as_menuRoles_as_menu" ManuallyRouted="false" />
+        <AssociationConnector Association="arkASModel.FK_as_profilePropertyValues_as_profileProperties" ManuallyRouted="false" />
+        <AssociationConnector Association="arkASModel.FK_as_settingAvailableValues_as_settings" ManuallyRouted="false" />
+        <AssociationConnector Association="arkASModel.FK_as_settings_as_settingCategories" ManuallyRouted="false" />
+        <AssociationConnector Association="arkASModel.FK_as_rightsRoles_as_rights" />
+        <EntityTypeShape EntityType="arkASModel.as_rightCategories" Width="1.5" PointX="0.75" PointY="11.75" />
+        <EntityTypeShape EntityType="arkASModel.crm_clients" Width="1.5" PointX="10" PointY="12" />
+        <EntityTypeShape EntityType="arkASModel.crm_clientStatuses" Width="1.5" PointX="7.75" PointY="12.75" />
+        <EntityTypeShape EntityType="arkASModel.crm_orderItems" Width="1.5" PointX="14.5" PointY="12.625" />
+        <EntityTypeShape EntityType="arkASModel.crm_orders" Width="1.5" PointX="12.25" PointY="12.5" />
+        <EntityTypeShape EntityType="arkASModel.crm_orderStatuses" Width="1.5" PointX="10" PointY="16.875" />
+        <EntityTypeShape EntityType="arkASModel.crm_sources" Width="1.5" PointX="7.75" PointY="15.875" />
+        <EntityTypeShape EntityType="arkASModel.ct_products" Width="1.5" PointX="12.25" PointY="16.875" />
+        <AssociationConnector Association="arkASModel.FK_crm_clients_crm_clientStatuses" />
+        <AssociationConnector Association="arkASModel.FK_crm_clients_crm_sources" />
+        <AssociationConnector Association="arkASModel.FK_crm_orders_crm_clients" />
+        <AssociationConnector Association="arkASModel.FK_crm_orderItems_crm_orders" />
+        <AssociationConnector Association="arkASModel.FK_crm_orderItems_ct_products" />
+        <AssociationConnector Association="arkASModel.FK_crm_orders_crm_orderStatuses" />
+        <EntityTypeShape EntityType="arkASModel.as_comments" Width="1.5" PointX="12.375" PointY="1.375" />
+        <EntityTypeShape EntityType="arkASModel.as_texts" Width="1.5" PointX="3.375" PointY="12.75" />
+        <EntityTypeShape EntityType="arkASModel.as_userActions" Width="1.5" PointX="12.375" PointY="7.75" />
+        <EntityTypeShape EntityType="arkASModel.hr_humans" Width="1.5" PointX="18.125" PointY="0.5" />
+        <EntityTypeShape EntityType="arkASModel.hr_humanSpecializations" Width="2.375" PointX="20.125" PointY="0.5" />
+        <EntityTypeShape EntityType="arkASModel.hr_sources" Width="1.5" PointX="15.875" PointY="2.875" />
+        <EntityTypeShape EntityType="arkASModel.hr_specializations" Width="1.5" PointX="20.125" PointY="2.875" />
+        <EntityTypeShape EntityType="arkASModel.hr_statuses" Width="1.5" PointX="15.875" PointY="0.5" />
+        <AssociationConnector Association="arkASModel.FK_hr_humans_hr_sources" />
+        <AssociationConnector Association="arkASModel.FK_hr_humans_hr_statuses" />
+        <AssociationConnector Association="arkASModel.FK_hr_humanSpecializations_hr_humans" />
+        <AssociationConnector Association="arkASModel.FK_hr_humanSpecializations_hr_specializations" />
+        <EntityTypeShape EntityType="arkASModel.fin_channels" Width="1.5" PointX="29.25" PointY="4.125" />
+        <EntityTypeShape EntityType="arkASModel.fin_contragents" Width="1.5" PointX="22.5" PointY="4" />
+        <EntityTypeShape EntityType="arkASModel.fin_finances" Width="1.5" PointX="24.75" PointY="3.25" />
+        <EntityTypeShape EntityType="arkASModel.fin_statuses" Width="1.5" PointX="27.5" PointY="5.625" />
+        <EntityTypeShape EntityType="arkASModel.fin_types" Width="1.5" PointX="26.875" PointY="2.375" />
+        <EntityTypeShape EntityType="arkASModel.tt_projects" Width="1.5" PointX="31.625" PointY="7.625" />
+        <AssociationConnector Association="arkASModel.FK_fin_contrAgents_crm_clients" />
+        <AssociationConnector Association="arkASModel.FK_fin_finances_fin_channels" />
+        <AssociationConnector Association="arkASModel.FK_fin_contrAgents_hr_humans" />
+        <AssociationConnector Association="arkASModel.FK_fin_finances_fin_contragents" />
+        <AssociationConnector Association="arkASModel.FK_fin_finances_fin_contragents1" />
+        <AssociationConnector Association="arkASModel.FK_fin_finances_fin_statuses" />
+        <AssociationConnector Association="arkASModel.FK_fin_finances_fin_types" />
+        <AssociationConnector Association="arkASModel.FK_fin_finances_tt_projects" />
+        <AssociationConnector Association="arkASModel.FK_fin_types_fin_types" />
+        <EntityTypeShape EntityType="arkASModel.aspnet_Users" Width="1.5" PointX="14.375" PointY="20" />
+        <EntityTypeShape EntityType="arkASModel.art_newsType" Width="1.5" PointX="0.75" PointY="16.375" />
+        <EntityTypeShape EntityType="arkASModel.as_profileMenu" Width="1.5" PointX="14.375" PointY="15.75" />
+        <EntityTypeShape EntityType="arkASModel.as_mail" Width="1.5" PointX="20.875" PointY="16" />
+        <EntityTypeShape EntityType="arkASModel.as_mailAttachment" Width="1.5" PointX="18.625" PointY="16" />
+        <EntityTypeShape EntityType="arkASModel.as_mailAttachmentType" Width="1.5" PointX="16.375" PointY="16.5" />
+        <EntityTypeShape EntityType="arkASModel.as_mailLog" Width="1.5" PointX="23.125" PointY="16.375" />
+        <AssociationConnector Association="arkASModel.FK_as_mail_as_mailAttachment" />
+        <AssociationConnector Association="arkASModel.FK_as_mailAttachment_as_mail" />
+        <AssociationConnector Association="arkASModel.FK_as_mailLog_as_mail" />
+        <AssociationConnector Association="arkASModel.FK_as_mailAttachment_as_mailAttachmentType" />
+        <EntityTypeShape EntityType="arkASModel.art_news" Width="1.5" PointX="3" PointY="16" />
+        <AssociationConnector Association="arkASModel.FK_gmn_News_gmn_typeNews" />
+        <EntityTypeShape EntityType="arkASModel.as_favorites" Width="1.5" PointX="14.375" PointY="5.75" />
+        <EntityTypeShape EntityType="arkASModel.as_mt_metrics" Width="1.5" PointX="18.625" PointY="7" />
+        <EntityTypeShape EntityType="arkASModel.as_mt_metricTypes" Width="1.5" PointX="16.375" PointY="7.875" />
+        <AssociationConnector Association="arkASModel.FK_as_mt_metrics_as_mt_metrics" />
+        <AssociationConnector Association="arkASModel.FK_as_mt_metrics_as_mt_metricTypes" />
+        <EntityTypeShape EntityType="arkASModel.as_images" Width="1.5" PointX="5.375" PointY="4.625" />
+        <EntityTypeShape EntityType="arkASModel.as_textMistakes" Width="1.5" PointX="16.625" PointY="20.125" />
+        <AssociationConnector Association="arkASModel.FK_as_textMistakes_aspnet_Users" />
+        <EntityTypeShape EntityType="arkASModel.as_userCheckItems" Width="1.5" PointX="19.625" PointY="12" />
+        <EntityTypeShape EntityType="arkASModel.as_userChecks" Width="1.5" PointX="21.875" PointY="12" />
+        <EntityTypeShape EntityType="arkASModel.as_userCheckSet" Width="1.25" PointX="17.625" PointY="12.25" />
+        <AssociationConnector Association="arkASModel.FK_as_userCheckItems_as_userCheckSet" />
+        <AssociationConnector Association="arkASModel.FK_as_userChecks_as_userCheckItems" />
+        <EntityTypeShape EntityType="arkASModel.as_files" Width="1.5" PointX="5.375" PointY="18.75" />
+        <EntityTypeShape EntityType="arkASModel.as_ctrl" Width="1.5" PointX="0.75" PointY="19.75" />
+        <EntityTypeShape EntityType="arkASModel.calc_calcs" Width="1.5" PointX="0.625" PointY="3.125" />
+        <EntityTypeShape EntityType="arkASModel.calc_parameters" Width="1.5" PointX="3" PointY="0.75" />
+        <AssociationConnector Association="arkASModel.FK_calc_parameters_as_dataTypes" />
+        <AssociationConnector Association="arkASModel.FK_calc_parameters_calc_calcs" />
+        <EntityTypeShape EntityType="arkASModel.recl_items" Width="1.5" PointX="33.875" PointY="6.875" />
+        <EntityTypeShape EntityType="arkASModel.recl_itemStatuses" Width="1.5" PointX="31.625" PointY="4.5" />
+        <AssociationConnector Association="arkASModel.FK_recl_items_recl_itemStatuses" />
+        <AssociationConnector Association="arkASModel.FK_recl_items_tt_projects" />
+        <EntityTypeShape EntityType="arkASModel.as_hotkeys" Width="1.5" PointX="3.375" PointY="21.75" />
+        <EntityTypeShape EntityType="arkASModel.aspnet_Applications" Width="1.5" PointX="9.875" PointY="21.875" />
+        <EntityTypeShape EntityType="arkASModel.aspnet_Membership" Width="1.5" PointX="19.625" PointY="19.5" />
+        <EntityTypeShape EntityType="arkASModel.aspnet_Paths" Width="1.5" PointX="12.125" PointY="28.125" />
+        <EntityTypeShape EntityType="arkASModel.aspnet_PersonalizationAllUsers" Width="1.5" PointX="14.375" PointY="31.5" />
+        <EntityTypeShape EntityType="arkASModel.aspnet_PersonalizationPerUser" Width="1.5" PointX="16.625" PointY="27.125" />
+        <EntityTypeShape EntityType="arkASModel.aspnet_Profile" Width="1.5" PointX="16.625" PointY="23.625" />
+        <EntityTypeShape EntityType="arkASModel.aspnet_Roles" Width="1.5" PointX="12.125" PointY="23.875" />
+        <EntityTypeShape EntityType="arkASModel.aspnet_SchemaVersions" Width="1.5" PointX="5.375" PointY="21.75" />
+        <EntityTypeShape EntityType="arkASModel.aspnet_WebEvent_Events" Width="1.5" PointX="22.375" PointY="19.75" />
+        <EntityTypeShape EntityType="arkASModel.sysdiagram" Width="1.5" PointX="21.375" PointY="7.75" />
+        <EntityTypeShape EntityType="arkASModel.Location" Width="1.5" PointX="7.375" PointY="19.75" />
+        <AssociationConnector Association="arkASModel.FK__aspnet_Me__Appli__21B6055D" />
+        <AssociationConnector Association="arkASModel.FK__aspnet_Pa__Appli__5AEE82B9" />
+        <AssociationConnector Association="arkASModel.FK__aspnet_Ro__Appli__440B1D61" />
+        <AssociationConnector Association="arkASModel.FK__aspnet_Us__Appli__0DAF0CB0" />
+        <AssociationConnector Association="arkASModel.FK__aspnet_Me__UserI__22AA2996" />
+        <AssociationConnector Association="arkASModel.FK__aspnet_Pe__PathI__628FA481" />
+        <AssociationConnector Association="arkASModel.FK__aspnet_Pe__PathI__68487DD7" />
+        <AssociationConnector Association="arkASModel.FK__aspnet_Pe__UserI__693CA210" />
+        <AssociationConnector Association="arkASModel.FK__aspnet_Pr__UserI__38996AB5" />
+        <AssociationConnector Association="arkASModel.aspnet_UsersInRoles" />
+        <EntityTypeShape EntityType="arkASModel.as_opinion" Width="1.5" PointX="0.75" PointY="23.75" />
+        <EntityTypeShape EntityType="arkASModel.ps_specsPartners" Width="1.5" PointX="28.875" PointY="11.625" />
+        <EntityTypeShape EntityType="arkASModel.ps_partners" Width="1.5" PointX="26" PointY="13.875" />
+        <EntityTypeShape EntityType="arkASModel.ps_specs" Width="1.5" PointX="26" PointY="11.75" />
+        <AssociationConnector Association="arkASModel.FK_ps_specsPartners_ps_partners" />
+        <AssociationConnector Association="arkASModel.FK_ps_specsPartners_ps_specs" />
+        <EntityTypeShape EntityType="arkASModel.ps_statuses" Width="1.5" PointX="23.625" PointY="13.875" />
+        <AssociationConnector Association="arkASModel.FK_ps_partners_ps_statuses" />
+        <EntityTypeShape EntityType="arkASModel.imp_itemLog" Width="1.5" PointX="26.625" PointY="20" />
+        <EntityTypeShape EntityType="arkASModel.imp_items" Width="1.5" PointX="24.375" PointY="20.125" />
+        <AssociationConnector Association="arkASModel.FK_imp_itemLog_imp_items" />
+        <EntityTypeShape EntityType="arkASModel.gr_site" Width="1.5" PointX="24.5" PointY="8.875" />
+        <EntityTypeShape EntityType="arkASModel.doc_docLogs" Width="1.5" PointX="36.875" PointY="6" />
+        <EntityTypeShape EntityType="arkASModel.doc_docVersions" Width="1.5" PointX="36.75" PointY="3.625" />
+        <EntityTypeShape EntityType="arkASModel.doc_docStatuses" Width="1.625" PointX="36.75" PointY="1.5" />
+        <EntityTypeShape EntityType="arkASModel.doc_docTypes" Width="1.625" PointX="36.625" PointY="8.5" />
+        <EntityTypeShape EntityType="arkASModel.doc_docTypeTemplates" Width="1.5" PointX="39" PointY="9.375" />
+        <AssociationConnector Association="arkASModel.FK_doc_docTypeTemplates_doc_docTypes" />
+        <EntityTypeShape EntityType="arkASModel.doc_docs" Width="1.5" PointX="34" PointY="1.5" />
+        <AssociationConnector Association="arkASModel.FK_doc_docLogs_doc_docs" />
+        <AssociationConnector Association="arkASModel.FK_doc_docs_doc_docStatuses" />
+        <AssociationConnector Association="arkASModel.FK_doc_docs_doc_docTypes" />
+        <AssociationConnector Association="arkASModel.FK_doc_docs_fin_contragents" />
+        <AssociationConnector Association="arkASModel.FK_doc_docs_tt_projects" />
+        <AssociationConnector Association="arkASModel.FK_doc_docVersions_doc_docs" />
+        <EntityTypeShape EntityType="arkASModel.as_sqlGet" Width="1.5" PointX="3.375" PointY="24.875" />
+        <EntityTypeShape EntityType="arkASModel.as_sqlRole" Width="1.5" PointX="5.625" PointY="25" />
+        <AssociationConnector Association="arkASModel.FK_as_sqlRole_as_sqlGet" />
+        <EntityTypeShape EntityType="arkASModel.cl_listInstanceItems" Width="1.5" PointX="26.875" PointY="26.625" />
+        <EntityTypeShape EntityType="arkASModel.cl_listInstances" Width="1.5" PointX="24.625" PointY="28" />
+        <EntityTypeShape EntityType="arkASModel.cl_listItems" Width="1.5" PointX="24.625" PointY="25.125" />
+        <EntityTypeShape EntityType="arkASModel.cl_lists" Width="1.5" PointX="22.375" PointY="26.75" />
+        <AssociationConnector Association="arkASModel.FK_cl_listInstanceItems_cl_listInstances" />
+        <AssociationConnector Association="arkASModel.FK_cl_listInstanceItems_cl_listItems" />
+        <AssociationConnector Association="arkASModel.FK_cl_listInstances_cl_lists" />
+        <AssociationConnector Association="arkASModel.FK_cl_listItems_cl_lists" />
+        <EntityTypeShape EntityType="arkASModel.SmallDataTest" Width="1.5" PointX="7.875" PointY="24.75" />
+        <EntityTypeShape EntityType="arkASModel.proc_processes" Width="1.5" PointX="3.375" PointY="29.5" />
+        <EntityTypeShape EntityType="arkASModel.proc_processItems" Width="1.5" PointX="5.625" PointY="29" />
+        <AssociationConnector Association="arkASModel.FK_proc_processItems_proc_processes" />
+        <EntityTypeShape EntityType="arkASModel.Mikhailova_contagents" Width="1.5" PointX="29.375" PointY="17.125" />
+        <EntityTypeShape EntityType="arkASModel.Mikhailova_contracts" Width="1.5" PointX="31.625" PointY="16.75" />
+        <EntityTypeShape EntityType="arkASModel.Mikhailova_invoices" Width="1.5" PointX="34.625" PointY="17" />
+        <EntityTypeShape EntityType="arkASModel.Mikhailova_mails" Width="1.5" PointX="31.625" PointY="24" />
+        <EntityTypeShape EntityType="arkASModel.Mikhailova_statuses_contracts" Width="1.5" PointX="29.375" PointY="20.25" />
+        <EntityTypeShape EntityType="arkASModel.Mikhailova_statuses_invoces" Width="1.5" PointX="32.375" PointY="13.25" />
+        <EntityTypeShape EntityType="arkASModel.Mikhailova_statuses_mails" Width="1.5" PointX="29.375" PointY="24.5" />
+        <AssociationConnector Association="arkASModel.FK_Mikhailova_contracts_Mikhailova_contagents" />
+        <AssociationConnector Association="arkASModel.FK_Mikhailova_invoices_Mikhailova_contagents" />
+        <AssociationConnector Association="arkASModel.FK_Mikhailova_contracts_Mikhailova_statuses_contracts" />
+        <AssociationConnector Association="arkASModel.FK_Mikhailova_invoices_Mikhailova_statuses_invoces" />
+        <AssociationConnector Association="arkASModel.FK_Mikhailova_mails_Mikhailova_statuses_mails" />
+        <AssociationConnector Association="arkASModel.FK_Mikhailova_contagents_Mikhailova_contagents" />
+        <EntityTypeShape EntityType="arkASModel.Mikhailova_docTypes" Width="1.5" PointX="23.375" PointY="0.75" />
+        <EntityTypeShape EntityType="arkASModel.Mikhailova_docTypeTemplates" Width="1.5" PointX="7.75" PointY="21.875" />
+        <EntityTypeShape EntityType="arkASModel.tst_cars" Width="1.5" PointX="18.625" PointY="30.875" />
+        <EntityTypeShape EntityType="arkASModel.tst_drivers" Width="1.5" PointX="16.375" PointY="31.125" />
+        <AssociationConnector Association="arkASModel.FK_tst_cars_tst_drivers" />
+        <AssociationConnector Association="arkASModel.FK_Mikhailova_contracts_Mikhailova_docTypes" />
+        <EntityTypeShape EntityType="arkASModel.gl_docStatuses" Width="1.5" PointX="27.75" PointY="8.75" />
+        <EntityTypeShape EntityType="arkASModel.gl_docTypes" Width="1.5" PointX="8.75" PointY="28.75" />
+        <EntityTypeShape EntityType="arkASModel.gl_contragents" Width="1.5" PointX="0.75" PointY="32.5" />
+        <EntityTypeShape EntityType="arkASModel.gurevskiy_contracts" Width="1.5" PointX="23.625" PointY="33.75" />
+        <EntityTypeShape EntityType="arkASModel.gurevskiy_contractStatuses" Width="1.5" PointX="21.375" PointY="31.5" />
+        <EntityTypeShape EntityType="arkASModel.gurevskiy_contractTypes" Width="1.5" PointX="21.375" PointY="37.875" />
+        <EntityTypeShape EntityType="arkASModel.gurevskiy_invoices" Width="1.5" PointX="26.625" PointY="34.25" />
+        <EntityTypeShape EntityType="arkASModel.gurevskiy_invoiceStatuses" Width="1.5" PointX="24.375" PointY="38.625" />
+        <EntityTypeShape EntityType="arkASModel.gurevskiy_mails" Width="1.5" PointX="17.625" PointY="35" />
+        <EntityTypeShape EntityType="arkASModel.gurevskiy_mailStatuses" Width="1.5" PointX="15.375" PointY="35.75" />
+        <EntityTypeShape EntityType="arkASModel.gurevskiy_partner" Width="1.5" PointX="21.375" PointY="34.625" />
+        <AssociationConnector Association="arkASModel.FK_gurevskiy_contracts_gurevskiy_contractStatuses" />
+        <AssociationConnector Association="arkASModel.FK_gurevskiy_contracts_gurevskiy_contractTypes" />
+        <AssociationConnector Association="arkASModel.FK_gurevskiy_contracts_gurevskiy_contragents" />
+        <AssociationConnector Association="arkASModel.FK_gurevskiy_invoices_gurevskiy_contragents" />
+        <AssociationConnector Association="arkASModel.FK_gurevskiy_invoices_gurevskiy_invoiceStatuses" />
+        <AssociationConnector Association="arkASModel.FK_gurevskiy_mails_gurevskiy_mailStatuses" />
+        <EntityTypeShape EntityType="arkASModel.pdv_contractors" Width="1.5" PointX="29.375" PointY="32.5" />
+        <EntityTypeShape EntityType="arkASModel.pdv_documentStatuses" Width="2" PointX="32.375" PointY="36.875" />
+        <EntityTypeShape EntityType="arkASModel.pdv_invoices" Width="1.5" PointX="36.875" PointY="32" />
+        <EntityTypeShape EntityType="arkASModel.pdv_mails" Width="1.5" PointX="31.625" PointY="31.625" />
+        <AssociationConnector Association="arkASModel.FK_pdv_invoices_pdv_contractors" />
+        <AssociationConnector Association="arkASModel.FK_pdv_mails_pdv_contractors" />
+        <AssociationConnector Association="arkASModel.FK_pdv_mails_pdv_contractors1" />
+        <EntityTypeShape EntityType="arkASModel.vas_mails" Width="1.5" PointX="35.75" PointY="11.25" />
+        <EntityTypeShape EntityType="arkASModel.vas_mailStatuses" Width="1.5" PointX="38.25" PointY="12.125" />
+        <AssociationConnector Association="arkASModel.FK_vas_mails_vas_mailStatuses" />
+        <EntityTypeShape EntityType="arkASModel.vas_docStatusesLog" Width="1.5" PointX="19.375" PointY="25.75" />
+        <EntityTypeShape EntityType="arkASModel.vas_contractors" Width="1.5" PointX="6.125" PointY="35.625" />
+        <EntityTypeShape EntityType="arkASModel.vas_docStatuses" Width="1.5" PointX="1.125" PointY="35.625" />
+        <EntityTypeShape EntityType="arkASModel.vas_docTypes" Width="1.5" PointX="1.125" PointY="37.75" />
+        <EntityTypeShape EntityType="arkASModel.vas_documents" Width="1.5" PointX="3.75" PointY="35.625" />
+        <EntityTypeShape EntityType="arkASModel.vas_invoices" Width="1.5" PointX="8.5" PointY="35.625" />
+        <EntityTypeShape EntityType="arkASModel.vas_invoiceStatuses" Width="1.5" PointX="8.5" PointY="38.75" />
+        <EntityTypeShape EntityType="arkASModel.vas_invoiceStatusesLog" Width="1.5" PointX="6.125" PointY="38.625" />
+        <EntityTypeShape EntityType="arkASModel.vas_mailStatusesLog" Width="1.5" PointX="10.625" PointY="35.625" />
+        <AssociationConnector Association="arkASModel.FK_vas_documents_vas_contractors" />
+        <AssociationConnector Association="arkASModel.FK_vas_invoices_vas_contractors" />
+        <AssociationConnector Association="arkASModel.FK_vas_documents_vas_docStatuses" />
+        <AssociationConnector Association="arkASModel.FK_vas_documents_vas_docTypes" />
+        <AssociationConnector Association="arkASModel.FK_vas_invoices_vas_invoiceStatuses" />
+        <EntityTypeShape EntityType="arkASModel.tsilurik_contractors" Width="1.5" PointX="37.375" PointY="44.5" />
+        <EntityTypeShape EntityType="arkASModel.tsilurik_documents" Width="1.5" PointX="39.625" PointY="40.375" />
+        <EntityTypeShape EntityType="arkASModel.tsilurik_invoices" Width="1.5" PointX="36.625" PointY="40.75" />
+        <EntityTypeShape EntityType="arkASModel.tsilurik_mails" Width="1.5" PointX="36.625" PointY="48.25" />
+        <EntityTypeShape EntityType="arkASModel.tsilurik_status" Width="1.5" PointX="34.375" PointY="41" />
+        <EntityTypeShape EntityType="arkASModel.tsilurik_statusLog" Width="1.5" PointX="41.875" PointY="44.5" />
+        <EntityTypeShape EntityType="arkASModel.tsilurik_types" Width="1.5" PointX="37.375" PointY="38.125" />
+        <AssociationConnector Association="arkASModel.FK_tsilurik_documents_tsilurik_contractors" />
+        <AssociationConnector Association="arkASModel.FK_tsilurik_invoices_tsilurik_contractors" />
+        <AssociationConnector Association="arkASModel.FK_tsilurik_documents_tsilurik_status" />
+        <AssociationConnector Association="arkASModel.FK_tsilurik_documents_tsilurik_types" />
+        <AssociationConnector Association="arkASModel.FK_tsilurik_statusLog_tsilurik_documents" />
+        <AssociationConnector Association="arkASModel.FK_tsilurik_invoices_tsilurik_status" />
+        <AssociationConnector Association="arkASModel.FK_tsilurik_statusLog_tsilurik_invoices" />
+        <AssociationConnector Association="arkASModel.FK_tsilurik_mails_tsilurik_status" />
+        <AssociationConnector Association="arkASModel.FK_tsilurik_statusLog_tsilurik_mails" />
+        <AssociationConnector Association="arkASModel.FK_tsilurik_statusLog_tsilurik_status" />
+        <EntityTypeShape EntityType="arkASModel.gl_docs" Width="1.5" PointX="34" PointY="20.625" />
+        <AssociationConnector Association="arkASModel.FK_gl_docs_gl_contragents" />
+        <AssociationConnector Association="arkASModel.FK_gl_docs_gl_docStatuses" />
+        <AssociationConnector Association="arkASModel.FK_gl_docs_gl_docTypes" />
+        <AssociationConnector Association="arkASModel.FK_gl_docs_fin_contragents" />
+        <EntityTypeShape EntityType="arkASModel.pdv_documentType" Width="1.5" PointX="36.75" PointY="35.75" />
+        <EntityTypeShape EntityType="arkASModel.pdv_deliveryService" Width="1.5" PointX="31.625" PointY="28.875" />
+        <AssociationConnector Association="arkASModel.FK_pdv_mails_pdv_deliveryService" />
+        <EntityTypeShape EntityType="arkASModel.pdv_deliveryMailStatuses" Width="1.5" PointX="29.5" PointY="29" />
+        <AssociationConnector Association="arkASModel.FK_pdv_mails_pdv_mails" />
+        <EntityTypeShape EntityType="arkASModel.pdv_invoiceStatuses" Width="1.5" PointX="33.75" PointY="28.875" />
+        <AssociationConnector Association="arkASModel.FK_pdv_invoices_pdv_invoiceStatuses" />
+        <EntityTypeShape EntityType="arkASModel.pdv_documentStatusesLog" Width="1.5" PointX="0.75" PointY="27.75" />
+        <EntityTypeShape EntityType="arkASModel.pdv_documents" Width="1.5" PointX="40" PointY="33.375" />
+        <AssociationConnector Association="arkASModel.FK_pdv_documents_pdv_contractors" />
+        <AssociationConnector Association="arkASModel.FK_pdv_documents_pdv_documents" />
+        <AssociationConnector Association="arkASModel.FK_pdv_documents_pdv_documents1" />
+        <AssociationConnector Association="arkASModel.FK_pdv_documents_pdv_documentStatuses" />
+        <AssociationConnector Association="arkASModel.FK_pdv_invoices_pdv_documents" />
+        <EntityTypeShape EntityType="arkASModel.fedchenko_counterparty" Width="1.5" PointX="36.375" PointY="23.125" />
+        <EntityTypeShape EntityType="arkASModel.fedchenko_docStatus" Width="1.5" PointX="36.375" PointY="26.25" />
+        <EntityTypeShape EntityType="arkASModel.fedchenko_docTypes" Width="1.5" PointX="28.375" PointY="14.75" />
+        <EntityTypeShape EntityType="arkASModel.fedchenko_documents" Width="1.5" PointX="38.625" PointY="22.625" />
+        <EntityTypeShape EntityType="arkASModel.fedchenko_invoices" Width="1.5" PointX="41.625" PointY="22.875" />
+        <EntityTypeShape EntityType="arkASModel.fedchenko_invoiceStatus" Width="1.5" PointX="39.375" PointY="20.25" />
+        <EntityTypeShape EntityType="arkASModel.fedchenko_mail" Width="1.5" PointX="41.75" PointY="17.125" />
+        <EntityTypeShape EntityType="arkASModel.fedchenko_mailStatus" Width="1.5" PointX="38" PointY="17.75" />
+        <AssociationConnector Association="arkASModel.FK__fedchenko__Count__2DF1BF10" />
+        <AssociationConnector Association="arkASModel.FK__fedchenko__Count__3F1C4B12" />
+        <AssociationConnector Association="arkASModel.FK__fedchenko__Statu__2EE5E349" />
+        <AssociationConnector Association="arkASModel.FK__fedchenko__Invoi__40106F4B" />
+        <AssociationConnector Association="arkASModel.FK__fedchenko__MailS__4A8DFDBE" />
+        <EntityTypeShape EntityType="arkASModel.motskin_contractors" Width="2.25" PointX="42.75" PointY="0.5" FillColor="192, 255, 255" />
+        <EntityTypeShape EntityType="arkASModel.motskin_documents" Width="2.25" PointX="42.75" PointY="2.875" />
+        <EntityTypeShape EntityType="arkASModel.motskin_documentStatuses" Width="2.125" PointX="45.5" PointY="4.25" FillColor="192, 255, 192" />
+        <EntityTypeShape EntityType="arkASModel.motskin_documentStatusLog" Width="2.125" PointX="45.5" PointY="6.625" FillColor="255, 224, 192" />
+        <EntityTypeShape EntityType="arkASModel.motskin_documentTypes" Width="2.125" PointX="45.5" PointY="2.125" FillColor="192, 255, 255" />
+        <EntityTypeShape EntityType="arkASModel.motskin_invoices" Width="2" PointX="40" PointY="0.5" />
+        <EntityTypeShape EntityType="arkASModel.motskin_invoiceStatuses" Width="2" PointX="40" PointY="4.25" FillColor="192, 255, 192" />
+        <EntityTypeShape EntityType="arkASModel.motskin_invoiceStatusLog" Width="2.25" PointX="39.75" PointY="6.625" FillColor="255, 224, 192" />
+        <EntityTypeShape EntityType="arkASModel.motskin_mails" Width="2.25" PointX="48.5" PointY="1.375" />
+        <EntityTypeShape EntityType="arkASModel.motskin_mailStatuses" Width="2.25" PointX="51.375" PointY="4.625" FillColor="255, 224, 192" />
+        <EntityTypeShape EntityType="arkASModel.motskin_mailStatusLog" Width="2.25" PointX="51.375" PointY="1.75" FillColor="192, 255, 192" />
+        <EntityTypeShape EntityType="arkASModel.motskin_sendSystems" Width="2.25" PointX="48.5" PointY="6" FillColor="192, 255, 255" />
+        <AssociationConnector Association="arkASModel.FK_motskin_contractormotskin_document" />
+        <AssociationConnector Association="arkASModel.FK_motskin_contractormotskin_invoice" ManuallyRouted="false" >
+        </AssociationConnector>
+        <AssociationConnector Association="arkASModel.FK_motskin_documentmotskin_documentStatusLog" />
+        <AssociationConnector Association="arkASModel.FK_motskin_documentStatusmotskin_document" />
+        <AssociationConnector Association="arkASModel.FK_motskin_documentTypemotskin_document" />
+        <AssociationConnector Association="arkASModel.FK_motskin_documentStatusmotskin_documentStatusLog" />
+        <AssociationConnector Association="arkASModel.FK_motskin_invoicemotskin_invoiceStatusLog" />
+        <AssociationConnector Association="arkASModel.FK_motskin_invoiceStatusmotskin_invoice" />
+        <AssociationConnector Association="arkASModel.FK_motskin_invoiceStatusmotskin_invoiceStatusLog" />
+        <AssociationConnector Association="arkASModel.FK_motskin_mailmotskin_mailStatusLog" />
+        <AssociationConnector Association="arkASModel.FK_motskin_mailStatusmotskin_mail" />
+        <AssociationConnector Association="arkASModel.FK_motskin_sendSystemmotskin_mail" />
+        <AssociationConnector Association="arkASModel.FK_motskin_mailStatusmotskin_mailStatusLog" />
+        <EntityTypeShape EntityType="arkASModel.molchanov_deliverySystems" Width="2.125" PointX="54.25" PointY="0.5" FillColor="255, 128, 0" />
+        <EntityTypeShape EntityType="arkASModel.molchanov_mailStatuses" Width="2.125" PointX="54.25" PointY="2.375" FillColor="255, 128, 0" />
+        <EntityTypeShape EntityType="arkASModel.molchanov_mails" Width="1.75" PointX="57.25" PointY="0.5" FillColor="255, 128, 0" />
+        <AssociationConnector Association="arkASModel.FK_deliverySystems_deliverySystemID" />
+        <AssociationConnector Association="arkASModel.FK_mailStatuses_mailStatusID" />
+        <EntityTypeShape EntityType="arkASModel.molchanov_contragents" Width="2.25" PointX="63.625" PointY="4.5" FillColor="255, 128, 0" />
+        <EntityTypeShape EntityType="arkASModel.molchanov_docStatuses" Width="2" PointX="57" PointY="4.75" FillColor="255, 128, 0" />
+        <EntityTypeShape EntityType="arkASModel.molchanov_docTypes" Width="2.375" PointX="54.25" PointY="4.5" FillColor="255, 128, 0" />
+        <EntityTypeShape EntityType="arkASModel.molchanov_documents" Width="2.375" PointX="60" PointY="3.25" FillColor="255, 128, 0" />
+        <AssociationConnector Association="arkASModel.FK_Contragrnts_contragentID" />
+        <AssociationConnector Association="arkASModel.FK_DocStatuses_docStatusID" />
+        <AssociationConnector Association="arkASModel.FK_DocTypes_docTypeID" />
+        <AssociationConnector Association="arkASModel.FK_Documents_ParentID" ></AssociationConnector>
+        <EntityTypeShape EntityType="arkASModel.molchanov_invoices" Width="2.25" PointX="63.25" PointY="0.5" FillColor="255, 128, 0" />
+        <AssociationConnector Association="arkASModel.FK_Contragents_contragentID" />
+        <EntityTypeShape EntityType="arkASModel.molchanov_invoiceStatuses" Width="2.125" PointX="60" PointY="0.875" FillColor="255, 128, 0" />
+        <AssociationConnector Association="arkASModel.FK_InvoiceStatuses_invStatusID" />
+        <EntityTypeShape EntityType="arkASModel.udovika_contract" Width="1.5" PointX="28.625" PointY="39.75" />
+        <EntityTypeShape EntityType="arkASModel.udovika_contractor" Width="1.5" PointX="26.375" PointY="40.625" />
+        <EntityTypeShape EntityType="arkASModel.udovika_contractType" Width="1.5" PointX="26.375" PointY="45.875" />
+        <EntityTypeShape EntityType="arkASModel.udovika_documentStatusLog" Width="1.5" PointX="29.375" PointY="0.75" />
+        <EntityTypeShape EntityType="arkASModel.udovika_email" Width="1.5" PointX="13.625" PointY="39" />
+        <EntityTypeShape EntityType="arkASModel.udovika_invoice" Width="1.5" PointX="31.625" PointY="40.25" />
+        <EntityTypeShape EntityType="arkASModel.udovika_statusContract" Width="1.5" PointX="26.375" PointY="43.5" />
+        <EntityTypeShape EntityType="arkASModel.udovika_statusEmail" Width="1.5" PointX="11.375" PointY="39.75" />
+        <EntityTypeShape EntityType="arkASModel.udovika_statusInvoice" Width="1.5" PointX="29.375" PointY="36.625" />
+        <AssociationConnector Association="arkASModel.FK_udovika_contract_udovika_contractor" />
+        <AssociationConnector Association="arkASModel.FK_udovika_contract_udovika_contractorType" />
+        <AssociationConnector Association="arkASModel.FK_udovika_contract_udovika_statusContractor" />
+        <AssociationConnector Association="arkASModel.FK_udovika_invoice_udovika_contractor" />
+        <AssociationConnector Association="arkASModel.FK_udovika_email_udovika_statusEmail" />
+        <AssociationConnector Association="arkASModel.FK_udovika_invoice_udovika_statusInvoice" />
+        <EntityTypeShape EntityType="arkASModel.molchanov_logContragents" Width="2.125" PointX="66.625" PointY="4.5" FillColor="Aqua" />
+        <EntityTypeShape EntityType="arkASModel.molchanov_logDeliverySystems" Width="2.375" PointX="56.25" PointY="11" FillColor="Aqua" />
+        <EntityTypeShape EntityType="arkASModel.molchanov_logDocStatuses" Width="2.375" PointX="59.5" PointY="11.125" FillColor="Aqua" />
+        <EntityTypeShape EntityType="arkASModel.molchanov_logDocTypes" Width="2.25" PointX="54.25" PointY="7.25" FillColor="Aqua" />
+        <EntityTypeShape EntityType="arkASModel.molchanov_logDocuments" Width="2.25" PointX="62.625" PointY="11" FillColor="Aqua" />
+        <EntityTypeShape EntityType="arkASModel.molchanov_logInvoices" Width="2.25" PointX="66" PointY="0.75" FillColor="Aqua" />
+        <EntityTypeShape EntityType="arkASModel.molchanov_logInvoiceStatuses" Width="2.125" PointX="63.75" PointY="8.625" FillColor="Aqua" />
+        <EntityTypeShape EntityType="arkASModel.molchanov_logMails" Width="2.125" PointX="59.75" PointY="8.25" FillColor="Aqua" />
+        <EntityTypeShape EntityType="arkASModel.molchanov_logMailStatuses" Width="2.125" PointX="57.125" PointY="8.25" FillColor="Aqua" />
+        <AssociationConnector Association="arkASModel.FK__molchanov__contr__6E6149E0" />
+        <AssociationConnector Association="arkASModel.FK__molchanov__mailD__0544AF38" />
+        <AssociationConnector Association="arkASModel.FK__molchanov__docSt__76F68FE1" />
+        <AssociationConnector Association="arkASModel.FK__molchanov__docTy__741A2336" />
+        <AssociationConnector Association="arkASModel.FK__molchanov__docum__713DB68B" />
+        <AssociationConnector Association="arkASModel.FK__molchanov__invoi__79D2FC8C" />
+        <AssociationConnector Association="arkASModel.FK__molchanov__invoi__7CAF6937" />
+        <AssociationConnector Association="arkASModel.FK__molchanov__mailI__7F8BD5E2" />
+        <AssociationConnector Association="arkASModel.FK__molchanov__mailS__0268428D" />
+        <EntityTypeShape EntityType="arkASModel.rosh_contragents" Width="1.5" PointX="3" PointY="47.125" />
+        <EntityTypeShape EntityType="arkASModel.rosh_contragentSources" Width="1.5" PointX="0.75" PointY="48" />
+        <EntityTypeShape EntityType="arkASModel.rosh_contragentStatuses" Width="1.5" PointX="0.75" PointY="44.875" />
+        <EntityTypeShape EntityType="arkASModel.rosh_docLogs" Width="1.5" PointX="9.75" PointY="47.875" />
+        <EntityTypeShape EntityType="arkASModel.rosh_docStatuses" Width="1.5" PointX="5.25" PointY="52" />
+        <EntityTypeShape EntityType="arkASModel.rosh_docTypes" Width="1.5" PointX="5.25" PointY="44.125" />
+        <EntityTypeShape EntityType="arkASModel.rosh_documents" Width="1.5" PointX="7.5" PointY="47.125" />
+        <EntityTypeShape EntityType="arkASModel.rosh_mailLogs" Width="1.5" PointX="12.75" PointY="43.875" />
+        <EntityTypeShape EntityType="arkASModel.rosh_mails" Width="1.5" PointX="10.5" PointY="43" />
+        <EntityTypeShape EntityType="arkASModel.rosh_mailStatuses" Width="1.5" PointX="8.25" PointY="56.125" />
+        <EntityTypeShape EntityType="arkASModel.rosh_orderLogs" Width="1.5" PointX="7.5" PointY="52.625" />
+        <EntityTypeShape EntityType="arkASModel.rosh_orders" Width="1.5" PointX="5.25" PointY="47.375" />
+        <EntityTypeShape EntityType="arkASModel.rosh_orderStatuses" Width="1.5" PointX="3" PointY="43.875" />
+        <EntityTypeShape EntityType="arkASModel.rosh_sendingSystems" Width="1.5" PointX="8.25" PointY="42.75" />
+        <AssociationConnector Association="arkASModel.FK_rosh_contragents_rosh_contragentSources" />
+        <AssociationConnector Association="arkASModel.FK_rosh_contragents_rosh_contragentStatuses" />
+        <AssociationConnector Association="arkASModel.FK_rosh_documents_rosh_contragents" />
+        <AssociationConnector Association="arkASModel.FK_rosh_orders_rosh_contragents" />
+        <AssociationConnector Association="arkASModel.FK_rosh_docLogs_rosh_documents" />
+        <AssociationConnector Association="arkASModel.FK_rosh_documents_rosh_docStatuses" />
+        <AssociationConnector Association="arkASModel.FK_rosh_docTypes_rosh_docTypes" />
+        <AssociationConnector Association="arkASModel.FK_rosh_documents_rosh_docTypes" />
+        <AssociationConnector Association="arkASModel.FK_rosh_documents_rosh_orders" />
+        <AssociationConnector Association="arkASModel.FK_rosh_mailLogs_rosh_mails" />
+        <AssociationConnector Association="arkASModel.FK_rosh_mails_rosh_mailStatuses" />
+        <AssociationConnector Association="arkASModel.FK_rosh_mails_rosh_orders" />
+        <AssociationConnector Association="arkASModel.FK_rosh_mails_rosh_sendingSystems" />
+        <AssociationConnector Association="arkASModel.FK_rosh_orderLogs_rosh_orders" />
+        <AssociationConnector Association="arkASModel.FK_rosh_orders_rosh_orderStatuses" />
+        <EntityTypeShape EntityType="arkASModel.rosh_CalendarEvents" Width="1.5" PointX="8.375" PointY="31.75" />
+        <EntityTypeShape EntityType="arkASModel.rosh_sqlQueriesTable" Width="1.5" PointX="10.375" PointY="31.75" />
+        <EntityTypeShape EntityType="arkASModel.h_contragents" Width="1.5" PointX="18.75" PointY="50.875" FillColor="128, 255, 128" />
+        <EntityTypeShape EntityType="arkASModel.h_deliverySystems" Width="1.5" PointX="20.375" PointY="54.5" FillColor="128, 255, 128" />
+        <EntityTypeShape EntityType="arkASModel.h_docStatuses" Width="1.5" PointX="24.25" PointY="52.375" FillColor="128, 255, 128" />
+        <EntityTypeShape EntityType="arkASModel.h_docTypes" Width="1.5" PointX="24.25" PointY="50.125" FillColor="128, 255, 128" />
+        <EntityTypeShape EntityType="arkASModel.h_invoiceStatuses" Width="1.5" PointX="15.5" PointY="48.375" FillColor="128, 255, 128" />
+        <EntityTypeShape EntityType="arkASModel.h_mailStatuses" Width="1.5" PointX="20.375" PointY="56.5" FillColor="128, 255, 128" />
+        <EntityTypeShape EntityType="arkASModel.h_invoices" Width="1.5" PointX="15.5" PointY="50.625" FillColor="128, 255, 128" />
+        <AssociationConnector Association="arkASModel.FK__h_invoice__contr__70747ADB" />
+        <AssociationConnector Association="arkASModel.FK__h_invoice__invSt__6F8056A2" />
+        <EntityTypeShape EntityType="arkASModel.h_mails" Width="1.5" PointX="17.75" PointY="54.5" FillColor="Lime" />
+        <AssociationConnector Association="arkASModel.FK__h_mails__deliver__78159CA3" />
+        <AssociationConnector Association="arkASModel.FK__h_mails__mailSta__7909C0DC" />
+        <EntityTypeShape EntityType="arkASModel.h_logMails" Width="1.5" PointX="15" PointY="58.375" FillColor="Fuchsia" />
+        <AssociationConnector Association="arkASModel.FK__h_logMail__mailI__4EDE7CE6" />
+        <EntityTypeShape EntityType="arkASModel.h_documents" Width="1.5" PointX="21.75" PointY="50.125" FillColor="128, 255, 128" />
+        <AssociationConnector Association="arkASModel.FK_h_documents_h_contragents" />
+        <AssociationConnector Association="arkASModel.FK_h_documents_h_docStatuses" />
+        <AssociationConnector Association="arkASModel.FK_documents_docTypes" />
+        <AssociationConnector Association="arkASModel.FK__h_documen__docPa__03874F4F" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

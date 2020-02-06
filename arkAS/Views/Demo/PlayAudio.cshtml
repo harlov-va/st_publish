@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Стандартные ответы на телефонные звонки";
+}
+@section css{
+    <link href="~/js/AS/controls/controls_style/audiojs.css" rel="stylesheet" />
+}
+<script src="~/js/AS/controls/mics/as.phoneAnswer.js"></script>
+
+<h1>Компонент Стандартные ответы на телефонные звонки</h1>
+<div class="well">
+    Данный компонент позволяет прослушивать аудиозаписи
+</div>
+<div id="audio-container">
+</div>
+
+
+@section js
+{
+    <script>
+        $(function() {
+            as.phoneAnswer.init({
+                appendTo: "#audio-container",
+                files: [
+                    { File: "/uploads/phones/mario-mario.mp3", Name: "mario-mario.mp3" },
+                    { File: "/uploads/phones/unknown_artist-avtootvetchik_putina.mp3", Name: " неизвестный исполнитель - Автоответчик Путина" },
+                    { File: "/uploads/phones/unknown_artist-bells_best.mp3", Name: " неизвестный исполнитель - Bells best" },
+                    { File: "/uploads/phones/unknown_artist-soft_sms.mp3", Name: " неизвестный исполнитель - Soft SMS" },
+                    { File: "/uploads/phones/unknown_artist-umirayuschij_zvonok.mp3", Name: "неизвестный исполнитель - Умирающий звонок	" }
+                ]
+            });
+        });
+    </script>
+}

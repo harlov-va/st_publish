@@ -1,0 +1,207 @@
+﻿@{
+    ViewBag.Title = "Чек-листы";
+    Layout = arkAS.BLL.Core.CoreManager.GetCabinetLayout();
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+
+<div class='usRolesTemplate hide'>
+
+    @foreach (var item in Roles.GetAllRoles())
+    {
+        <input type="checkbox" value='@item' id='svOurSup@(item)' /><label for='svOurSup@(item)'>@item</label>@Html.Raw("&nbsp; &nbsp; &nbsp; &nbsp;")
+    }
+</div>
+
+<div class='LICont'>
+</div>
+
+@section js{
+    <script type="text/javascript">
+        var usersSource = @Html.Raw(js.Serialize(((List<string>)ViewBag.Users).Select(x => new { text = x })));
+        var indexVal = 0;
+        $.each(usersSource, function() {
+            usersSource[indexVal].value = indexVal;
+            indexVal++;
+        });
+    var lists = {
+        init: function () {
+            lists.initMainTable();
+            $(document).delegate('.usCreateDoc', 'click', function (e) {
+                e.preventDefault();
+                lists.createItem();
+            });
+
+            $(document).delegate('.LICont .usUserRoles input[type=checkbox]', 'change', function (e) {
+                e.preventDefault();
+                var div= $(this).parent('div');
+                var s = "";
+                $.each($(div).find('input[type="checkbox"]:checked'), function()
+                {
+                    s += $(this).val() + ",";
+                });
+                s = s.slice(0, s.length - 1);
+                var tr= $(this).closest('tr');
+                var params = {
+                    pk: tr.attr('data-itemID'),
+                    roles: s
+                };
+                as.sys.ajaxSend("/Admin/ChangeRoleForList", params, function (data) {
+                    if (typeof (data) != "object") data = eval('(' + data + ')');
+
+                    if (data.result) {
+                        as.sys.bootstrapAlert("Роль изменена", { type: 'success' });                    
+                    } else {
+                        as.sys.bootstrapAlert("Возникли ошибки при выполнении операции!", { type: 'danger' });
+                    }
+                });
+            });
+        },
+        initMainTable: function () {
+            as.crud.init({
+                cont: $('.LICont'),
+                title: 'Чек-листы',
+                toolbarAdditional: '<a href="#" class="btn btn-primary usCreateDoc">Создать</a>',
+                groupOperationsToolbar: '',
+                ajaxURLFormat: '/Admin/clLists_{0}',
+                inlineAjaxURL: "/Admin/clListInline",
+                pageSize: 15,
+                cookiePrefix: "as-crud-clListItemsTable-",
+                emptyText: 'Нет элементов',
+                createLinkTitle: 'Создать',
+                filterLinkTitle: 'Найти',
+                filterTitle: 'Фильтрация данных',
+                showChecksCol: false,
+                showNumsCol: true,
+                showToolbar: true,
+                showColSettings: false,
+                showReplaceTool: false,
+                showExcelExport: false,
+                additionalSort: false,
+                cols: [
+                    { code: "id", title: "ID", tooltip: "Идентификатор", isVisible: false, isPK: true, datatype: "int", isRequired: false },
+                    {
+                        code: "name", title: "Параметр чек-листа", tooltip: "Параметр чек-листа", isVisible: true, isPK: false, datatype: "checklist", isRequired: true, format: "{0}", isSort: true, callback: null,
+                        editable: { type: "text", format: "{0}", callback: function (el, newValue) { } }
+                    },
+                    {
+                        code: "code", title: "Код", tooltip: "Код", isVisible: true, isPK: false, datatype: "string", isRequired: true, format: "{0}", isSort: true, callback: null,
+                        editable: { type: "text", format: "{0}", callback: function (el, newValue) { } }
+                    },
+                    {
+                        code: "users", title: "Пользователи", tooltip: "Пользователи", isVisible: true, isPK: false, datatype: "string", isRequired: true, format: "{0}", isSort: false, callback: null,
+                        editable: { type: "checklist", source: usersSource, format: "{0}", callback: function (el, newValue) { } }
+                    },
+                    {
+                        code: "usersID", title: "usersID", tooltip: "usersID", isVisible: false, isPK: false, datatype: "string", isRequired: true, format: "{0}", isSort: false, callback: null
+                    },
+                    { code: "roles", title: "Роли", tooltip: "Роли", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: false, callback: null }
+                ],
+                operations: {
+                    create: false,
+                    remove: true,
+                    edit: false,
+                    other: [
+                    ]
+                },
+                getFilterMakeup: function (filter) {
+                    var s = [];
+
+                    return s.join("");
+                },
+                filter: function () {
+                    var listID = 0;
+
+                    var filter = {
+                        listID: listID
+                    };
+                    return filter;
+                },
+                getItemsCallback: function () {
+                    $('.LICont .usUserRoles').each(function () {
+                        var roles = ("," + $(this).text() + ",").split(",");
+                        $('.usRolesTemplate input').removeAttr("checked");
+                        $('.usRolesTemplate input').each(function () {
+                            if ($.inArray($(this).val(), roles)>=0) {
+                                $(this).attr("checked","checked");
+                            }
+                        });
+                        $(this).html($('.usRolesTemplate').html());
+                    });
+                }
+            });
+        },
+        createItem: function () {
+            var s = [];
+            s.push("<span>Название чек-листа</span><input type='text' class='form-control NewListName' /><br />");
+            s.push("<span>Код чек-листа</span><input type='text' class='form-control NewListCode' /><br />");
+            s.push("<span>Пользователи</span><br><a href='#' id='NewUsers' class='editable-unsaved' data-type='checklist' data-pk='1' data-title='Пользователи'></a>");
+            $('.usRolesTemplate input').removeAttr("checked");
+            s.push("<br><br><span>Роли</span><br><div href='#' id='NewRoles''>" + $('.usRolesTemplate').html() + "</div>");
+
+            setTimeout(function () { $('.NewListName').focus(); }, 200);
+            as.sys.showDialog("Создание", s.join(""), "Сохранить", function () {
+                var newName = $('.NewListName').val();
+                var newCode = $('.NewListCode').val();
+                debugger;
+                var newUsers = $('#NewUsers').html();
+                var newRoles = "";
+                $.each($('#NewRoles input[type="checkbox"]:checked'), function () {
+                    newRoles += $(this).val() + ",";
+                });
+                newRoles = newRoles.slice(0, newRoles.length -1);
+
+                if (!newName) {
+                    as.sys.bootstrapAlert("Укажите пожалуйста имя чек-листа", { type: 'warning' });
+                    $('.NewListName').focus();
+                    return;
+                }
+                if (!newCode) {
+                    as.sys.bootstrapAlert("Укажите пожалуйста код чек-листа", { type: 'warning' });
+                    $('.NewListCode').focus();
+                    return;
+                }
+                if (!newUsers || newUsers == "Выбрать") {
+                    as.sys.bootstrapAlert("Укажите пожалуйста поьзователей", { type: 'warning' });
+                    return;
+                }
+                if (!newRoles) {
+                    as.sys.bootstrapAlert("Укажите пожалуйста роли", { type: 'warning' });
+                    return;
+                }
+
+                var params = {
+                    name: newName,
+                    code: newCode,
+                    users: newUsers,
+                    roles: newRoles
+                };
+                
+                as.sys.ajaxSend("/Admin/clListCreate", params, function (data) {
+                    if (typeof (data) != "object") data = eval('(' + data + ')');
+                    if (data.result) {
+                        as.sys.bootstrapAlert("Элемент сохранен", { type: 'success' });
+                        as.sys.closeDialog();
+                        as.crud.getItems();
+                        setTimeout(function () {
+                            as.crud.gotoItem(data.textID);
+                        }, 1000);
+                    } else {
+                        as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                    }
+                });
+            }, false, function () {
+                $('#NewUsers').editable({   
+                    source: usersSource,
+                    emptytext: "Выбрать"
+                });
+            });
+        }
+    }
+    $(function () {
+        lists.init();
+    });
+    </script>
+
+}
+
+

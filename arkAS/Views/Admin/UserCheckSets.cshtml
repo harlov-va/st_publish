@@ -1,0 +1,268 @@
+﻿@using System.Activities.Statements
+@using arkAS.Models;
+@{
+    Layout = arkAS.BLL.Core.CoreManager.GetCabinetLayout();
+    ViewBag.Title = "Типы уведомлений пользователей";
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+
+<div class='usRolesTemplate hide'>
+    @foreach (var item in Roles.GetAllRoles())
+    {
+        <div class="usRolesItem">
+            <input type="checkbox" value='@item' id='svOurSup@(item)' @if (item == "admin") { @Html.Raw("checked disabled")    } /><label for='svOurSup@(item)'>@item</label>@Html.Raw("&nbsp; &nbsp; &nbsp; &nbsp;")
+        </div>
+    }
+</div>
+
+<div class='usCont'>
+</div>
+@section js{
+    <script type="text/javascript">
+
+        var us = {
+            init: function () {
+                us.initMainTable();
+
+                $(document).delegate('.usCreateUserCheckSet', 'click', function (e) {
+                    e.preventDefault();
+                    us.CreateUserCheckSet();
+                });
+
+                $(document).delegate('.usCloseUserCheckSet', 'click', function (e) {
+                    e.preventDefault();
+                    $(this).closest("tr").hide(250, function () { $(this).remove(); });
+                });
+
+                $(document).delegate('.usSaveUserCheckSet', 'click', function (e) {
+                    e.preventDefault();
+                    us.saveText($(this));
+                });
+            },
+            initMainTable: function () {
+                as.crud.init({
+                    cont: $('.usCont'),
+                    title: 'Типы уведомлений пользователей',
+                    toolbarAdditional: '<a href="#" class="btn btn-primary usCreateUserCheckSet">Создать тип уведомлений</a>&nbsp;&nbsp;',
+                    groupOperationsToolbar: '',
+                    ajaxURLFormat: '/Admin/UserCheckSets_{0}',
+                    //inlineAjaxURL: "/Admin/CommentsInline",
+                    pageSize: 10,
+                    cookiePrefix: "as-crud-UserCheckSetsTable-",
+                    emptyText: 'Нет элементов',
+                    createLinkTitle: 'Создать',
+                    filterLinkTitle: 'Найти',
+                    filterTitle: 'Фильтрация данных',
+                    showChecksCol: false,
+                    showNumsCol: true,
+                    showToolbar: true,
+                    showColSettings: false,
+                    showReplaceTool: false,
+                    showExcelExport: false,
+                    showPDFExport: false,
+                    additionalSort: false,
+                    cols: [
+                        { code: "id", title: "ID", tooltip: "Идентификатор", isVisible: false, isPK: true, datatype: "int", isRequired: false },
+                        {
+                            code: "name",
+                            title: "Название",
+                            tooltip: "Название",
+                            isVisible: true,
+                            isPK: false,
+                            datatype: "string",
+                            isRequired: false,
+                            format: "{0}",
+                            isSort: true,
+                            callback: null,
+                            editable: false
+                        },
+                        {
+                            code: "code",
+                            title: "Код",
+                            tooltip: "Код",
+                            isVisible: true,
+                            isPK: false,
+                            datatype: "string",
+                            isRequired: false,
+                            format: "{0}",
+                            isSort: true,
+                            callback: null,
+                            editable: false
+                        },
+                        {
+                            code: "roles",
+                            title: "Роли",
+                            tooltip: "Роли",
+                            isVisible: true,
+                            isPK: false,
+                            datatype: "string",
+                            isRequired: false,
+                            format: "{0}",
+                            isSort: false,
+                            callback: null,
+                            editable: false
+                        }
+                    ],
+                    operations: {
+                        create: false,
+                        remove: true,
+                        edit: false,
+                        other: [
+                            { linkClass: 'crdTo2', iconClass: 'glyphicon glyphicon-pencil', title: 'Редактировать тип', callback: us.editValue },
+                            {
+                                linkClass: 'crdTo3', iconClass: 'glyphicon glyphicon-option-horizontal', title: 'Показать уведомления этого типа',
+                                callback: function (e, el) {
+                                    e.preventDefault();
+                                    var tr = $(this).closest('tr');
+                                    var setID = $('td[data-code=id]', tr).text();
+                                    document.location.href = "/Admin/UserCheckItems/#set=" + setID;
+                                }
+                            }
+                        ]
+                    },
+                    getFilterMakeup: function (filter) {
+                        var s = [];
+                        s.push("<div class='crdFilterItem'><span class='gCap'>Название</span><input type='text' class='usName' value='" + (filter.name || '') + "' /></div>");
+                        s.push("<div class='crdFilterItem'><span class='gCap'>Код</span><input type='text' class='usCode' value='" + (filter.code || '') + "' /></div>");
+
+                        return s.join("");
+                    },
+                    filter: function () {
+
+                        var filter = {
+                            name: $('.usName').val() || "",
+                            code: $('.usCode').val() || ""
+                        };
+                        return filter;
+                    }
+                });
+            },
+            CreateUserCheckSet: function () {
+                var s = [];
+                s.push("<span>Название</span><input type='text' class='form-control usNewName' /><br />");
+                s.push("<span>Код (латиница)</span><input type='text' class='form-control usNewCode' /><br />");
+
+                s.push("<div class='usRoles'>");
+                s.push($(".usRolesTemplate").html());
+                s.push("</div>");
+
+                setTimeout(function () { $('.usNewName').focus(); }, 200);
+                as.sys.showDialog("Новый тип уведомлений", s.join(""), "Сохранить", function () {
+                    var name = $('.usNewName').val();
+                    var code = $('.usNewCode').val();
+                    var checkedRoles = [];
+                    var rolesItems = $(".usRoles .usRolesItem input").filter(":checked");
+
+                    if (!name) {
+                        as.sys.bootstrapAlert("Укажите пожалуйста название", { type: 'warning' });
+                        $('.usNewName').focus();
+                        return;
+                    }
+                    if (!code) {
+                        as.sys.bootstrapAlert("Укажите пожалуйста код", { type: 'warning' });
+                        $('.usNewCode').focus();
+                        return;
+                    }
+
+                    rolesItems.each(function () {
+                        checkedRoles.push($(this).val());
+                    });
+
+                    var roleslist = checkedRoles.join(",");
+
+                    var params = { name: name, code: code, roles: roleslist };
+                    as.sys.ajaxSend("/Admin/CreateUserCheckSet", params, function (data) {
+                        if (typeof (data) != "object") data = eval('(' + data + ')');
+                        if (data.result) {
+                            as.sys.bootstrapAlert("Элемент сохранен", { type: 'success' });
+                            as.sys.closeDialog();
+                            as.crud.getItems();
+                            setTimeout(function () {
+                                as.crud.gotoItem(data.textID);
+                            }, 1000);
+                        } else {
+                            as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                        }
+                    });
+                });
+            },
+            editValue: function (e) {
+                e.preventDefault();
+                var btn = $(this);
+                var tr = btn.closest('tr');
+                if (tr.next().hasClass('crdAddRow')) {
+                    tr.next().hide(50, function () { $(this).remove(); });
+                } else {
+                    var s = [];
+                    s.push("<tr class='crdAddRow'><td colspan='5'>");
+                    s.push("<div class='well well-sm'><a href='#' class='btn btn-success usSaveUserCheckSet'>Сохранить</a>&nbsp;&nbsp;<a href='#' class='btn btn-default usCloseUserCheckSet'>Закрыть</a></div>");
+                    s.push("<span>Название</span><input type='text' class='form-control usNewName' /><br />");
+                    s.push("<span>Код (латиница)</span><input type='text' class='form-control usNewCode' /><br />");
+                    s.push("<div class='usRoles'>");
+                    s.push($(".usRolesTemplate").html());
+                    s.push("</div>");
+
+                    s.push("</td></tr>");
+                    $(s.join("")).insertAfter(tr);
+                    var params = { id: tr.find("td[data-code=id]").text() };
+                    as.sys.ajaxSend("/Admin/GetUserCheckSet", params, function (data) {
+                        if (typeof (data) != "object") data = eval('(' + data + ')');
+                        if (data.result) {
+                            var nameInput = tr.next().find('.usNewName');
+                            nameInput.val(data.name);
+                            var codeInput = tr.next().find('.usNewCode');
+                            codeInput.val(data.code);
+
+                            var rolesItems = tr.next().find('.usRoles .usRolesItem input');
+                            rolesItems.each(function () {
+                                if (data.roles.indexOf($(this).val()) >= 0) {
+                                    $(this).attr("checked", true);
+                                } else {
+                                    $(this).attr("checked", false);
+                                }
+                            });
+
+                        } else {
+                            as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                        }
+                    });
+                }
+            },
+            saveText: function (btn) {
+                var tr = btn.closest("tr").prev();
+                var nameInput = tr.next().find('.usNewName');
+                var codeInput = tr.next().find('.usNewCode');
+
+                var checkedRoles = [];
+                var rolesItems = tr.next().find('.usRoles .usRolesItem input').filter(":checked");
+                rolesItems.each(function () {
+                    checkedRoles.push($(this).val());
+                });
+                var roleslist = checkedRoles.join(",");
+
+                var params = { pk: tr.attr('data-itemID'), name: nameInput.val(), code: codeInput.val(), roles: roleslist };
+                as.sys.ajaxSend("/Admin/UserCheckSetsInline", params, function (data) {
+                    if (typeof (data) != "object") data = eval('(' + data + ')');
+                    if (data.result) {
+
+                        var nameText = tr.find("td[data-code=name]");
+                        nameText.text(nameInput.val());
+                        var codeText = tr.find("td[data-code=code]");
+                        codeText.text(codeInput.val());
+                        var rolesText = tr.find("td[data-code=roles]");
+                        rolesText.text(roleslist);
+
+                        as.sys.bootstrapAlert("Сохранено", { type: 'success' });
+                        btn.closest("tr").hide(250, function () { $(this).remove(); });
+                    } else {
+                        as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                    }
+                });
+            }
+        };
+
+        $(function () {
+            us.init();
+        });
+    </script>
+}

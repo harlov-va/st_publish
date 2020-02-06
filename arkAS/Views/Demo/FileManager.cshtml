@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "FileManager";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Менеджер файлов</h2>
+
+<div class="as-files-manager" data-code="products" data-itemid="1" data-typeid="*.gif; *.jpg; *.png; *.txt; *.pdf" style="padding-bottom :5px;"></div>
+
+<style type="text/css">
+    .as-files-manager-delete {
+        margin-left: 10px;
+        vertical-align: middle;
+    }
+</style>
+
+<script type="text/javascript">
+    window.auth = "@(Request.Cookies[FormsAuthentication.FormsCookieName] == null ? string.Empty : Request.Cookies[FormsAuthentication.FormsCookieName].Value)";
+    window.ASPSESSID = "@Session.SessionID";
+</script>

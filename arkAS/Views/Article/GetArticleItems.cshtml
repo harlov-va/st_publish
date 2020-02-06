@@ -1,0 +1,31 @@
+﻿@model List<arkAS.BLL.art_news>
+@{
+    ViewBag.Title = "Новости  Ark AS";
+}
+<h1>Новости</h1>
+<p>Это могут быть любые списковые данные. Параметры: картинка, заголовок, превью, полный текст, дата</p>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8 col-md-8 col-lg-8">
+            @foreach (var item in Model)
+            {
+                if (item.title != "")
+                {
+                    <div>
+                        <div class="thumbnail">
+                            @if (item.imgPath != null)
+                            {
+                                <img src="@item.imgPath" alt="Picture">
+                            }
+                                <div class="caption">
+                                <h4>@Html.ActionLink(item.title, "GetArticleItem", new { id = item.id })</h4>
+                                <p>@item.anouns</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+

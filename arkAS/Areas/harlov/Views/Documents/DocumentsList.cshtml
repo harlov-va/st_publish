@@ -1,0 +1,286 @@
+﻿@model arkAS.Areas.harlov.Models.DocumentViewModel
+@{
+    ViewBag.Title = "Список документов";
+    Layout = "~/Areas/harlov/Views/Shared/_CabinetLayout.cshtml";
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+@section css{
+    <style type="text/css">
+        .usStatusItem {
+            display: inline-block;
+            padding-right: 20px;
+        }
+
+        .crd2Table tr tr:first-child {
+            width: 40px;
+            max-width: 40px;
+        }
+    </style>
+}
+<div class="usCont">
+
+</div>
+@section js{
+    <script src="~/js/AS/controls/as.crud2.js" charset="windows-1251"></script>
+    <script src="~/js/chosen/chosen.jquery.min.js" charset="windows-1251"></script>
+    @*<script src="~/Areas/harlov/Content/jquery-3.3.1.min.js"></script>*@
+
+    <script type="text/javascript">
+    var contragentSource = @Html.Raw(js.Serialize((Model.Contragents).Select(x => new { Value = x.id, Text = x.name, Selected = false})));
+    var statusesSource =  @Html.Raw(js.Serialize((Model.DocStatuses).Select(x => new { Value = x.id, Text = x.name, Selected = false})));
+    var typesSourses =  @Html.Raw(js.Serialize((Model.DocTypes).Select(x => new { Value = x.id, Text = x.name, Selected = false})));
+    var docsSourses = @Html.Raw(js.Serialize((Model.Documents).Select(x => new { Value = x.id, Text = x.number, Selected = false})));
+    
+
+        var contragentSourceInline = @Html.Raw(js.Serialize((Model.Contragents).Select(x => new{ value = x.id, text = x.name })));
+        var typeSourceInline = @Html.Raw(js.Serialize((Model.DocTypes).Select(x => new { value =x.id, text = x.name})));
+        var statusesSourceForInline =  @Html.Raw(js.Serialize((Model.DocStatuses).Select(x => new { value = x.id, text = x.name, Selected = false})));
+        var parentDocsSourceInline = @Html.Raw(js.Serialize((Model.Documents).Select(x => new{ value = x.id, text = x.number }).Take(20)));
+
+    var us = {
+        init: function () {
+            as.crud2.init({
+                enableFrozenHeader: false
+            });
+
+            us.initMainTable();
+            $(document).delegate('.usCreateDoc', 'click', function (e) {
+                e.preventDefault();
+                us.createDoc();
+            });
+
+        },
+        initMainTable: function () {
+            as.crud2.initTable({
+                cont: $('.usCont'),
+                immediatelyLoad: true,
+                title: 'Документы',
+                titleTooltip: 'Щелчок на строке с Ctrl открывает комментарии',
+                toolbarAdditional: '<a href="#" class="btn btn-primary usCreateDoc">Создать...</a>',
+                groupOperationsToolbar: '',
+                ajaxURLFormat: '/harlov/Documents/DocumentsList_{0}',
+                inlineAjaxURL: "/harlov/Documents/Documents_changeInline",
+                pageSize: 10,
+                cookiePrefix: "as-crud-docs1-",
+                emptyText: 'Данных нет',
+                filterLinkTitle: 'Найти',
+                showChecksCol: false,
+                showNumsCol: true,
+                showToolbar: true,
+                showExcelExport: false,
+                additionalSort: false,
+                cols: [
+                    { code: "id", title: "ID", tooltip: "Идентификатор", isVisible: false, isPK: true, datatype: "int", isRequired: false, editHide: true, callback: null },
+                    { code: "uniqueCode", title: "uniqueCode", tooltip: "Уникальный идентификатор", isVisible: false, isPK: false, datatype: "int", isRequired: false, editHide: true },
+                    { code: "date", title: "Дата", tooltip: "Дата", isVisible: true, isPK: false, datatype: "date", isRequired: true, format: "{0}", isSort: true, editable: { type: "text", format: "{0}", callback: function (el, newValue) { } } },
+                    { code: "number", title: "Номер", tooltip: "Номер", isVisible: true, isPK: false, datatype: "string", isRequired: true, format: "{0}", isSort: true, callback: null },
+                    { code: "sum", title: "Сумма", tooltip: "Сумма", isVisible: true, isPK: false, datatype: "string", isRequired: true, format: "{0}", isSort: true, editable: { type: "number", format: "{0}", callback: function (el, newValue) { } } },
+                    { code: "description", title: "Описание", tooltip: "Описание", isVisible: true, isPK: false, datatype: "string", isRequired: true, format: "{0}", isSort: false, callback: null },
+                    { code: "link", title: "Ссылка", tooltip: "Ссылка на документ", isVisible: true, isPK: false, datatype: "string", isRequired: true, format: "{0}", isSort: false, editable: { type: "text", format: "{0}", callback: function (el, newValue) { } } },
+                    { code: "isDeleted", title: "isDeleted", tooltip: "isDeleted", isVisible: false, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: false, editHide: true, callback: null },
+                    { code: "contragentName", title: "Контрагент", tooltip: "Контрагент", isVisible: true, isPK: false, datatype: "select", isRequired: true, format: "{0}", isSort: false, editSources: contragentSource, editHide: false, callback: null },
+                    { code: "docStatus", title: "Статус", tooltip: "Статус", isVisible: true, isPK: false, datatype: "select", isRequired: false, format: "{0}", isSort: false, editSources: statusesSource, editHide: false, editable: { type: "select", format: "{0}", source: statusesSourceForInline, callback: function (el, newValue) { } } },
+                    { code: "docTypes", title: "Тип", tooltip: "Тип документа", isVisible: true, isPK: false, datatype: "select", isRequired: true, format: "{0}", isSort: false, editSources: typesSourses, editHide: false, callback: null },
+                    { code: "ParentDocs", title: "Базовый документ", tooltip: "Базовый документ", isVisible: true, isPK: false, datatype: "select", isRequired: true, format: "{0}", isSort: false, editSources: docsSourses, editHide: false, callback: null }
+                ],
+                detailsCallback: function (data) {
+                    var s = "";
+                    if (data.item.link) {
+                        s += "<label>Ссылка на документ</label><br />";
+                        s += "<a href='" + data.item.link + "' target='_blank'>" + data.item.link + "</a>";
+                    } else {
+                        s += "<i>Ссылка на документ не указана</i>";
+                    }
+                    return s;
+                },
+                operations: {
+                    create: true,
+                    remove: true,
+                    edit: false,
+                    comments: false,
+                    other: [
+                        {
+                        linkClass: 'crd2Edit', iconClass: 'glyphicon glyphicon-pencil', title: 'Редактировать запись', callback: us.editDocument
+                        }
+                    ]
+                },
+                predefinedFilterLinks: [
+                ],
+
+                getFilterMakeup: function (filter) {
+                    var s = "";
+                    s +="<input type='text' placeholder='Текст' class='usText form-control' value='" + (filter.text || '') + "' />";
+                    return s;
+                },
+                filter: function () {
+
+                    var filter = {
+                        text: $('.usText').val() || ""
+                    };
+                    return filter;
+                },
+                processRowCallback: function (tr) {
+                }
+            });
+        },
+        createDoc: function () {
+            var s = "";
+
+            s += "<span>Номер</span><input type='text' class='form-control usNewNum' /><br />";
+            s += "<span>Дата</span><input type='text' class='form-control usNewDate asDatepicker' /><br />";
+            s += "<span>Сумма</span><input type='text' class='form-control usNewSum' /><br />";
+            s += "<span>Описание</span><input type='text' class='form-control usNewDescription' /><br />";
+            s += "<span>Ссылка</span><input type='text' class='form-control usNewLink' /><br />";
+
+            s += "<span>Контрагент</span><select class='form-control usNewContragent'>";
+            for (var i = 0; i < contragentSourceInline.length; i++) {
+                var item = contragentSourceInline[i];
+                s += "<option value='" + item.value + "'>" + item.text + "</option>";
+            }
+            s += "</select><br />";
+
+            s += "<span>Тип документа</span><select class='form-control usNewType'>";
+            for (var i = 0; i < typeSourceInline.length; i++) {
+                var item = typeSourceInline[i];
+                s += "<option value='" + item.value + "'>" + item.text + "</option>";
+            }
+            s += "</select><br />";
+
+            s += "<span>Статус документа</span><select class='form-control usNewStatus'>";
+            for (var i = 0; i < statusesSourceForInline.length; i++) {
+                var item = statusesSourceForInline[i];
+                s += "<option value='" + item.value + "'>" + item.text + "</option>";
+            }
+            s += "</select><br />";
+
+            s += "<span>Базовый документ</span><select class='form-control usNewParentDocs'>";
+            for (var i = 0; i < parentDocsSourceInline.length; i++) {
+                var item = parentDocsSourceInline[i];
+                s += "<option value='" + item.value + "'>" + item.text + "</option>";
+            }
+            s += "</select><br />";
+
+            setTimeout(function () {
+                $('.usNewNum').focus();
+            }, 200);
+            as.sys.showDialog("Новый документ", s, "Сохранить", function () {
+                var number = $('.usNewNum').val();
+                var date = $('.usNewDate').val();
+                var sum = $('.usNewSum').val();
+                var description = $('.usNewDescription').val();
+                var link = $('.usNewLink').val();
+                var contragentName = $('.usNewContragent option:selected').val();
+                var docTypes = $('.usNewType option:selected').val();
+                var docStatus = $('.usNewStatus option:selected').val();
+                var ParentDocs = $('.usNewParentDocs option:selected').val();
+
+
+                if (!number) {
+                    as.sys.bootstrapAlert("Укажите, пожалуйста, Номер документа", { type: 'warning' });
+                    $('.usNewNum').focus();
+                    return;
+                }
+                if (!date) {
+                    as.sys.bootstrapAlert("Укажите, пожалуйста, Дату документа", { type: 'warning' });
+                    $('.usNewDate').focus();
+                    return;
+                }
+                var ar = [{ code: 'id', value: 0 },
+                    { code: 'number', value: number || '' },
+                    { code: 'date', value: date || '' },
+                    { code: 'sum', value: sum || '' },
+                    { code: 'description', value: description || '' },
+                    { code: 'link', value: link || '' },
+                    { code: 'contragentName', value: contragentName || '' },
+                    { code: 'docTypes', value: docTypes || '' },
+                    { code: 'docStatus', value: docStatus || '' },
+                    { code: 'ParentDocs', value: ParentDocs || '' },
+                   ];
+                var params = {
+                    fields: ar
+                };
+                as.sys.ajaxSend("/harlov/Documents/DocumentsList_save", params, function (data) {
+                        if (data.result) {
+                            as.sys.bootstrapAlert("Сохранено", { type: 'success' });
+                            as.sys.closeDialog();
+                            as.crud2.getItems({g: $(".usCont").attr("data-g")});
+
+                        } else {
+                            as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                        }
+                    }
+                );
+            });
+        },
+        editDocument: function (e) {
+            e.preventDefault();
+            var itemID = $(this).closest('tr').attr('data-itemid');
+            var tr = $(this).closest('tr');
+            var s = "";
+            s += "<div class='crdEditCont' data-itemID='" + itemID + "'>";
+            //var crudCols = us.tableOptions.cols.length;
+            $.each(as.crud2.options.defaults.cols, function (i, col) {
+                
+                if ($(".crd2Item[data-code=" + col.code + "]", tr).children("a").length) {
+                    var val = tr ? $(".crd2Item[data-code=" + col.code + "]", tr).children("a").html() : "";
+                }
+                else {
+                    var val = tr ? $(".crd2Item[data-code=" + col.code + "]", tr).html() : "";
+                }
+                var hide = "";
+                if (col.isPK || col.editHide) {
+                    hide = " hide ";
+                }
+                if (col.isPK && itemID == 0) {
+                    val = "0";
+                }
+                var m = as.makeup.getControlMakeupByDataType(col.datatype, val, col.editSources || [], "form-control");
+                s += "<div class='crdEditItem " + hide + "' data-code='" + col.code + "' data-datatype='" + col.datatype + "' data-isRequired='" + (col.isRequired ? 1 : 0) + "'>" +
+                    "<span class='gCap'>" + col.title + "</span>" + m +
+                    "</div>";
+            });
+            s += "</div>";
+
+            s += "";
+            as.sys.showDialog(itemID > 0 ? as.resources.crud_showEditDialog_edit : as.resources.crud_showEditDialog_create, s, as.resources.crud_showEditDialog_save, function () {
+                var ar = [];
+                var errorMessage = "";
+                var errorElement = null;
+                $(".crdEditItem").each(function () {
+                    if (!errorMessage) {
+                        var val = as.makeup.getValueFromControlMakeup($(this).attr('data-datatype'), $(this));
+                        ar.push({ code: $(this).attr('data-code'), value: val || '' });
+                        if ($(this).attr("data-isRequired") == "1" && !val) {
+                            errorMessage = as.resources.crud_showEditDialog_errorMessage + $(".gCap", this).text();
+                            errorElement = $(">:input", this);
+                        }
+                    }
+                });
+
+                if (errorMessage) {
+                    as.sys.bootstrapAlert(errorMessage, { type: "warning" });
+                    if (errorElement) errorElement.focus();
+                    return;
+                }
+                var params = {
+                    fields: ar
+                };
+                as.sys.ajaxSend("/harlov/Documents/DocumentsList_save", params, function (data) {
+                    if (typeof (data) != "object") data = eval('(' + data + ')');
+                    if (data.result) {
+                        as.sys.bootstrapAlert(data.msg || as.resources.crud_showEditDialog_savedMessage, { type: 'success' });
+                        as.sys.closeDialog();
+                        as.crud2.getItems({ g: $(".usCont").attr("data-g") });
+                    } else {
+                        as.sys.bootstrapAlert(data.msg || as.resources.crud_showEditDialog_savedErrMessage, { type: 'danger' });
+                    }
+                });
+            });
+        }
+    }
+    $(function () {
+        us.init();
+    });
+
+    </script>
+}

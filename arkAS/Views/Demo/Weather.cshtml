@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "Погода";
+}
+@section css{
+    <style>
+        .input-group {
+            display: block;
+        }
+    </style>
+}
+<script src="~/js/AS/controls/mics/as.weather.js"></script>
+
+
+<h1>Погода</h1>
+<div class="well">
+    Данный компонент показывает погоду
+</div>
+
+<form class="form-inline" action="javascript:void(null);" onsubmit="findCity(); return false">
+    <div class="form-group">
+        <div class="input-group">
+            <input id="search" type="text" class="form-control" placeholder="город" />
+            <span class="input-group-btn">
+                <input class="btn btn-primary" type="submit" value="Поиск" />
+            </span>
+        </div>
+    </div>
+</form>
+
+<br />
+<div id="result"></div>
+
+@section js
+{
+    <script>
+        $(function () {
+            as.weather.init({ appendTo: "#result" });
+            as.weather.getLocation(function (location) {
+                as.weather.loadByLocation(location.longitude, location.latitude);
+            });
+        });
+
+        function findCity() {
+            as.weather.loadByCity($("#search").val());
+        }
+    </script>
+}

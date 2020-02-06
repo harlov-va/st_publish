@@ -1,0 +1,116 @@
+﻿
+    /*-------------- file editor -------------------------------*/
+    .feUpload{ min-height: 30px; }
+    .feToolbar {
+        float: right; 
+        width: 450px; 
+        text-align: right; 
+        padding-top: 3px;
+        font-size: 11px;
+        margin-top: -5px;
+        line-height: 15px;
+    }
+
+        .feToolbar a {
+            display: inline-block;
+            width: 200px;
+        }
+
+    .feDeleteFile{ display: inline-block; margin-left: 20px;}
+    
+    .feDirs{ float: left; width: 170px; overflow: auto; height: 280px; border-right: solid 1px #eee;}
+    
+    .feDirs ul,.feDirs li{  list-style: none; margin: 0; padding: 0;}
+    .feRoot{ position: relative; left: -10px; text-transform: uppercase;}
+    .feDirs li a{ display: inline-block; margin: 1px 2px; padding: 2px 7px; width: 120px;}
+    .feDirs li a:hover{ font-weight: bold;}
+    
+    .feFiles{ margin-left: 140px; overflow: auto; height: 250px; }
+    .feFile{ display: inline-block; width: 86px; height: 120px;  margin: 10px;  border: solid 2px #fff; margin-bottom: 20px; padding: 3px; position: relative; vertical-align: top; text-align: center;}
+    .feFile>a.feFileLink>img{ max-height: 75px; max-width: 75px;   text-align: center;  vertical-align: middle; }
+    .feFile>a.feFileLink>span{ display: block;  text-align: center; font-weight: bold; width: 75px; overflow: hidden; min-height: 30px;}
+    .feSelDir{ color:red;  font-weight: bold;}
+    .feSelFile{  border: solid 3px #169;}
+    .feZoom, .feOpen, .feDownload{ position: absolute; top: 2px; right: 2px;}
+    .feDesc{ margin-top:10px; clear: left; }
+    .feDesc input[type=text]{ width: 400px; margin-left: 30px;}
+    .feAddFolder{ display: inline-block; width: 120px; margin-right: 35px;}
+    .feEditFileText{ width: 900px; height: 500px; }
+    
+    /*-------------- forms -------------------------------*/
+     .ui-state-highlight { height: 1.5em; line-height: 1.2em; background: #fff5d6; }
+     .fmCont{ min-height:670px;}
+     .fmCont textrea, .fmCont input[type=text], .fmCont select{ width: 180px;}
+     .fmFormAction{ width: 350px !important;}
+     .fmEmails, .fmPhones, .fmTitle{ width: 650px !important;} 
+    .fmForm { list-style-type: none; margin: 0; padding: 0; width: 500px; margin: 10px 0; }
+  .fmForm li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; position:relative; }
+  html>body .fmForm li { line-height: 1.2em; }
+  .fmDeleteElement{ position: absolute; right:10px; top: 2px;}
+  .fmSel{ background: #bbb; border: solid 1px #444;}
+  
+ 
+    .fmProps{ float: right; width: 220px; border: solid 1px #eee; border-radius: 10px; padding: 15px; margin-top: 5px;}    
+    .fmProp{ margin: 10px 0;}
+    .fmProp textarea, .fmProp input[type=text]{ width: 180px; }
+    
+    .fmRedStar{ font-size: 16px; color:Red; display: inline-block; margin-left: 4px;}    
+    .fmValuesCont { display: inline-block;}
+    .fmValuesItem{ display: inline-block; margin-right: 20px;}
+    
+    .frmCont textrea, .frmCont input[type=text], .frmCont select{ width: 180px;}    
+    .frmItem{ margin: 8px 0;}
+    .frmButtonCont{ margin: 10px 0;}
+    .frmFormSubmit{ }
+    
+
+    .tmDays, .tmHours, .tmMinutes, .tmSeconds{ width: 60px; }
+ .tmTimerCont2{ height: 80px;}
+    
+    /*-------------- slider -------------------------------*/
+        .slItems{ min-height: 200px;}
+      
+    .slItems .slItem{ display: none;}
+    .slItems  div.slCurItem{ display: block;}
+    
+    .slPaging{  float: right; margin-right: 10px;}
+    .slPage{  background: #eee; border: solid 1px #ccc; padding: 4px; margin: 2px; width: 30px; text-align: center;}
+    .slPage:hover{ text-decoration: none;}
+    .slCurPage{  background: #555; font-weight: bold; color: #fff;  border: solid 1px #aaa;}
+    
+    .slNotSaved{ background: #f8efc4; }
+    .slSaved{ background: #c1e6b7; }
+    
+    
+    /*----------------background----------------------------*/
+    .bsVertPosition2, .bsHorPosition2{ width: 40px !important; }
+    .bsColor{ width: 80px !important;}
+    /*----------------------  FAQ ----------------------------*/     
+   
+        .fqItems{ min-height: 200px;}
+      
+    .fqItems .fqItem{ display: none;}
+    .fqItems  div.fqCurItem{ display: block;}
+    
+    .fqPaging{  float: right; margin-right: 10px;}
+    .fqPage{  background: #eee; border: solid 1px #ccc; padding: 4px; margin: 2px; width: 30px; text-align: center;}
+    .fqPage:hover{ text-decoration: none;}
+    .fqCurPage{  background: #555; font-weight: bold; color: #fff;  border: solid 1px #aaa;}
+    
+    .fqNotSaved{ background: #f8efc4; }
+    .fqSaved{ background: #c1e6b7; }
+   
+    
+    .fqName>span{ display: inline-block; margin-right: 20px; width: 650px;}
+    .fqAnswer>span{ display: inline-block; margin-right: 20px; width: 650px; min-height: 100px;}
+    
+     .fqFrontCont .fqAnswer{ display: none; }
+   .fqFrontCont  li{ list-style-type: none;} 
+   .fqName{ cursor: pointer;}
+  .CodeMirror { font-size: medium !important;}
+  
+  
+.shrShareCont{ min-height: 250px;}
+.shrResult{ margin-left: 170px;}
+.shrTypesCont{ margin: 10px 0; margin-left: 170px;} 
+.shrTypesCont label { display: inline-block; margin-right: 20px;}

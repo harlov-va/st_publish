@@ -1,0 +1,151 @@
+﻿@model arkAS.Areas.harlov.Models.MailViewModel
+@{
+    ViewBag.Title = "Список почтовых отправлений";
+    Layout = "~/Areas/harlov/Views/Shared/_CabinetLayout.cshtml";
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+
+<div class='mailCont'>
+</div>
+<select class='dmDeliverySystemTemplate hide'>
+    <option value="0">Не выбрано</option>
+    @foreach (var item in Model.DeliverySystems)
+    {
+        <option value='@item.id'>@item.name</option>
+    }
+</select>
+
+<div class='dmStatusesTemplate hide'>
+    <input type="checkbox" data-code='nostatus' value='0' /><label>Не установлен</label>&nbsp;&nbsp;&nbsp;&nbsp;
+    @foreach (var item in Model.MailStatuses)
+    {
+        <input type="checkbox" data-code='@item.code' value='@item.id' id='svOurSup@(item.id)' /><label for='svOurSup@(item.id)'>@item.name</label>@Html.Raw("&nbsp; &nbsp; &nbsp; &nbsp;")
+    }
+</div>
+
+@section js{
+    <script type="text/javascript">
+        var delSystemsSource = @Html.Raw(js.Serialize((Model.DeliverySystems).Select(x => new { Value = x.id, Text = x.name, Selected = false})));
+        var statusesSource =  @Html.Raw(js.Serialize((Model.MailStatuses).Select(x => new { Value = x.id, Text = x.name, Selected = false})));
+        var delSystemsSourceForInline = @Html.Raw(js.Serialize((Model.DeliverySystems).Select(x => new { value = x.id, text = x.name, Selected = false})));
+        var statusesSourceForInline =  @Html.Raw(js.Serialize((Model.MailStatuses).Select(x => new { value = x.id, text = x.name, Selected = false})));       
+        var asApp = {
+            init: function () {
+                asApp.initMainTable();
+            },
+
+            initMainTable: function () {
+                as.crud.init({
+                    cont: $('.mailCont'),
+                    title: 'Список почтовых отправлений',
+                    toolbarAdditional: '',
+                    groupOperationsToolbar: '',
+                    ajaxURLFormat: '/harlov/Mail/MailsList_{0}',
+                    inlineAjaxURL: "/harlov/Mail/Mails_changeInline",
+                    pageSize: 5,
+                    cookiePrefix: 'as-crud-h-mails',
+                    emptyText: 'Нет элементов',
+                    createLinkTitle: 'Создать',
+                    filterLinkTitle: 'Найти',
+                    filterTitle: 'Фильтрация данных',
+                    showChecksCol: false,
+                    showNumsCol: true,
+                    showToolbar: true,
+                    showColSettings: false,
+                    showReplaceTool: false,
+                    showPDFExport: false,
+                    showExcelExport: false,
+                    additionalSort: false,
+                    cols: [
+                        { code: "id", title: "ID", tooltip: "Идентификатор", isVisible: false, isPK: true, datatype: "int", isRequired: false, editHide: true,  callback: null},
+                         { code: "uniqueCode", title: "uniqueCode", tooltip: "Уникальный идентификатор", isVisible: false, isPK: false, datatype: "int", isRequired: false, editHide: true },
+                        { code: "date", title: "Дата", tooltip: "Дата", isVisible: true, isPK: false, datatype: "date", isRequired: true, format: "{0}", isSort: true, editHide: false},
+                        { code: "fromSender", title: "Отправитель", tooltip: "Отправитель", isVisible: true, isPK: false, datatype: "string", isRequired: true, format: "{0}", isSort: true, callback: null },
+                         { code: "toRecipient", title: "Получатель", tooltip: "Получатель", isVisible: true, isPK: false, datatype: "string", isRequired: true, format: "{0}", isSort: true, callback: null },
+                        { code: "description", title: "Описание", tooltip: "Описание", isVisible: true, isPK: false, datatype: "string", isRequired: true, format: "{0}", isSort: false, callback: null },
+                        { code: "trackNumber", title: "Трек номер", tooltip: "Трек Номер", isVisible: true, isPK: false, datatype: "string", isRequired: true, format: "{0}", isSort: false, callback: null },
+                        { code: "backTrackNumber", title: "Обр. трек номер", tooltip: "Обратный трек номер", isVisible: false, isPK: false, datatype: "string", isRequired: true, format: "{0}", isSort: false, callback: null },
+                        { code: "backDateRecipient", title: "Дата обр. отправки", tooltip: "Дата обр. отправки", isVisible: false, isPK: false, datatype: "date", isRequired: true, format: "{0}", isSort: true, editHide: false},
+                        { code: "delSystemsName", title: "Почтовая система", tooltip: "Почтовая система", isVisible: true, isPK: false, datatype: "select", isRequired: true, format: "{0}", isSort: false, editSources: delSystemsSource, editHide: false, callback: null , editable: { type: "select", format: "{0}", source: delSystemsSourceForInline, callback: function (el, newValue) { } } },
+                        {code: "mailStatuses", title: "Статус", tooltip: "Статус почтового отправления", isVisible: true, isPK: false, datatype: "select", isRequired: false, format: "{0}", isSort: false,  editSources: statusesSource,  editHide: false, editable: { type: "select", format: "{0}", source: statusesSourceForInline, callback: function (el, newValue) { } } },
+                    ],
+                    operations: {
+                        create: true,
+                        remove: true,
+                        edit: true,
+                        other: [
+                            {
+                                linkClass: 'crdTo2', iconClass: 'fa fa-info-circle', title: 'Просмотреть логи по записи', callback: asApp.showDocLogs
+                            }
+                        ]
+                    },
+                    getFilterMakeup: function (filter) {
+                        var s = [];
+                        s.push( "<div class='form-group'><label  for='usText'>Отправитель:</label><input type='text' placeholder='Имя отправителя' class='form-control' id = 'usText' value='" + (filter.text || '') + "' /></div>");
+
+                        $('.dmDeliverySystemTemplate option').removeAttr('selected');
+                        $('.dmDeliverySystemTemplate option[value=' + filter.delSysID + ']').attr('selected', 'selected');
+                        s.push("<label  for='delSys'>Почтовая система:</label><select class='form-control' id = 'delSys'>" + $('.dmDeliverySystemTemplate').html() + "</select><br />");
+                      
+                        $('.dmStatusesTemplate input').removeAttr('checked');
+                        if (filter.statusIDs) {
+                            $.each(filter.statusIDs, function (i, item) {
+                                $('.dmStatusesTemplate input[value=' + item + ']').attr('checked', 'checked');
+                            })
+                        }
+                        s.push("<label for='dmStatuses'>Статус:</label><div id='dmStatuses'>" + $('.dmStatusesTemplate').html() + "</div><br />");
+
+                        return s.join("");
+                    },
+                    filter: function () {
+                        var statusIDs = [];
+                        $('#dmStatuses input:checked').each(function () {
+                            statusIDs.push($(this).attr('value'));
+                        });
+                        var filter = {
+                            text: $('#usText').val() || "",
+                            delSysID: $('#delSys option:selected').val(),
+                            statusIDs: statusIDs
+                        };
+                        return filter;
+                    }
+                });
+            },
+            showDocLogs : function () {
+                var btn = $(this);
+                var tr = btn.closest('tr');
+                if (tr.next().hasClass('crdAddRow')) {
+                    tr.next().hide(50, function () { $(this).remove() });
+                }
+                else {
+                    var documentID = tr.attr('data-itemid');
+                    var s = "<tr class='crdAddRow'><td colspan='13'>"
+                    var params = {id : documentID};
+                    as.sys.ajaxSend('/harlov/Mail/GetMailLogs', params, function(data) {
+
+                        if (data.items) {
+                            s+="<table class='table'><thead><tr><th>Дата</th><th>Запись</th><th>Пользователь</th></thead>";
+                            s+="<tbody>";
+                            for (var i=0; i<data.items.length;i++)
+                            {
+                                s+="<tr><td>"+data.items[i].date+"</td>";
+                                s+="<td>"+data.items[i].notice+"</td>";
+                                s+="<td>"+data.items[i].userName+"</td></tr>";
+                            }
+                            s+="</td></tr>";
+                            s+="</tbody></table>";
+                        }
+                        else {
+                            as.sys.bootstrapAlert("Возникли ошибки при выполнении операции!", { type: 'danger' });
+                        }
+                        $(s).insertAfter(tr);
+                    });
+                }
+            }
+        }
+        $(function () {
+            asApp.init();
+        });
+    </script>
+}
+

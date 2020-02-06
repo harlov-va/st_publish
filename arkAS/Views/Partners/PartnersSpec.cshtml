@@ -1,0 +1,65 @@
+﻿@using arkAS.Models;
+@{
+    ViewBag.Title = "Специализации партнеров";
+    Layout = "~/Views/Shared/_CabinetLayout.cshtml";
+}
+
+<div class="PartnersSpec">
+</div>
+
+@section js{
+    <script type="text/javascript">
+
+        var spec = {
+            init: function () {
+                spec.initMainTable();
+            },
+            initMainTable: function () {
+                as.crud.init({
+                    cont: $(".PartnersSpec"),
+                    title: "Специализации партнеров",
+                    toolbarAdditional: "",
+                    groupOperationsToolbar: "",
+                    ajaxURLFormat: "/Partners/PartnersSpec_{0}",
+                    inlineAjaxURL: "/Partners/PartnersSpecInline",
+                    pageSize: 150,
+                    cookiePrefix: "as-crud-specTable-",
+                    emptyText: "Специализации не заданы",
+                    createLinkTitle: "Создать",
+                    filterLinkTitle: "",
+                    filterTitle: "",
+                    showChecksCol: false,
+                    showNumsCol: false,
+                    showToolbar: true,
+                    showColSettings: false,
+                    showReplaceTool: false,
+                    showExcelExport: false,
+                    additionalSort: false,
+                    cols: [
+                        { code: "id", title: "ID", tooltip: "Идентификатор", isVisible: false, isPK: true, datatype: "int", isRequired: false },
+                        { code: "name", title: "Название", tooltip: "Название", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null },
+                    ],
+                    operations: {
+                        create: true,
+                        remove: true,
+                        edit: true,
+                        other: [
+                        ]
+                    },
+                    getFilterMakeup: function (filter) {
+                        var s = [];
+                        return s.join("");
+                    },
+                    filter: function () {
+                        return {};
+                    },
+                    getItemsCallback: function () {
+                    }
+                });
+            }
+        }
+        $(function () {
+            spec.init();
+        });
+    </script>
+}

@@ -1,0 +1,131 @@
+﻿@{
+    ViewBag.Title = "Экспорт в Excel и PDF";
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+<div class='dmCont'>
+</div>
+
+<select class='dmClientsTemplate hide'>
+    <option value="0">Не выбрано</option>
+    @foreach (var item in (List<arkAS.BLL.crm_clients>)ViewBag.Clients)
+    {
+        <option value='@item.id'>@item.fio</option>
+    }
+</select>
+
+
+<div class='dmStatusesTemplate hide'>
+    <input type="checkbox" data-code='nostatus' value='0' /><label>Не установлен</label>&nbsp;&nbsp;&nbsp;&nbsp;
+    @foreach (var item in (List<arkAS.BLL.crm_orderStatuses>)ViewBag.OrderStatuses)
+    {
+        <input type="checkbox" data-code='@item.code' value='@item.id' id='svOurSup@(item.id)' /><label for='svOurSup@(item.id)'>@item.name</label>@Html.Raw("&nbsp; &nbsp; &nbsp; &nbsp;")
+    }
+</div>
+
+<hr />
+<h1>Для обычной HTML-таблицы с помощью as.export.js</h1>
+
+<table class="as-export table table-bordered table-hover" data-type="excel pdf" data-title="Новая таблица" data-subtitle="Для проверки функциональности экспорта">
+    <thead>
+        <tr><th>Столбец 1</th><th>Столбец 2</th><th>Столбец 3</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>Столбец 11</td><td>Столбец 12</td><td>Столбец 13</td></tr>
+        <tr><td>Столбец 21</td><td>Столбец 22</td><td>Столбец 23</td></tr>
+        <tr><td>Столбец 31</td><td>Столбец 32</td><td>Столбец 33</td></tr>
+        <tr><td>Столбец 41</td><td>Столбец 42</td><td>Столбец 43</td></tr>
+    </tbody>
+
+</table>
+
+
+@Html.Raw(arkAS.BLL.Core.CoreManager.GetMainFormLink())
+
+
+@section js{
+<script type="text/javascript">
+    var statusesSource = @Html.Raw(js.Serialize(((List<arkAS.BLL.crm_orderStatuses>)ViewBag.OrderStatuses).Select(x => new { value = x.id, text = x.name })));
+    var asdemo = {
+        init: function () {
+            asdemo.initMainTable();
+        },
+        initMainTable: function () {
+            as.crud.init({
+                cont: $('.dmCont'),
+                title: 'Для таблицы созданной через as.crud.js',
+                toolbarAdditional: 'Возможность экспорта в Excel и PDF. Выгружаются только видимые столбцы. &nbsp;&nbsp;&nbsp;',
+                groupOperationsToolbar: '',
+                ajaxURLFormat: '/Demo/ExportExcelTable_{0}',
+                inlineAjaxURL: "",
+                pageSize: 15,
+                cookiePrefix: "as-crud-expertExcelTable-",
+                emptyText: 'Нет элементов',
+                createLinkTitle: 'Создать',
+                filterLinkTitle: 'Найти',
+                filterTitle: 'Фильтрация данных',
+                showChecksCol: false,
+                showNumsCol: true,
+                showToolbar: true,
+                showColSettings: true,
+                showReplaceTool: false,
+                showExcelExport: true,
+                showPDFExport: true,
+                additionalSort: false,
+                cols: [
+                    { code: "id", title: "ID", tooltip: "Идентификатор", isVisible: false, isPK: true, datatype: "int", isRequired: false },
+                    { code: "created", title: "Дата создания", tooltip: "Дата создания", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null },
+                    { code: "orderNum", title: "Номер  заказа", tooltip: "Номер  заказая", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null },
+                    { code: "statusName", title: "Статус", tooltip: "Статус", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null },
+                    { code: "statusID", title: "ID статуса", tooltip: "ID статуса", isVisible: false, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null },
+                    { code: "clientName", title: "Клиент", tooltip: "Клиент", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null },
+                    { code: "clientID", title: "ID клиента", tooltip: "ID клиента", isVisible: false, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null }
+                ],
+                operations: {
+                    create: false,
+                    remove: false,
+                    edit: false,
+                    other: [
+                    ]
+                },
+                getFilterMakeup: function (filter) {
+                    var s = [];
+                    s.push("<span class='gCap'>Номер заказ</span><input type='text' class='dmOrderNum' value='" + (filter.orderNum || '') + "' /><br /><br />");
+                    $('.dmClientsTemplate option').removeAttr('selected');
+                    $('.dmClientsTemplate option[value=' + filter.clientID + ']').attr('selected', 'selected');
+                    s.push("<span class='gCap'>Клиент</span><select class='dmClients'>" + $('.dmClientsTemplate').html() + "</select><br /><br />");
+
+                    $('.dmStatusesTemplate input').removeAttr('checked');
+                    if (filter.statusIDs) {
+                        $.each(filter.statusIDs, function (i, item) {
+                            $('.dmStatusesTemplate input[value=' + item + ']').attr('checked', 'checked');
+                        })
+                    }
+                    s.push("<span class='gCap'>Статус</span><div class='dmStatuses'>" + $('.dmStatusesTemplate').html() + "</div><br /><br />");
+                    return s.join("");
+                },
+                filter: function () {
+                    var statusIDs = [];
+                    $('.dmStatuses input:checked').each(function () {
+                        statusIDs.push($(this).attr('value'));
+                    });
+
+                    var filter = {
+                        orderNum: $('.dmOrderNum').val() || "",
+                        clientID: $('.dmClients option:selected').val(),
+                        statusIDs: statusIDs
+                    };
+                    return filter;
+                }
+            });
+        }
+    }
+    $(function () {
+        asdemo.init();
+    });
+</script>
+
+
+
+}
+
+

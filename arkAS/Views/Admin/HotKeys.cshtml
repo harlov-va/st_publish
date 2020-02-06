@@ -1,0 +1,458 @@
+﻿@using arkAS.Models;
+@{
+    Layout = arkAS.BLL.Core.CoreManager.GetCabinetLayout();
+    ViewBag.Title = "Горячие клавишы";
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+<style type="text/css">
+    .usRolesItem {
+        display: inline-block;
+        font-size: 12px;
+    }
+</style>
+
+<div class='usHotKeysTemplate hide'>
+    @foreach (var item in Roles.GetAllRoles())
+    {
+        <div class="usRolesItem">
+            <input type="checkbox" value='@item' id='svOurSup@(item)' /><label for='svOurSup@(item)'>@item</label>@Html.Raw("&nbsp; &nbsp; &nbsp; &nbsp;")
+        </div>
+    }
+</div>
+
+<select class="usHotKeysList hide">
+    <option value="0">Не выбрано</option>
+    <option value="8">backspace</option>
+    <option value="9">tab</option>
+    <option value="13">enter</option>
+    <option value="19">pause/break</option>
+    <option value="20">caps lock</option>
+    <option value="27">escape</option>
+    <option value="33">page up</option>
+    <option value="34">page down</option>
+    <option value="35">end</option>
+    <option value="36">home</option>
+    <option value="37">left arrow</option>
+    <option value="38">up arrow</option>
+    <option value="39">right arrow</option>
+    <option value="40">down arrow</option>
+    <option value="45">insert</option>
+    <option value="46">delete</option>
+    <option value="48">0</option>
+    <option value="49">1</option>
+    <option value="50">2</option>
+    <option value="51">3</option>
+    <option value="52">4</option>
+    <option value="53">5</option>
+    <option value="54">6</option>
+    <option value="55">7</option>
+    <option value="56">8</option>
+    <option value="57">9</option>
+    <option value="65">a</option>
+    <option value="66">b</option>
+    <option value="67">c</option>
+    <option value="68">d</option>
+    <option value="69">e</option>
+    <option value="70">f</option>
+    <option value="71">g</option>
+    <option value="72">h</option>
+    <option value="73">i</option>
+    <option value="74">j</option>
+    <option value="75">k</option>
+    <option value="76">l</option>
+    <option value="77">m</option>
+    <option value="78">n</option>
+    <option value="79">o</option>
+    <option value="80">p</option>
+    <option value="81">q</option>
+    <option value="82">r</option>
+    <option value="83">s</option>
+    <option value="84">t</option>
+    <option value="85">U</option>
+    <option value="86">v</option>
+    <option value="87">w</option>
+    <option value="88">x</option>
+    <option value="89">y</option>
+    <option value="90">z</option>
+    <option value="91">left window key</option>
+    <option value="92">right window key</option>
+    <option value="93">select key</option>
+    <option value="96">numpad 0</option>
+    <option value="97">numpad 1</option>
+    <option value="98">numpad 2</option>
+    <option value="99">numpad 3</option>
+    <option value="100">numpad 4</option>
+    <option value="101">numpad 5</option>
+    <option value="102">numpad 6</option>
+    <option value="103">numpad 7</option>
+    <option value="104">numpad 8</option>
+    <option value="105">numpad 9</option>
+    <option value="106">multiply</option>
+    <option value="107">add</option>
+    <option value="109">subtract</option>
+    <option value="110">decimal point</option>
+    <option value="111">divide</option>
+    <option value="112">f1</option>
+    <option value="113">f2</option>
+    <option value="114">f3</option>
+    <option value="115">f4</option>
+    <option value="116">f5</option>
+    <option value="117">f6</option>
+    <option value="118">f7</option>
+    <option value="119">f8</option>
+    <option value="120">f9</option>
+    <option value="121">f10</option>
+    <option value="122">f11</option>
+    <option value="123">f12</option>
+    <option value="144">num lock</option>
+    <option value="145">scroll lock</option>
+    <option value="186">semi-colon</option>
+    <option value="187">equal sign</option>
+    <option value="188">comma</option>
+    <option value="189">dash</option>
+    <option value="190">period</option>
+    <option value="191">forward slash</option>
+    <option value="192">grave accent</option>
+    <option value="219">open bracket</option>
+    <option value="220">back slash</option>
+    <option value="221">close braket</option>
+    <option value="222">single quote</option>
+</select>
+
+<div class='usCont'>
+</div>
+
+@section js{
+    @Scripts.Render("~/hotKeys")
+    <script type="text/javascript">
+        var us = {
+            init: function () {
+                us.initMainTable();
+                us.initHotKeys();
+                $(document).delegate('.usCreateHotKey', 'click', function (e) {
+                    e.preventDefault();
+                    us.createHotKey();
+                });
+                $(document).delegate('.usCont .usHotKeyRoles input[type=checkbox]', 'change', function (e) {
+                    e.preventDefault();
+                    var tr = $(this).closest('tr');
+                    var params = {
+                        pk: $('td[data-code=Id]', tr).text(),
+                        value: $(this).val() + "=" + $(this).is(":checked"), //turnON
+                        name: "roles"
+                    };
+                    as.sys.ajaxSend("/Admin/HotKeyInline", params, function (data) {
+                        if (typeof (data) != "object") data = eval('(' + data + ')');
+
+                        if (data.result) {
+                            as.sys.bootstrapAlert("Роль изменена", { type: 'success' });
+                        } else {
+                            as.sys.bootstrapAlert("Возникли ошибки при выполнении операции!", { type: 'danger' });
+                        }
+                    });
+                });
+                $(document).delegate('.usCont .usHotKeyisAlt', 'change', function (e) {
+                    e.preventDefault();
+                    var tr = $(this).closest('tr');
+                    var params = {
+                        pk: $('td[data-code=Id]', tr).text(),
+                        value: $(this).is(":checked"), //turnON
+                        name: "isAlt"
+                    };
+                    as.sys.ajaxSend("/Admin/HotKeyInline", params, function (data) {
+                        if (typeof (data) != "object") data = eval('(' + data + ')');
+
+                        if (data.result) {
+                            as.sys.bootstrapAlert("Флаг изменен", { type: 'success' });
+                        } else {
+                            as.sys.bootstrapAlert("Возникли ошибки при выполнении операции!", { type: 'danger' });
+                        }
+                    });
+                });
+                $(document).delegate('.usCont .usHotKeyisCtrl', 'change', function (e) {
+                    e.preventDefault();
+                    var tr = $(this).closest('tr');
+                    var params = {
+                        pk: $('td[data-code=Id]', tr).text(),
+                        value: $(this).is(":checked"), //turnON
+                        name: "isCtrl"
+                    };
+                    as.sys.ajaxSend("/Admin/HotKeyInline", params, function (data) {
+                        if (typeof (data) != "object") data = eval('(' + data + ')');
+
+                        if (data.result) {
+                            as.sys.bootstrapAlert("Флаг изменен", { type: 'success' });
+                        } else {
+                            as.sys.bootstrapAlert("Возникли ошибки при выполнении операции!", { type: 'danger' });
+                        }
+                    });
+                });
+                $(document).delegate('.usCont .usHotKeyisShift', 'change', function (e) {
+                    e.preventDefault();
+                    var tr = $(this).closest('tr');
+                    var params = {
+                        pk: $('td[data-code=Id]', tr).text(),
+                        value: $(this).is(":checked"), //turnON
+                        name: "isShift"
+                    };
+                    as.sys.ajaxSend("/Admin/HotKeyInline", params, function (data) {
+                        if (typeof (data) != "object") data = eval('(' + data + ')');
+
+                        if (data.result) {
+                            as.sys.bootstrapAlert("Флаг изменен", { type: 'success' });
+                        } else {
+                            as.sys.bootstrapAlert("Возникли ошибки при выполнении операции!", { type: 'danger' });
+                        }
+                    });
+                });
+            },
+            initHotKeys: function () {
+                as.hotKeys.init({
+                    GetHotKeysLink: '/Admin/HotKeysForUser',
+                    AccessLink: '/Admin/Access'
+                });
+            },
+            initMainTable: function () {
+                as.crud.init({
+                    cont: $('.usCont'),
+                    title: 'Горячие кнопки',
+                    toolbarAdditional: '<a href="#" class="btn btn-primary usCreateHotKey">Создать горячую кнопку</a>',
+                    groupOperationsToolbar: '',
+                    ajaxURLFormat: '/Admin/HotKeys_{0}',
+                    inlineAjaxURL: "/Admin/HotKeyInline",
+                    pageSize: 150,
+                    cookiePrefix: "as-crud-hotkeyTable-",
+                    emptyText: 'Нет горячих клавиш',
+                    createLinkTitle: 'Создать',
+                    filterLinkTitle: 'Найти',
+                    filterTitle: 'Фильтрация данных',
+                    showChecksCol: false,
+                    showNumsCol: false,
+                    showToolbar: true,
+                    showColSettings: false,
+                    showReplaceTool: false,
+                    showExcelExport: false,
+                    additionalSort: false,
+                    cols: [
+                        { code: "Id", title: "ID", tooltip: "Идентификатор", isVisible: false, isPK: true, datatype: "int", isRequired: false },
+                        {
+                            code: "keyCode", title: "Код клавиш", tooltip: "Код клафиш", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: false,
+                            //editable: { type: "text", format: "{0}", callback: function (el, newValue) { } }
+                            editable: {
+                                type: "select", source:
+                                [
+                                    { value: "8", text: "backspace" },
+                                    { value: "9", text: "Tab" },
+                                    { value: "13", text: "enter" },
+                                    { value: "19", text: "pause/break" },
+                                    { value: "20", text: "caps lock" },
+                                    { value: "27", text: "escape" },
+                                    { value: "33", text: "page up" },
+                                    { value: "34", text: "page down" },
+                                    { value: "35", text: "end" },
+                                    { value: "36", text: "home" },
+                                    { value: "37", text: "left arrow" },
+                                    { value: "38", text: "up arrow" },
+                                    { value: "39", text: "right arrow" },
+                                    { value: "40", text: "down arrow" },
+                                    { value: "45", text: "insert" },
+                                    { value: "46", text: "delete" },
+                                    { value: "48", text: "0" },
+                                    { value: "49", text: "1" },
+                                    { value: "50", text: "2" },
+                                    { value: "51", text: "3" },
+                                    { value: "52", text: "4" },
+                                    { value: "53", text: "5" },
+                                    { value: "54", text: "6" },
+                                    { value: "55", text: "7" },
+                                    { value: "56", text: "8" },
+                                    { value: "57", text: "9" },
+                                    { value: "65", text: "A" },
+                                    { value: "66", text: "B" },
+                                    { value: "67", text: "C" },
+                                    { value: "68", text: "D" },
+                                    { value: "69", text: "E" },
+                                    { value: "70", text: "F" },
+                                    { value: "71", text: "G" },
+                                    { value: "72", text: "H" },
+                                    { value: "73", text: "I" },
+                                    { value: "74", text: "J" },
+                                    { value: "75", text: "K" },
+                                    { value: "76", text: "L" },
+                                    { value: "77", text: "M" },
+                                    { value: "78", text: "N" },
+                                    { value: "79", text: "O" },
+                                    { value: "80", text: "P" },
+                                    { value: "81", text: "Q" },
+                                    { value: "82", text: "R" },
+                                    { value: "83", text: "S" },
+                                    { value: "84", text: "T" },
+                                    { value: "85", text: "U" },
+                                    { value: "86", text: "V" },
+                                    { value: "87", text: "W" },
+                                    { value: "88", text: "X" },
+                                    { value: "89", text: "Y" },
+                                    { value: "90", text: "Z" },
+                                    { value: "91", text: "left window key" },
+                                    { value: "92", text: "right window key" },
+                                    { value: "93", text: "select key" },
+                                    { value: "96", text: "numpad 0" },
+                                    { value: "97", text: "numpad 1" },
+                                    { value: "98", text: "numpad 2" },
+                                    { value: "99", text: "numpad 3" },
+                                    { value: "100", text: "numpad 4" },
+                                    { value: "101", text: "numpad 5" },
+                                    { value: "102", text: "numpad 6" },
+                                    { value: "103", text: "numpad 7" },
+                                    { value: "104", text: "numpad 8" },
+                                    { value: "105", text: "numpad 9" },
+                                    { value: "106", text: "multiply" },
+                                    { value: "107", text: "add" },
+                                    { value: "109", text: "subtract" },
+                                    { value: "110", text: "decimal point" },
+                                    { value: "111", text: "divide" },
+                                    { value: "112", text: "f1" },
+                                    { value: "113", text: "f2" },
+                                    { value: "114", text: "f3" },
+                                    { value: "115", text: "f4" },
+                                    { value: "116", text: "f5" },
+                                    { value: "117", text: "f6" },
+                                    { value: "118", text: "f7" },
+                                    { value: "119", text: "f8" },
+                                    { value: "120", text: "f9" },
+                                    { value: "121", text: "f10" },
+                                    { value: "122", text: "f11" },
+                                    { value: "123", text: "f12" },
+                                    { value: "144", text: "num lock" },
+                                    { value: "145", text: "scroll lock" },
+                                    { value: "186", text: "semi-colon" },
+                                    { value: "187", text: "equal sign" },
+                                    { value: "188", text: "comma" },
+                                    { value: "189", text: "dash" },
+                                    { value: "190", text: "period" },
+                                    { value: "191", text: "forward slash" },
+                                    { value: "192", text: "grave accent" },
+                                    { value: "219", text: "open bracket" },
+                                    { value: "220", text: "back slash" },
+                                    { value: "221", text: "close braket" },
+                                    { value: "222", text: "single quote" }
+                                ], format: "{0}", callback: function (el, newValue) { }
+                            }
+                        },
+                        { code: "isAlt", title: "Alt", tooltip: "Флаг Alt", isVisible: true, isPK: false, datatype: "bool", isRequired: false, format: "{0}", isSort: false, callback: null },
+                        { code: "isCtrl", title: "Ctrl", tooltip: "Флаг Ctrl", isVisible: true, isPK: false, datatype: "bool", isRequired: false, format: "{0}", isSort: false, callback: null },
+                        { code: "isShift", title: "Shift", tooltip: "Флаг Shift", isVisible: true, isPK: false, datatype: "bool", isRequired: false, format: "{0}", isSort: false, callback: null },
+                        {
+                            code: "js", title: "JavaScript", tooltip: "JavaScript", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: false,
+                            editable: { type: "text", format: "{0}", callback: function (el, newValue) { } }
+                        },
+                        {
+                            code: "url", title: "Url", tooltip: "Url", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: false,
+                            editable: { type: "text", format: "{0}", callback: function (el, newValue) { } }
+                        },
+                        { code: "roles", title: "Роли", tooltip: "Роли", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: false, callback: null }
+
+                    ],
+                    operations: {
+                        create: false,
+                        remove: true,
+                        edit: false,
+                        other: []
+                    },
+                    getFilterMakeup: function (filter) {
+                        var s = [];
+
+                        $('.usHotKeyCode option').removeAttr('selected');
+                        $('.usHotKeysList option:first').attr('selected', 'selected');
+                        s.push("<span class='gCap'>Горячая кнопка</span><select class='form-control usHotKeyCode' >" + $('.usHotKeysList').html() + "</select><br />");
+
+                        //s.push("<span class='gCap'>Горячая кнопка</span><input type='text' class='usHotKeyCode' value='" + (filter.KeyCodeName || '') + "' /><br /><br />");
+                        s.push("<span class='gCap'>Js</span><input type='text' class='usHotKeyJs' value='" + (filter.KeyCodeJs || '') + "' /><br /><br />");
+                        s.push("<span class='gCap'>Url</span><input type='text' class='usHotKeyUrl' value='" + (filter.KeyCodeUrl || '') + "' /><br /><br />");
+
+                        $('.usHotKeysTemplate input').removeAttr('checked');
+                        if (filter.roles) {
+                            $.each(filter.roles, function (i, item) {
+                                $('.usHotKeysTemplate input[value=' + item + ']').attr('checked', 'checked');
+                            })
+                        }
+                        s.push("<span class='gCap'>Роли</span><div class='usHotKeys'>" + $('.usHotKeysTemplate').html() + "</div><br /><br />");
+
+                        return s.join("");
+                    },
+                    filter: function () {
+                        var roles = [];
+                        $('.usHotKeys input:checked').each(function () {
+                            roles.push($(this).attr('value'));
+                        });
+
+                        var filter = {
+                            KeyCodeName: $('.usHotKeyCode').val() || "",
+                            KeyCodeJs: $('.usHotKeyJs').val() || "",
+                            KeyCodeUrl: $('.usHotKeyUrl').val() || "",
+                            roles: roles
+                        };
+                        return filter;
+                    },
+                    getItemsCallback: function () {
+                        $('.usCont .usHotKeyRoles').each(function () {
+                            var roles = ("," + $(this).text() + ",").split(",");
+                            $('.usHotKeysTemplate input').removeAttr("checked");
+                            $('.usHotKeysTemplate input').each(function () {
+                                if ($.inArray($(this).val(), roles) >= 0) {
+                                    $(this).attr("checked", "checked");
+                                }
+                            });
+                            $(this).html($('.usHotKeysTemplate').html());
+                        });
+                    }
+                });
+            },
+            createHotKey: function () {
+                var s = [];
+                $('.usHotKeysList option').removeAttr('selected');
+                $('.usHotKeysList option:first').attr('selected', 'selected');
+                s.push("<span>Клавиша</span><select class='form-control usHotKey' >" + $('.usHotKeysList').html() + "</select><br />");
+                //s.push("<span>Клавиша</span><textarea class='form-control usHotKey' rows = '1' cols = '70'/><br />");
+                s.push("<span>Js</span>​<textarea class='form-control usJsHotKey' rows = '1' cols = '70'/><br />");
+                s.push("<span>Url</span>​<textarea class='form-control usUrlHotKey' rows = '1' cols = '70' /><br />");
+
+
+
+                setTimeout(function () { $('.usNewUserLogin').focus(); }, 200);
+                as.sys.showDialog("Новая горячая кнопка", s.join(""), "Создать горячую кнопку", function () {
+                    var keyCode = $('.usHotKey').val();
+                    var js = $('.usJsHotKey').val();
+                    var url = $('.usUrlHotKey').val();
+
+                    if (!keyCode) {
+                        as.sys.bootstrapAlert("Укажите пожалуйста кнопку", { type: 'warning' });
+                        $('.usHotKey').focus();
+                        return;
+                    }
+
+                    var params = { keyCode: keyCode, js: js, url: url };
+                    as.sys.ajaxSend("/Admin/CreateHotKey", params, function (data) {
+                        if (typeof (data) != "object") data = eval('(' + data + ')');
+
+                        if (data.result) {
+                            as.sys.bootstrapAlert("Горячая кнопка успешно создана", { type: 'success' });
+                            as.sys.closeDialog();
+                            as.crud.getItems();
+                            setTimeout(function () {
+                                as.crud.gotoItem(data.guid);
+                            }, 1000);
+                        } else {
+                            as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                        }
+                    });
+                });
+            },
+        }
+
+        $(function () {
+            us.init();
+        });
+    </script>
+}
+

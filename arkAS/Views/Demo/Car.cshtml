@@ -1,0 +1,307 @@
+﻿@{
+    ViewBag.Title = "Cars";
+    // Layout = "~/Views/Shared/_CabinetLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.js"></script>
+
+</head>
+<style type="text/css">
+  
+</style>
+<body>
+    <h2>Пример управление машинкой</h2>
+    <div class="well">
+        <ul>
+            <li>Возможность управлять машинкой клавишами с клавиатуры</li>
+            <li>Управление:  "↑" - вперед, "↓" - назад, "←" - на лево, "→" - на право</li>
+            <li>Движение по трассе с ускорением</li>
+            <li>Движение за пределами трассы с замедлением</li>
+        </ul>
+    </div>
+        <script type="text/javascript">
+            $(document).ready(function () {
+
+                $('body').keydown(function (e) {
+                    var key = e.which;
+                    if ((key == "37") || (key == "38") || (key == "39") || (key == "40"))
+                        e.preventDefault();
+                });
+
+                // Canvas Variables
+                var canvas = $('#canvas');
+                var context = canvas.get(0).getContext('2d');
+                // var canvasWidth = canvas.width();
+                //var canvasHeight = canvas.height();
+                context.canvas.width = 1140;
+                context.canvas.height = screen.height / 1.7;
+                var canvasWidth = context.canvas.width;
+                var canvasHeight = context.canvas.height;
+                var leftKey = 37;
+                var upKey = 38;
+                var rightKey = 39;
+                var downKey = 40;
+                var treck = new treck();
+
+                function treck() {
+                    this.image = new Image();
+                    this.image.crossOrigin = 'anonymous';
+                    this.image.src = "@Url.Content("~/Content/images/Car-game/zeRace.png")";
+                    this.draw = function () {
+                        var backgroundImg = new Image();
+
+                        backgroundImg.crossOrigin = 'anonymous';
+                        this.height = canvas.height;
+
+                        backgroundImg.src = "@Url.Content("~/Content/images/Car-game/zeRace.png")";
+                        context.drawImage(backgroundImg, 0, 0, context.canvas.width, context.canvas.height);
+                    }
+
+                    this.collision = function () {
+                        var imgData = context.getImageData(car.x - 1, car.y - 1, 10, 10);
+                        var pixels = imgData.data;
+                        var i;
+                        for (i = 0; i < pixels.length; i += 4) {
+                            var red = pixels[i];
+                            var green = pixels[i + 1];
+                            var blue = pixels[i + 2];
+                            var alpha = pixels[i + 3];
+                            if (red == 97 && green >= 140 && blue <= 30) {
+                                return true;
+                            }
+                            else {
+                                false;
+                            }
+                        }
+                    }
+                }
+
+                function Car(src, x, y) {
+                    this.image = new Image();
+                    this.image.crossOrigin = 'anonymous';
+                    this.image.src = src;
+                    this.width = 10;
+                    this.height = 20;
+                    this.x = x;
+                    this.y = y;
+                    this.vx = 0;
+                    this.vy = 0;
+                    this.angle = 0;
+
+                    this.topSpeed = 15;
+                    this.acceleration = 0.1;
+                    this.reverse = 0.1;
+                    this.brakes = 0.3;
+                    this.friction = 0.05;
+                    this.handeling = 15;
+                    this.grip = 15;
+                    this.minGrip = 5;
+                    this.speed = 0;
+                    this.drift = 0;
+
+
+
+                    this.left = false;
+                    this.up = false;
+                    this.right = false;
+                    this.down = false;
+                }
+
+                $(window).keydown(function (e) {
+                    var keyCode = e.keyCode;
+
+                    if (keyCode == leftKey) {
+                        car.left = true;
+                    } else if (keyCode == upKey) {
+                        car.forward = true;
+                    } else if (keyCode == rightKey) {
+                        car.right = true;
+                    } else if (keyCode == downKey) {
+                        car.backward = true;
+                    }
+                });
+
+                $(window).keyup(function (e) {
+                    var keyCode = e.keyCode;
+                    if (keyCode == leftKey) {
+                        car.left = false;
+                    } else if (keyCode == upKey) {
+                        car.forward = false;
+                    } else if (keyCode == rightKey) {
+                        car.right = false;
+                    } else if (keyCode == downKey) {
+                        car.backward = false;
+                    }
+                });
+
+                var playAnimation = true;
+
+                var startButton = $('#startAnimation');
+                var stopButton = $('#stopAnimation');
+
+                startButton.hide();
+                startButton.click(function () {
+                    $(this).hide();
+                    stopButton.show();
+                    playAnimation = true;
+                    updateStage();
+                });
+                stopButton.click(function () {
+                    $(this).hide();
+                    startButton.show();
+                    playAnimation = false;
+                });
+
+                function resizeCanvas() {
+                    canvasWidth = canvas.width();
+                    canvasHeight = canvas.height();
+                }
+
+                function initialise() {
+                    initStageObjects();
+                    drawStageObjects();
+                    updateStage();
+                }
+
+                function initStageObjects() {
+
+                    car = new Car('@Url.Content("~/Content/images/Car-game/car.png")', 97, 452, 5, 10);
+
+                }
+
+                function drawStageObjects() {
+                    context.drawImage(treck.image, 0, 0, context.canvas.width, context.canvas.height);
+                    context.save();
+                    context.translate(car.x, car.y);
+                    context.rotate((car.angle + car.drift) * Math.PI / 180);
+                    context.drawImage(car.image, -25, (-47 + (Math.abs(car.drift / 3))));
+
+                    context.restore();
+
+                }
+
+                function clearCanvas() {
+                    context.clearRect(0, 0, canvasWidth, canvasHeight);
+                    context.beginPath();
+                }
+
+                function updateStageObjects() {
+
+                    if (treck.collision()) {
+                        car.speed = car.speed * 0.8 + car.acceleration;
+                    }
+
+                    if (car.x > canvasWidth - 10) {
+                        car.x -= 15;
+                    }
+
+                    if (car.handeling > car.minGrip) {
+                        car.handeling = car.grip - car.speed;
+                    }
+                    else {
+                        car.handeling = car.minGrip + 1;
+                    }
+
+                    if (car.forward) {
+                        if (car.speed < car.topSpeed) {
+                            car.speed = car.speed + car.acceleration;
+                        }
+                    }
+                    else if (car.backward) {
+                        if (car.speed < 1) {
+                            car.speed = car.speed - car.reverse;
+                        }
+                        else if (car.speed > 1) {
+                            car.speed = car.speed - car.brakes;
+                        }
+                    }
+
+                    if (car.forward && car.left) {
+                        if (car.drift > -35) {
+                            car.drift = car.drift - 3;
+                        }
+                    }
+                    else if (car.forward && car.right) {
+                        if (car.drift < 35) {
+                            car.drift = car.drift + 3;
+                        }
+                    }
+                    else if (car.forward && !car.left && car.drift > -40 && car.drift < -3) {
+                        car.drift = car.drift + 3;
+                    }
+                    else if (car.forward && !car.right && car.drift < 40 && car.drift > 3) {
+                        car.drift = car.drift - 3;
+                    }
+
+                    if (car.drift > 3) {
+                        if (!car.forward && !car.left) {
+                            car.drift = car.drift - 4;
+                        }
+                    }
+
+                    else if (car.drift > -40 && car.drift < -3) {
+                        if (!car.forward && !car.right) {
+                            car.drift = car.drift + 4;
+                        }
+                    }
+
+                    if (car.left) {
+                        car.angle = car.angle - (car.handeling * car.speed / car.topSpeed);
+
+                    } else if (car.right) {
+                        car.angle = car.angle + (car.handeling * car.speed / car.topSpeed);
+
+                    }
+
+                    $('#stats').html(car.drift);
+
+                    if (car.speed > 0) {
+                        car.speed = car.speed - car.friction;
+                    } else if (car.speed < 0) {
+                        car.speed = car.speed + car.friction;
+                    }
+
+                    car.vy = -Math.cos(car.angle * Math.PI / 180) * car.speed;
+                    car.vx = Math.sin(car.angle * Math.PI / 180) * car.speed;
+
+                    car.y = car.y + car.vy;
+                    car.x = car.x + car.vx;
+
+                    if (car.x + car.width > canvas.width)
+                        car.x = canvas.width - car.width;
+
+                    /* if (car.y > 570 && car.x < 692 && car.x > 524) {
+                         alert("finish");
+                         car.x = 85;
+                         car.y = 570;
+                         car.angle = 0;
+                         car.acceleration = 0;
+                         car.speed = 0;
+
+                     }*/
+                }
+
+                function updateStage() {
+                    clearCanvas();
+                    treck.draw();
+                    updateStageObjects();
+                    drawStageObjects();
+
+                    if (playAnimation) {
+                        setTimeout(updateStage, 25);
+                    }
+                }
+
+                initialise();
+            });
+
+        </script>
+        <canvas id="canvas"></canvas>
+        <!--<img src="@Url.Content("~/Content/images/Car-game/zeRace.png")" width="1400" height="600" />-->
+</body>
+</html>
+

@@ -1,0 +1,65 @@
+﻿@{
+    Layout = arkAS.BLL.Core.CoreManager.GetCabinetLayout();
+    ViewBag.Title = "Категории";
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();    
+}
+<div class='usCont'>
+</div>
+
+@section js{
+<script type="text/javascript">
+    var parentCategoriesSource = @Html.Raw(js.Serialize(((List<arkAS.BLL.as_categories>)ViewBag.ParentCategories).Select(x => new { Value = x.id, Text = x.name, Selected = false })));
+    parentCategoriesSource.push({ Text: 'Не указано', Value: '0', selected: true });//почему selected не срабатывает???
+
+    var asdemo = {
+        init: function () {
+            asdemo.initMainTable();            
+        },
+        initMainTable: function () {
+            as.crud.init({
+                cont: $('.usCont'),
+                title: 'Категории',
+                toolbarAdditional: '',
+                groupOperationsToolbar: '',
+                ajaxURLFormat: '/Admin/Categories_{0}',
+                inlineAjaxURL: "",
+                pageSize: 150,
+                cookiePrefix: "as-crud-CategoriesDict-",
+                emptyText: 'Нет элементов',
+                createLinkTitle: 'Создать',
+                filterLinkTitle: 'Найти',
+                filterTitle: 'Фильтрация данных',
+                showChecksCol: false,
+                showNumsCol: true,
+                showToolbar: true,
+                showColSettings: false,
+                showReplaceTool: false,
+                showExcelExport: false,
+                additionalSort: false,
+                cols: [
+                    { code: "id", title: "ID", tooltip: "Идентификатор", isVisible: false, isPK: true, datatype: "int", isRequired: false, editHide: true },
+                    { code: "name", title: "Название категории", tooltip: "Название категории", isVisible: true, isPK: false, datatype: "string", isRequired: true, format: "{0}", isSort: true, callback: null },
+                    { code: "parentName", title: "Родительская категория", tooltip: "Родительская категория", isVisible: true, isPK: false, datatype: "select", isRequired: false, format: "{0}", isSort: true, editSources: parentCategoriesSource, callback: null },
+                    { code: "parentID", title: "Код родителя", tooltip: "Код родителя", isVisible: false, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, editHide: true, callback: null },
+                    { code: "typeCode", title: "typeCode", tooltip: "typeCode", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null }
+                ],
+                operations: {
+                    create: true,
+                    remove: true,
+                    edit: true,
+                    other: [
+                    ]
+                }
+            });
+        }
+    }
+    $(function () {
+        asdemo.init();
+    });
+</script>
+
+}
+
+
+
+

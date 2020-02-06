@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "ImageManager";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Менеджер картинок</h2>
+
+<div class="as-images-manager" data-code="products" data-itemid="3" data-thumbwidth="150" data-thumbheight="90"></div>
+
+<style type="text/css">
+    .as-images-manager-items { border: solid 1px #ccc;  padding: 10px; width: 640px; margin: 20px 0; }
+    .as-images-manager-items ul { list-style-type: none; vertical-align: top;  }
+    .as-images-manager-items li {  display: inline-block; margin: 10px; }
+
+    .ui-state-highlight {  display: block;  width: 64px; height: 1em;line-height: 0.7em; }
+
+    .as-images-manager-image {display: inline-block; padding: 2px; text-align: center;  vertical-align: middle;
+        width: 164px; height: 164px; border: solid 1px #ccc;}
+    .as-images-manager-image img { max-width: 164px; max-height: 164px; }
+
+    .as-images-manager-sel { border: solid 1px #f00; }
+    .as-images-manager-upload { }
+    .as-images-manager-panel { margin: 10px 0; border: solid 1px #ccc;  padding: 10px; text-align: center; width: 640px; }
+    .as-images-manager-panel label { display: inline-block; width: 100px; padding-right: 20px; text-align: right; }
+
+    .as-images-manager-show { margin: 10px 0; max-width:500px; max-height: 500px; }
+    .as-images-manager-name ,  .as-images-manager-url ,  .as-images-manager-description  { width: 80%; }
+    .as-images-manager-description { height: 60px; }   
+</style>

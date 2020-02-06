@@ -1,0 +1,126 @@
+﻿@{
+    ViewBag.Title = "Пример таблицы с фильтром";
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+<div class='dmCont'>
+</div>
+
+
+<select class='dmClientsTemplate hide'>
+    <option value="0">Не выбрано</option>
+   @foreach (var item in (List<arkAS.BLL.crm_clients>)ViewBag.Clients)
+    {
+    <option value='@item.id'>@item.fio</option>
+    }
+</select>
+
+
+<div class='dmStatusesTemplate hide'>
+    <input type="checkbox" data-code='nostatus' value='0' /><label>Не установлен</label>&nbsp;&nbsp;&nbsp;&nbsp;
+    @foreach (var item in (List<arkAS.BLL.crm_orderStatuses>)ViewBag.OrderStatuses)
+    {
+        <input type="checkbox" data-code='@item.code' value='@item.id' id='svOurSup@(item.id)' /><label for='svOurSup@(item.id)'>@item.name</label>@Html.Raw("&nbsp; &nbsp; &nbsp; &nbsp;")
+    } 
+</div>
+
+
+
+@Html.Raw(arkAS.BLL.Core.CoreManager.GetMainFormLink())
+
+@section js{
+<script type="text/javascript">
+    var clientsSource = @Html.Raw(js.Serialize(((List<arkAS.BLL.crm_clients>)ViewBag.Clients).Select(x => new { Value = x.id, Text = x.fio, Selected = false })));
+    var statusesSource = @Html.Raw(js.Serialize(((List<arkAS.BLL.crm_orderStatuses>)ViewBag.OrderStatuses).Select(x => new { Value = x.id, Text = x.name, Selected = false })));
+
+    var asdemo = {
+        init: function () {
+            asdemo.initMainTable();
+        },
+        initMainTable: function () {
+            as.crud.init({
+                cont: $('.dmCont'),
+                title: 'Пример таблицы с фильтром',
+                toolbarAdditional: 'Набор фильтра может быть любым, комбинация фильтра и сортировки запоминается  в куки',
+                groupOperationsToolbar: '',
+                ajaxURLFormat: '/Demo/FilterTable_{0}',
+                inlineAjaxURL: "/Demo/FilterTableInline",
+                pageSize: 5,
+                cookiePrefix: "as-crud-filterTable2-",
+                emptyText: 'Нет элементов',
+                createLinkTitle: 'Создать',
+                filterLinkTitle: 'Найти',
+                filterTitle: 'Фильтрация данных',
+                showChecksCol: false,
+                showNumsCol: true,
+                showToolbar: true,
+                showColSettings: false,
+                showReplaceTool: false,
+                showExcelExport: false,
+                additionalSort: false,
+                cols: [
+                    { code: "id", title: "ID", tooltip: "Идентификатор", isVisible: false, isPK: true, datatype: "int", isRequired: false },
+                    { 
+                        code: "created", title: "Дата создания", tooltip: "Дата создания", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                        filter: { type: "daterange" }  
+                    },
+                    {
+                        code: "orderNum", title: "Номер  заказа", tooltip: "Номер  заказая", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null
+                    },
+                    { 
+                        code: "statusName", title: "Статус", tooltip: "Статус", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null
+                    },
+                    { code: "statusID", title: "ID статуса", tooltip: "ID статуса", isVisible: false, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null },
+                    { 
+                        code: "clientName", title: "Клиент", tooltip: "Клиент", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                        filter: { type: "select", source: clientsSource, notSelected: "Не выбрано" }
+                    },
+                    { code: "clientID", title: "ID клиента", tooltip: "ID клиента", isVisible: false, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null }
+                ],
+                operations: {
+                    create: false,
+                    remove: false,
+                    edit: false,
+                    other: [
+                    ]
+                },
+                predefinedFilterLinks: [
+                    {title: "Незакрытые заказы", tooltip:"Заказы, у которых статус равен Не установлено, В обработке, В процессе доставки", code:"uncloseOrders", setFilter: function(){
+                        var res = {};
+                        res.statusName = ["0", "1", "3", "4"];
+                        return res;
+                    }},
+                    {title: "Закрытые заказы от Петрова", tooltip:"Выбираем только заказы от клиента Петрова со статусом Закрыто", code:"petrovClosedOrders", setFilter: function(){
+                        var res = {};
+                        res.statusName = ["5"];
+                        res.clientName = 2;
+                        return res;
+                    }},
+                ],
+                getFilterMakeup: function (filter) {
+                    var s = [];
+                    s.push("<span class='gCap'>Номер заказа</span><input type='text' class='dmOrderNum' value='" + (filter.orderNum || '') + "' /><br /><br />");
+                    return s.join("");
+                },
+                filter: function () {                    
+                    var filter = {
+                        orderNum: $('.dmOrderNum').val() || ""                       
+                    };
+                    return filter;
+                }
+            });
+        }
+    }
+    $(function () {
+        asdemo.init();
+    });
+</script>
+
+
+
+}
+
+
+
+
+
+

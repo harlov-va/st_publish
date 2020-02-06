@@ -1,0 +1,17 @@
+﻿.kanbanColumn { min-height: 80vh; background-color: #F0FFF0; border: 1px solid; display:flex-column;}
+
+.kanbanElement { user-select: none; cursor: pointer;}
+
+.ui-sortable{ border: 1px solid; margin: 1px; font-size: 14px; padding: 5px; width: 100%; background-color: #F0FFFF; padding-left: 5px; border-radius: 15px;}
+
+.columnTitle {padding: 20px 10px;margin: 5px;font-weight: bold;background-color: green; height:60px; border-radius:inherit}
+
+.portlet { margin: 0 1em 1em 0; padding: 0.3em;}
+
+.portlet-header { padding: 0.2em 0.3em; margin-bottom: 0.5em; position: relative;}
+
+.portlet-toggle { position: absolute; top: 50%; right: 0;}
+
+.portlet-content { padding: 0.4em;}
+
+.portlet-placeholder { border: 1px dotted black; margin: 0 1em 1em 0; height: 50px;}

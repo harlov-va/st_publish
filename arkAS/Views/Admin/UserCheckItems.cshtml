@@ -1,0 +1,239 @@
+﻿@using System.Activities.Statements
+@using arkAS.BLL
+@using arkAS.Models;
+@{
+    Layout = arkAS.BLL.Core.CoreManager.GetCabinetLayout();
+    ViewBag.Title = "UsersCheckItems";
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+
+<select class='usCheckSetTypesTemplate hide'>
+    <option value="0">Не выбрано</option>
+    @foreach (var item in (List<arkAS.BLL.as_userCheckSet>)ViewBag.CheckSets)
+    {
+        <option value='@item.id'>@item.name</option>
+    }
+</select>
+
+<div class='usCont'>
+</div>
+@section js{
+    <script type="text/javascript">
+    var sourceCheckSets = @Html.Raw(js.Serialize(((List<arkAS.BLL.as_userCheckSet>)ViewBag.CheckSets).Select(x => new { value = x.id, text = x.name, Selected = false })));
+
+    var us = {
+        init: function() {
+            us.initMainTable();
+
+            $(document).delegate('.usCreateElement', 'click', function(e) {
+                e.preventDefault();
+                us.CreateElement();
+            });
+
+            $(document).delegate('.usCloseEditForm', 'click', function(e) {
+                e.preventDefault();
+                $(this).closest("tr").hide(250, function() { $(this).remove(); });
+            });
+
+            $(document).delegate('.usSaveElement', 'click', function (e) {
+                e.preventDefault();
+                us.saveElement($(this));
+            });
+        },
+        initMainTable: function() {
+            as.crud.init({
+                cont: $('.usCont'),
+                title: 'UsersCheckItems',
+                toolbarAdditional: '<a href="#" class="btn btn-primary usCreateElement">Создать</a>&nbsp;&nbsp;',
+                groupOperationsToolbar: '',
+                ajaxURLFormat: '/Admin/UserCheckItems_{0}',
+                inlineAjaxURL: "/Admin/UserCheckItemsInline",
+                pageSize: 10,
+                cookiePrefix: "as-crud-UserCheckItemsTable-",
+                emptyText: 'Нет элементов',
+                createLinkTitle: 'Создать',
+                filterLinkTitle: 'Найти',
+                filterTitle: 'Фильтрация данных',
+                showChecksCol: false,
+                showNumsCol: true,
+                showToolbar: true,
+                showColSettings: false,
+                showReplaceTool: false,
+                showExcelExport: false,
+                additionalSort: false,
+                cols: [
+                    { code: "id", title: "ID", tooltip: "Идентификатор", isVisible: false, isPK: true, datatype: "int", isRequired: false },
+                    {
+                        code: "name",
+                        title: "Наименование",
+                        tooltip: "Наименование",
+                        isVisible: true,
+                        isPK: false,
+                        datatype: "string",
+                        isRequired: false,
+                        format: "{0}",
+                        isSort: true,
+                        callback: null,
+                        editable: { type: "text", format: "{0}", callback: function (el, newValue) { } }
+                    },
+                    {
+                        code: "set",
+                        title: "Тип",
+                        tooltip: "Тип",
+                        isVisible: true,
+                        isPK: false,
+                        datatype: "string",
+                        isRequired: false,
+                        format: "{0}",
+                        isSort: true,
+                        callback: null,
+                        editable: { type: "select", format: "{0}",source: sourceCheckSets, callback: function (el, newValue) { } }
+                    },
+                    {
+                        code: "description",
+                        title: "Описание",
+                        tooltip: "Описание",
+                        isVisible: true,
+                        isPK: false,
+                        datatype: "string",
+                        isRequired: false,
+                        format: "{0}",
+                        isSort: true,
+                        callback: null,
+                        editable: { type: "text", format: "{0}", callback: function (el, newValue) { } }
+
+                    },
+                    {
+                        code: "emailText",
+                        title: "Текст письма",
+                        tooltip: "Текст письма",
+                        isVisible: true,
+                        isPK: false,
+                        datatype: "string",
+                        isRequired: false,
+                        format: "{0}",
+                        isSort: false,
+                        callback: null,
+                        editable: { type: "text", format: "{0}", callback: function (el, newValue) { } }
+
+                    },
+                    {
+                        code: "emailSubject",
+                        title: "Тема письма",
+                        tooltip: "Тема письма",
+                        isVisible: true,
+                        isPK: false,
+                        datatype: "string",
+                        isRequired: false,
+                        format: "{0}",
+                        isSort: false,
+                        callback: null,
+                        editable: { type: "text", format: "{0}", callback: function (el, newValue) { } }
+                    },
+                    {
+                        code: "created",
+                        title: "Дата создания",
+                        tooltip: "Дата создания",
+                        isVisible: true,
+                        isPK: false,
+                        datatype: "string",
+                        isRequired: false,
+                        format: "{0}",
+                        isSort: true,
+                        callback: null,
+                        filter: { type: "daterange" },
+                        editable: false
+                    }
+                ],
+                operations: {
+                    create: false,
+                    remove: true,
+                    edit: false,
+                    other: []
+                },
+                getFilterMakeup: function(filter) {
+                    var s = [];
+                    s.push("<div class='crdFilterItem'><span class='gCap'>Фильтр</span><input type='text' class='usName' value='" + (filter.name || '') + "' /></div>");
+                    $('.usCheckSetTypesTemplate option').removeAttr('selected');
+                    $('.usCheckSetTypesTemplate option[value=' + filter.setID + ']').attr('selected', 'selected');
+                    s.push("<div class='crdFilterItem'><span class='gCap'>Тип</span><select class='usCheckSetTypes'>" + $('.usCheckSetTypesTemplate').html() + "</select></div>");
+
+                    return s.join("");
+                },
+                filter: function() {
+
+                    var filter = {
+                        name: $('.usName').val() || "",
+                        setID: $('.usCheckSetTypes').val() || ""
+                    };
+
+                    return filter;
+                }
+            });
+        },
+        CreateElement: function () {
+            var s = [];
+            s.push("<span>Наименование</span><input type='text' class='form-control usNewName' /><br />");
+            s.push("<span>Описание</span><input type='text' class='form-control usNewDescription' /><br />");
+            s.push("<span>Тема e-письма</span><input type='text' class='form-control usNewEmailSubject' /><br />");
+            s.push("<span>Текст</span><textarea rows='4' cols='50' class='form-control usNewEmailText'></textarea><br />");
+
+            s.push("<span class='gCap'>Тип</span><select class='form-control usCheckSetTypeNewElement'>" + $('.usCheckSetTypesTemplate').html() + "</select><br /><br />");
+
+            setTimeout(function() { $('.usNewName').focus(); }, 200);
+            as.sys.showDialog("Создать новый материал для рассылки", s.join(""), "Сохранить", function() {
+                var name = $('.usNewName').val();
+                var description = $('.usNewDescription').val();
+                var emailText = $('.usNewEmailText').val();
+                var emailSubject = $('.usNewEmailSubject').val();
+                var setID = $('.usCheckSetTypeNewElement option:selected').val();
+
+                if (!name) {
+                    as.sys.bootstrapAlert("Укажите пожалуйста название", { type: 'warning' });
+                    $('.usNewName').focus();
+                    return;
+                }
+                if (!emailText) {
+                    as.sys.bootstrapAlert("Укажите пожалуйста тело письма", { type: 'warning' });
+                    $('.usNewEmailText').focus();
+                    return;
+                }
+                if (!description) {
+                    as.sys.bootstrapAlert("Укажите пожалуйста описание письма", { type: 'warning' });
+                    $('.usNewDescription').focus();
+                    return;
+                }
+                if (!emailSubject) {
+                    as.sys.bootstrapAlert("Укажите пожалуйста тему письма", { type: 'warning' });
+                    $('.usNewEmailSubject').focus();
+                    return;
+                }
+                if (!setID || setID== 0) {
+                    as.sys.bootstrapAlert("Выберите пожалуйста тип", { type: 'warning' });
+                    $('.usCheckSetTypeNewElement').focus();
+                    return;
+                }
+
+                var params = { name: name, description: description, emailText: emailText, emailSubject: emailSubject, setID: setID };
+                as.sys.ajaxSend("/Admin/CreateUserCheckItem", params, function (data) {
+                    if (typeof (data) != "object") data = eval('(' + data + ')');
+                    if (data.result) {
+                        as.sys.bootstrapAlert("Элемент сохранен", { type: 'success' });
+                        as.sys.closeDialog();
+                        as.crud.getItems();
+                        setTimeout(function() {
+                            as.crud.gotoItem(data.textID);
+                        }, 1000);
+                    } else {
+                        as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                    }
+                });
+            });
+        }
+    };
+
+    $(function() {
+        us.init();
+    });
+    </script>
+}

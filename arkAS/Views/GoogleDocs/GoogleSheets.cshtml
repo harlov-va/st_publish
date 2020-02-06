@@ -1,0 +1,232 @@
+﻿@{
+    ViewBag.Title = "Google Sheets";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+    <link href="~/js/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet">
+}
+
+<style>
+    input {max-width: 500px;}
+</style>
+
+<h1>Google Sheets</h1>
+<div class="well well-sm">
+        <p>ID таблицы:</p>
+        <input type="text" class="tableID form-control col-md-8" value="1IW5EnM3MKnTPByP3boxGlnQcilxinIlXkwfB2F5EmZM">&nbsp;&nbsp;
+        <button class="btn btn-default findTable">Найти</button>
+</div>
+<div class="panels"></div>
+<div class="GoogleSheetCont"></div>
+
+@section js {
+<script src="~/js/bootstrap-editable/js/bootstrap-editable.min.js"></script>
+    <script type="text/javascript">
+            var gSheets = {
+                init: function () {
+                    gSheets.ajaxSend("/GoogleDocs/GetTableData/", { tableID: $('.tableID').val(), sheetName: "nullTable" }, gSheets.successFindTable);
+                    $('.findTable').on('click', function () {
+                        var params = {
+                            tableID: $('.tableID').val(),
+                            sheetName: "nullTable"
+                        };
+                        $('.GoogleSheetCont').empty();
+                        gSheets.ajaxSend("/GoogleDocs/GetTableData/", params, gSheets.successFindTable);
+                    });
+                },
+                ajaxSend: function (url, data, callback) {
+                    $.ajax({
+                        type: 'GET',
+                        url: url,
+                        dataType: 'json',
+                        cache: false,
+                        contentType: 'application/json; charset=utf8',
+                        data: data,
+                        success: function (data) {
+                            if (callback) callback(data);
+                        },
+                        error: function () {
+                            
+                        }
+                    })
+                },
+                successFindTable: function (data) {
+                    var s = [];
+                    if (data.editable) {
+                        s.push("<div class='well well-sm'><a href='#' class='btn btn-primary createTable'>Создать лист таблицы</a></div>");
+                        $('.GoogleSheetCont').after("<div class='well well-sm'><a href='#' class='btn btn-primary addLine'>Добавить строку</a></div>");
+                    }
+
+                    s.push("<div class='well well-sm'><p>Лист таблицы:</p><select class='form-control sheets'>");
+                    for (var i = 0; i < data.sheets.length; i++) {
+                        s.push("<option>" + data.sheets[i] + "</option>");
+                    }
+                    s.push("</select></div>");
+                    $('.panels').empty().append(s.join(""));
+
+                    $('.sheets').on('change', function () {
+                        var params = {
+                            tableID: $('.tableID').val(),
+                            sheetName: $('.sheets option:selected').text()
+                        };
+                        $('.GoogleSheetCont').empty();
+                        gSheets.ajaxSend("/GoogleDocs/GetTableData/", params, gSheets.successGetTable);
+                    });
+
+                    if (data.editable) {
+                        $('.createTable').on('click', gSheets.createTable);
+                        $('.addLine').on('click', gSheets.addLine);
+                    }
+                    else {
+                        $('.panels').prepend("<div class='alert alert-info' role='alert'>Только чтение</div>");
+                    }
+                    
+                    gSheets.successGetTable(data);
+                },
+                successGetTable: function (data) {
+                    if (data.values != null) {
+                        var rows1 = data.values.length < 10 ? 10 : data.values.length;
+                        var rows2 = data.values[0].length < 10 ? 10 : data.values[0].length;
+                        var s = [];
+                        var str = "";
+                        s.push("<table class='table table-bordered'>");
+                        s.push("<thread><th></th>");
+                        for (var th = 0; th < rows2; th++) {
+                            s.push("<th>" + String.fromCharCode(th + 65) + "</th>");
+                        }
+                        s.push("</thread>");
+
+                        if (data.editable) {
+                            for (var i = 0; i < rows1; i++) {
+                                s.push("<tr>");
+                                for (var j = 0; j < rows2; j++) {
+                                    if (j == 0) s.push("<th scope='row'>" + (i + 1) + "</th>");
+
+                                    if (i < data.values.length && j < data.values[0].length) {
+                                        if (data.values[i][j] == undefined) s.push("<td><a href='#' class='cell editable editable_empty' data-type='text' data-pk='" + (i + 1) + "' data-name='" + String.fromCharCode(j + 65) + "'></a></td>");
+                                        else s.push("<td><a href='#' class='cell' data-type='text' data-pk='" + (i + 1) + "' data-name='" + $('.sheets option:selected').text() + "!" + String.fromCharCode(j + 65) + "'>" + data.values[i][j] + "</a></td>");
+                                    }
+                                    else {
+                                        s.push("<td><a href='#' class='cell editable editable_empty' data-type='text' data-pk='" + (i + 1) + "' data-name='" + $('.sheets option:selected').text() + "!" + String.fromCharCode(j + 65) + "'></a></td>");
+                                    }
+                                }
+                                s.push("</tr>");
+                            }
+                        }
+                        else {
+                            for (var i = 0; i < data.values.length; i++) {
+                                s.push("<tr>");
+                                for (var j = 0; j < data.values[0].length; j++) {
+                                    if (j == 0) s.push("<th scope='row'>" + (i + 1) + "</th>");
+                                    if (data.values[i][j] == undefined) s.push("<td></td>");
+                                    else s.push("<td>" + data.values[i][j] + "</td>");
+                                }
+                                s.push("</tr>");
+                            }
+                        }
+                        s.push("</table>");
+                        $('.GoogleSheetCont').empty().append(s.join(""));
+
+                        if (data.editable) {
+                            $('.cell').editable({
+                                url: "/GoogleDocs/InlineEditTable/",
+                                mode: 'inline',
+                                emptytext: 'Пустая ячейка',
+                                params: { tableID: $('.tableID').val() }
+                            });
+                        }
+                    }
+                    else {
+                        if (data.editable) {
+                            s = [];
+                            s.push("<table class='table table-bordered'>");
+                            s.push("<thread><th></th>");
+                            for (var th = 0; th < 10; th++) {
+                                s.push("<th>" + String.fromCharCode(th + 65) + "</th>");
+                            }
+                            s.push("</thread>");
+                            for (var i = 0; i < 10; i++) {
+                                s.push("<tr>");
+                                for (var j = 0; j < 10; j++) {
+                                    if (j == 0) s.push("<th scope='row'>" + (i + 1) + "</th>");
+                                    s.push("<td><a href='#' class='cell editable editable_empty' data-type='text' data-pk='" + (i + 1) + "' data-name='" + $('.sheets option:selected').text() + "!" + String.fromCharCode(j + 65) + "'></a></td>");
+                                }
+                                s.push("</tr>");
+                            }
+                            s.push("</table>");
+                            $('.GoogleSheetCont').append(s.join(""));
+
+                            if (data.editable) {
+                                $('.cell').editable({
+                                    url: "/GoogleDocs/InlineEditTable/",
+                                    mode: 'inline',
+                                    emptytext: 'Пустая ячейка',
+                                    params: { tableID: $('.tableID').val() }
+                                });
+                            }
+                        }
+                    }
+                },
+                addLine: function () {
+                    var s = [];
+                    var number1 = $('.GoogleSheetCont table tr:last th').text();
+                    number1++;
+                    var number2 = -1;
+                    $.each($('.GoogleSheetCont table tr:first th'), function () {
+                        number2++;
+                    });
+                    s.push("<tr><th scope='row'>" + number1 + "</th>");
+                    for (var j = 0; j < number2; j++) {
+                        s.push("<td><a href='#' class='cell editable editable_empty' data-type='text' data-pk='" + number1 + "' data-name='" + $('.sheets option:selected').text() + "!" + String.fromCharCode(j + 65) + "'></a></td>");
+                    }
+                    s.push("</tr>");
+                    $('.GoogleSheetCont table').append(s.join(""));
+
+                    $('.cell').editable({
+                        url: "/GoogleDocs/InlineEditTable/",
+                        mode: 'inline',
+                        emptytext: 'Пустая ячейка',
+                        params: { tableID: $('.tableID').val() }
+                    });
+                    return false;
+                },
+                createTable: function () {
+                    var s = [];
+                    s.push("<span>Название листа таблицы</span><input type='text' class='form-control tableName' /><br />");
+                    setTimeout(function () { $('.tableName').focus(); }, 200);
+                    as.sys.showDialog("Создание листа таблицы", s.join(""), "Создать лист таблицы", function () {
+                        var tableName = $('.tableName').val();
+                        if (!tableName) {
+                            as.sys.bootstrapAlert("Укажите пожалуйста название листа таблицы", { type: 'warning' });
+                            $('.tableName').focus();
+                            return;
+                        }
+                        
+                        var params = {
+                            tableID: $('.tableID').val(),
+                            sheetName: tableName,
+                        };
+
+                        gSheets.ajaxSend("/GoogleDocs/CreateTable", params, function (data) {
+                            if (data == true) {
+                                as.sys.bootstrapAlert("Лист таблицы создан", { type: 'success' });
+                                as.sys.closeDialog();
+
+                                $('.sheets').append("<option class='AddedOption'>" + tableName + "</option>");
+                                $('.AddedOption').attr('selected', 'selected').removeClass('AddedOption');
+
+                                $('.GoogleSheetCont').empty();
+
+                                setTimeout(1000);
+                                gSheets.ajaxSend("/GoogleDocs/GetTableData/", params, gSheets.successGetTable);
+                            } else {
+                                as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                            }
+                        });
+                    });
+                }
+            };
+            $(function () {
+                gSheets.init();            
+            });
+    </script>
+}

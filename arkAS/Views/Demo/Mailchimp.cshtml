@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "Mailchimp";
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+
+<div class='usCont'>
+</div>
+
+@section js
+{
+    <script type="text/javascript">
+        var asdemo = {
+            init: function() {
+                asdemo.initMainTable();
+            },
+            initMainTable: function() {
+                as.crud.init({
+                    cont: $('.usCont'),
+                    title: 'Списки для рассылки (mailchimp Api)',
+                    toolbarAdditional: '',
+                    groupOperationsToolbar: '',
+                    ajaxURLFormat: '/Demo/Mailchimp_{0}',
+                    inlineAjaxURL: "",
+                    pageSize: 15,
+                    cookiePrefix: "as-crud-mailchimp-",
+                    emptyText: 'Нет элементов',
+                    createLinkTitle: 'Создать',
+                    filterLinkTitle: 'Найти',
+                    filterTitle: 'Фильтрация данных',
+                    showChecksCol: false,
+                    showNumsCol: true,
+                    showToolbar: true,
+                    showColSettings: false,
+                    showReplaceTool: false,
+                    showExcelExport: false,
+                    additionalSort: false,
+                    cols: [
+                        { code: "id", title: "ID", tooltip: "Идентификатор", isVisible: true, isPK: true, datatype: "int", isRequired: false },
+                        { code: "name", title: "Имя списка", tooltip: "Имя списка", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: false, callback: null }
+                    ],
+                    operations: {
+                        create: false,
+                        remove: false,
+                        edit: false,
+                        other: [
+                        ]
+                    }
+                });
+            }
+        }
+        $(function() {
+            asdemo.init();
+        });
+    </script>
+}
+

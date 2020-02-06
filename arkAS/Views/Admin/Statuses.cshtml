@@ -1,0 +1,63 @@
+﻿@{
+    Layout = arkAS.BLL.Core.CoreManager.GetCabinetLayout();
+    ViewBag.Title = "Статусы";
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+<div class='usCont'>
+</div>
+@section js{
+<script type="text/javascript">
+    
+    var asdemo = {
+        init: function () {
+            asdemo.initMainTable();
+        },
+        initMainTable: function () {
+            as.crud.init({
+                cont: $('.usCont'),
+                title: 'Статусы',
+                toolbarAdditional: '',
+                groupOperationsToolbar: '',
+                ajaxURLFormat: '/Admin/Statuses_{0}',
+                inlineAjaxURL: "",
+                pageSize: 150,
+                cookiePrefix: "as-crud-StatusesDict-",
+                emptyText: 'Нет элементов',
+                createLinkTitle: 'Создать',
+                filterLinkTitle: 'Найти',
+                filterTitle: 'Фильтрация данных',
+                showChecksCol: false,
+                showNumsCol: true,
+                showToolbar: true,
+                showColSettings: false,
+                showReplaceTool: false,
+                showExcelExport: false,
+                additionalSort: false,
+                cols: [
+                    { code: "id", title: "ID", tooltip: "Идентификатор", isVisible: false, isPK: true, datatype: "int", isRequired: false, editHide: true },       
+                    { code: "name", title: "Название статуса", tooltip: "Название статуса", isVisible: true, isPK: false, datatype: "string", isRequired: true, format: "{0}", isSort: true, callback: null },
+                    { code: "color", title: "Цвет отображения", tooltip: "Цвет отображения", isVisible: true, isPK: false, datatype: "string", isRequired: true, format: "{0}", isSort: true, callback: null },
+                    { code: "code", title: "Код", tooltip: "Код", isVisible: true, isPK: false, datatype: "string", isRequired: true, format: "{0}", isSort: true, callback: null },
+                    { code: "desc", title: "Описание", tooltip: "Описание", isVisible: true, isPK: false, datatype: "string", isRequired: true, format: "{0}", isSort: true, callback: null },
+                    { code: "typeCode", title: "typeCode", tooltip: "typeCode", isVisible: true, isPK: false, datatype: "string", isRequired: true, format: "{0}", isSort: true, callback: null }
+                ],
+                operations: {
+                    create: true,
+                    remove: true,
+                    edit: true,
+                    other: [
+                    ]
+                }
+            });
+        }
+    }
+    $(function () {
+        asdemo.init();
+    });
+</script>
+}
+
+
+
+
+

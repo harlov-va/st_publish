@@ -1,0 +1,234 @@
+﻿@{
+    ViewBag.Title = "Рекламации";
+    Layout = arkAS.BLL.Core.CoreManager.GetCabinetLayout();
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+
+@section css{
+    <style type="text/css">
+        .as-checkboxes input[type=checkbox] {
+            width: 30px;
+        }
+    </style>
+}
+
+<div class='dmCont'>
+</div>
+
+<select class='usprojectName hide'>
+    <option value="0">Не выбрано</option>
+    @foreach (var item in (List<arkAS.BLL.tt_projects>)ViewBag.Projects)
+    {
+        <option value='@item.id'>@item.name</option>
+    }
+</select>
+
+@section js{
+    <script type="text/javascript">
+        var projectsSourceF = @Html.Raw(js.Serialize(((List<arkAS.BLL.tt_projects>)ViewBag.Projects).Select(x => new { Value = x.id, Text = x.name, selected = false })));
+        var statusesSourceF = @Html.Raw(js.Serialize(((List<arkAS.BLL.recl_itemStatuses>)ViewBag.Statuses).Select(x => new { Value = x.id, Text = x.name, selected = false })));
+        var projectsSourceE = @Html.Raw(js.Serialize(((List<arkAS.BLL.tt_projects>)ViewBag.Projects).Select(x => new { value = x.id, text = x.name })));
+        var statusesSourceE = @Html.Raw(js.Serialize(((List<arkAS.BLL.recl_itemStatuses>)ViewBag.Statuses).Select(x => new { value = x.id, text = x.name })));
+
+        var haveWOWSourceF =  @Html.Raw(js.Serialize(((List<string>)ViewBag.haveWOW).Select(x => new { value = x, text = x, selected = false })));
+        var haveWOWSourceE =  @Html.Raw(js.Serialize(((List<string>)ViewBag.haveWOW).Select(x => new { value = x, text = x })));
+
+        var asdemo = {
+            init: function () {
+                asdemo.initMainTable();
+                $(document).delegate('.usCreateItem', 'click', function (e) {
+                    e.preventDefault();
+                    asdemo.createItem();
+                });
+                $(document).delegate('.usSaveText', 'click', function (e) {
+                    e.preventDefault();
+                    asdemo.saveText($(this));
+                });
+                $(document).delegate('.usCloseText', 'click', function (e) {
+                    e.preventDefault();
+                    $(this).closest("tr").hide(250, function () { $(this).remove() });
+                    as.crud.getItems();
+                });
+            },
+            initMainTable: function () {
+                as.crud.init({
+                    cont: $('.dmCont'),
+                    title: 'Рекламации',
+                    toolbarAdditional: '<a href="#" class="btn btn-primary usCreateItem">Создать</a>',
+                    groupOperationsToolbar: '',
+                    ajaxURLFormat: '/Reclamations/ReclamationsTable_{0}',
+                    inlineAjaxURL: "/Reclamations/ReclamationsTableInline",
+                    pageSize: 5,
+                    cookiePrefix: "as-crud-ReclamationsTable-",
+                    emptyText: 'Нет элементов',
+                    createLinkTitle: 'Создать',
+                    filterLinkTitle: 'Найти',
+                    filterTitle: 'Фильтрация данных',
+                    showChecksCol: false,
+                    showNumsCol: true,
+                    showToolbar: true,
+                    showColSettings: false,
+                    showReplaceTool: false,
+                    showExcelExport: false,
+                    additionalSort: false,
+                    cols: [
+                        {   code: "id",         title: "ID",                tooltip: "Идентификатор",   isVisible: false,   isPK: true,     datatype: "int",    isRequired: false },
+                        {
+                            code: "created",    title: "Дата создания",     tooltip: "Дата создания",   isVisible: true,    isPK: false,    datatype: "string", isRequired: false,      format: "{0}",      isSort: true,   callback: null,
+                            filter: { type: "daterange" }
+                        },
+                        {
+                            code: "addedBy",    title: "Заказчик",          tooltip: "Заказчик",        isVisible: true,    isPK: false,    datatype: "string", isRequired: false,      format: "{0}",      isSort: true,   callback: null,
+                            editable: { type: "text", format: "{0}", notSelected: "не выбрано", callback: function (el, newValue) { } }
+                        },
+                        {
+                            code: "name",       title: "Название",          tooltip: "Название",        isVisible: true,    isPK: false,    datatype: "string", isRequired: false,      format: "{0}",      isSort: false,  callback: null,
+                            editable: { type: "text", format: "{0}", notSelected: "не выбрано", callback: function (el, newValue) { } }
+                        },
+                        {
+                            code: "reportDate", title: "Дата исправления",  tooltip: "Дата исправления",isVisible: true,    isPK: false,    datatype: "string", isRequired: false,      format: "{0}",      isSort: true,   callback: null,
+                            filter: { type: "daterange" }
+                        },
+                        {
+                            code: "statusName", title: "Статус",            tooltip: "Статус",          isVisible: true,    isPK: false,    datatype: "string", isRequired: false,      format: "{0}",      isSort: true,   callback: null,
+                            filter: { type: "checkboxes", source: statusesSourceF, notSelected: "Не задано" },
+                            editable: { type: "select", format: "{0}", source: statusesSourceE, notSelected: "Не установлено", callback: function (el, newValue) { } }
+                        },
+                        {
+                            code: "projectName",title: "Проект",            tooltip: "Проект",          isVisible: true,    isPK: false,    datatype: "string", isRequired: false,      format: "{0}",      isSort: true,   callback: null,
+                            filter: { type: "checkboxes", source: projectsSourceF, notSelected: "Не задано" },
+                            editable: { type: "select", format: "{0}", source: projectsSourceE, notSelected: "Не установлено", callback: function (el, newValue) { } }
+                        },
+                        {
+                            code: "haveWOW",    title: "wow",            tooltip: "wow",          isVisible: true,    isPK: false,    datatype: "select", editSources: haveWOWSourceF, isRequired: false,      format: "{0}",      isSort: false,  callback: null,
+                            editable: { type: "select", format: "{0}", source: haveWOWSourceE, notSelected: "", callback: function (el, newValue) { } }
+                        }
+                    ],
+                    operations: {
+                        create: false,
+                        remove: true,
+                        edit: false,
+                        other: [
+                        { linkClass: 'crdTo0', iconClass: 'glyphicon glyphicon-question-sign', title: 'Замечание', callback: asdemo.editValue },
+                        { linkClass: 'crdTo1', iconClass: 'glyphicon glyphicon-info-sign', title: 'Необходимо сделать', callback: asdemo.editValue },
+                        { linkClass: 'crdTo2', iconClass: 'glyphicon glyphicon-ok-sign', title: 'Что сделано', callback: asdemo.editValue }
+                        ]
+                    },
+                    getFilterMakeup: function (filter) {
+                        var s = [];
+                        s.push("<span class='gCap'>Заказчик</span><input type='text' class='dmaddedBy' value='" + (filter.addedBy || '') + "' /><br /><br />");
+                        return s.join("");
+                    },
+                    filter: function () {
+                        var filter = {
+                            addedBy: $('.dmaddedBy').val() || ""
+                        };
+                        return filter;
+                    }
+                });
+            },
+            createItem: function () {
+                var s = [];
+                s.push("<span>Заказчик</span><input type='text' class='form-control usCreateItemInput usNewaddedBy' /><br />");
+                s.push("<span>Название</span><input type='text' class='form-control usNewname' /><br />");
+                //s.push("<span>projectName</span><input type='number' min='0' max='99' step='1' class='form-control usNewOrd' /><br />");
+                $('.usNewprojectName option').removeAttr('selected');
+                $('.usNewprojectName option:first').attr('selected', 'selected');        
+                s.push("<span>Проект</span><select class='form-control usNewprojectName' >"+ $('.usprojectName').html() + "</select><br />");
+                
+                as.sys.showDialog("Создать новую рекламацию", s.join(""), "Сохранить", function () {
+                    var addedBy = $('.usNewaddedBy').val();
+                    var name = $('.usNewname').val();
+                    //var ord = $('.usNewOrd').val();
+                    var projectName = $('.usNewprojectName option:selected').val();
+                
+                    var params = { addedBy: addedBy, name: name, /*ord: ord,*/ projectName: projectName };
+                    as.sys.ajaxSend("/Reclamations/ReclamationsSaveItem", params, function (data) {
+                        if (typeof (data) != "object") data = eval('(' + data + ')');
+                        if (data.result) {
+                            as.sys.bootstrapAlert("Сохранено!", { type: 'success' });
+                            as.sys.closeDialog();
+                            as.crud.getItems();
+                            setTimeout(function () {
+                                as.crud.gotoItem(data.settingID);
+                            }, 1000);
+                        } else {
+                            as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                        }
+                    });
+                });
+            }, 
+            editValue: function(e){
+                e.preventDefault();
+                var btn = $(this);
+                var tr = btn.closest('tr');
+                var td = btn.closest('td');
+                var code = "";
+                var textName = "";
+                if(btn.hasClass("crdTo0")) { code = "customerText"; textName="Замечание"; }
+                else if(btn.hasClass("crdTo1")) { code = "whatToDo"; textName="Необходимо сделать"; }
+                else if(btn.hasClass("crdTo2")) { code = "report"; textName="Что сделано"; }
+
+                var showTextArea = function () {
+                    var s = [];
+                    s.push("<tr class='crdAddRow "+ code +"'><td colspan='5'>");
+                    s.push("<div class='well well-sm'><h4>"+ textName +"</h4><a class='btn btn-success usSaveText'>Сохранить</a>&nbsp;&nbsp;<a class='btn btn-default usCloseText'>Закрыть</a></div>");
+                    s.push("<textarea  class='as-html usText' rows='15' cols='120' style='max-width:  1600px;'></textarea>");
+                    s.push("</td></tr>");
+                    $(s.join("")).insertAfter(tr);
+                    var params = { id: tr.attr('data-itemID'), code: code };
+                    as.sys.ajaxSend("/Reclamations/ReclamationsGetText", params, function (data) {
+                        if (typeof (data) != "object") data = eval('(' + data + ')');
+                        if (data.result) {
+                            var t = tr.next().find('.usText')
+                            var mce = tinyMCE.get( t.attr('id'));
+                            mce.setContent ? mce.setContent(data.text) : t.val(data.text);
+
+                        } else {
+                            as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                        }
+                    })
+                }  
+
+                if (tr.next().hasClass('crdAddRow') && tr.next().hasClass(code)) {
+                    tr.next().hide(50, function () { $(this).remove() });
+                } 
+                else if(tr.next().hasClass('crdAddRow') && !tr.next().hasClass(code)) 
+                { 
+                    tr.next().hide(50, function () { 
+                        $(this).remove() 
+                        showTextArea();
+                    });
+                }
+                else{ showTextArea(); }
+                
+            },
+            
+            saveText: function(btn){
+                var tr = btn.closest("tr").prev();
+                var trc = btn.closest("tr");
+                var t = btn.closest("tr").find('.usText')
+                var mce = tinyMCE.get( t.attr('id'));
+                var text = mce.getContent ? mce.getContent() : t.val();
+                var textType = "";
+                if(trc.hasClass("customerText")) { textType = "customerText"; }
+                else if(trc.hasClass("whatToDo")) { textType = "whatToDo"; }
+                else if(trc.hasClass("report")) { textType = "report"; }
+
+                var params = { pk: tr.attr('data-itemID'), value: text, name: textType };
+                as.sys.ajaxSend("/Reclamations/ReclamationsTableInline", params, function (data) {
+                    if (typeof (data) != "object") data = eval('(' + data + ')');
+                    if (data.result) {
+                        as.sys.bootstrapAlert("Сохранено", { type: 'success' });
+                    } else {
+                        as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                    }
+                });
+            }
+        }
+        $(function () {
+            asdemo.init();
+        });
+    </script>
+}
+

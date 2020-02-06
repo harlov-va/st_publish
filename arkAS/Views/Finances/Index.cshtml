@@ -1,0 +1,419 @@
+﻿@using arkAS.Models;
+@{
+    Layout = arkAS.BLL.Core.CoreManager.GetCabinetLayout();
+    ViewBag.Title = "Финансовые транзакции";
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+<style type="text/css">
+    .usStatusItem {
+        display: inline-block;
+        padding-right: 20px;
+    }
+</style>
+
+<select class='usStatusTemplate hide'>
+    <option value="0">Не выбрано</option>
+    @foreach (var item in (List<arkAS.BLL.fin_statuses>)ViewBag.statusName)
+    {
+        <option value='@item.id'>@item.name</option>
+    }
+</select>
+
+<div class='usStatusCheckBoxTemplate hide'>
+    @foreach (var item in (List
+<arkAS.BLL.fin_statuses>)ViewBag.statusName)
+    {
+        <div class="usStatusItem">
+            <input type="checkbox" value='@item.code' data-color="@item.color" data-value="@item.id" id='svOurSup@(item.id)' />
+            <label for='svOurSup@(item.id)'>@item.name</label>
+        </div>
+    }
+</div>
+
+<select class='usProjectTemplate hide'>
+    <option value="0">Не выбрано</option>
+    @foreach (var item in (List<arkAS.BLL.tt_projects>)ViewBag.projectName)
+    {
+        <option value='@item.id'>@item.name</option>
+    }
+</select>
+
+<select class='usTypeTemplate hide'>
+    <option value="0">Не выбрано</option>
+    @foreach (var item in (List<arkAS.BLL.fin_types>)ViewBag.typeName)
+    {
+        <option value='@item.id'>@item.name</option>
+    }
+</select>
+
+<select class='usContragentTemplate hide'>
+    <option value="0">Не выбрано</option>
+    @foreach (var item in (List<arkAS.BLL.fin_contragents>)ViewBag.contragentName)
+    {
+        <option value='@item.id'>@item.name</option>
+    }
+</select>
+
+<select class='usHrTemplate hide'>
+    <option value="0">Не выбрано</option>
+    @foreach (var item in (List<arkAS.BLL.hr_humans>)ViewBag.hrName)
+    {
+        <option value='@item.id'>@item.fio</option>
+    }
+</select>
+
+<select class='usCrmTemplate hide'>
+    <option value="0">Не выбрано</option>
+    @foreach (var item in (List<arkAS.BLL.crm_clients>)ViewBag.crmName)
+    {
+        <option value='@item.id'>@item.fio</option>
+    }
+</select>
+
+<div class='usCont'>
+</div>
+@section js{
+    <script type="text/javascript">
+        var contragentNameSource = @Html.Raw(js.Serialize(((List<arkAS.BLL.fin_contragents>)ViewBag.contragentName).Select(x => new { Value = x.id, Text = x.name, Selected = false })));
+        var typeNameSource = @Html.Raw(js.Serialize(((List<arkAS.BLL.fin_types>)ViewBag.typeName).Select(x => new { Value = x.id, Text = x.name, Selected = false })));
+        var projectNameSource = @Html.Raw(js.Serialize(((List<arkAS.BLL.tt_projects>)ViewBag.projectName).Select(x => new { Value = x.id, Text = x.name, Selected = false })));
+        var statusNameSource = @Html.Raw(js.Serialize(((List<arkAS.BLL.fin_statuses>)ViewBag.statusName).Select(x => new { Value = x.id, Text = x.name, Selected = false })));
+
+        var contragentNameSourceInLine = @Html.Raw(js.Serialize(((List<arkAS.BLL.fin_contragents>)ViewBag.contragentName).Select(x => new { value = x.id, text = x.name})));
+        var typeNameSourceInLine = @Html.Raw(js.Serialize(((List<arkAS.BLL.fin_types>)ViewBag.typeName).Select(x => new { value = x.id, text = x.name })));
+        var projectNameSourceInLine = @Html.Raw(js.Serialize(((List<arkAS.BLL.tt_projects>)ViewBag.projectName).Select(x => new { value = x.id, text = x.name })));
+        var statusNameSourceInLine = @Html.Raw(js.Serialize(((List<arkAS.BLL.fin_statuses>)ViewBag.statusName).Select(x => new { value = x.id, text = x.name })));
+
+
+        var us = {
+            init: function () {
+                us.initMainTable();
+                $(document).delegate('.usCreateFinance', 'click', function (e) {
+                    e.preventDefault();
+                    us.createFinance();
+                });
+                $(document).delegate('.usCreateContragent', 'click', function (e) {
+                    e.preventDefault();
+                    us.createContragent();
+                });
+                $(document).delegate('.usCreateIncomeFromClient', 'click', function (e) {
+                    e.preventDefault();
+                    us.createIncomeFromClient();
+                });
+                $(document).delegate('.usCreateExpense', 'click', function (e) {
+                    e.preventDefault();
+                    us.createExpense();
+                });
+                $(document).delegate('.usNewClientID', 'change', function (e) {
+                    $('.usNewHumanID option:first').attr('selected', 'selected');
+                });
+                $(document).delegate('.usNewHumanID', 'change', function (e) {
+                    $('.usNewClientID option:first').attr('selected', 'selected');
+                });
+
+            },
+            initMainTable: function () {
+                as.crud.init({
+                    cont: $('.usCont'),
+                    title: 'Финансовые транзакции',
+                    toolbarAdditional: '<div class="btn-group"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Создать <span class="caret"></span></button><ul class="dropdown-menu" role="menu"><li><a href="#" class="usCreateFinance">Добавить транзакцию</a></li><li><a href="#" class="usCreateIncomeFromClient">Приход от клиента</a></li><li><a href="#" class="usCreateExpense">Нетиповой расход</a></li></ul></div>&nbsp;&nbsp;<a href="#" class="btn btn-primary usCreateContragent">Создать контрагента</a>&nbsp;&nbsp;',
+                    groupOperationsToolbar: '',
+                    ajaxURLFormat: '/Finances/Finances_{0}',
+                    inlineAjaxURL: "/Finances/FinancesInline",
+                    pageSize: 150,
+                    cookiePrefix: "as-crud-financesTable-",
+                    emptyText: 'Финансовые транзакции не заданы',
+                    createLinkTitle: 'Создать',
+                    filterLinkTitle: 'Найти',
+                    filterTitle: 'Фильтрация данных',
+                    showChecksCol: false,
+                    showNumsCol: true,
+                    showToolbar: true,
+                    showColSettings: true,
+                    showReplaceTool: false,
+                    showExcelExport: false,
+                    additionalSort: true,
+                    cols: [
+                        { code: "id", title: "ID", tooltip: "Идентификатор", isVisible: false, isPK: true, datatype: "int", isRequired: false },
+                        {
+                            code: "created", title: "Дата создания", tooltip: "Дата создания", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                            filter: { type: "daterange" }
+                        },
+                        { code: "fromID", title: "ID от", tooltip: "ID от", isVisible: false, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: false, callback: null },
+                        {
+                            code: "fromName", title: "От", tooltip: "От", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                            filter: { type: "select", source: contragentNameSource, notSelected: "Не выбрано" },
+                            editable: { type: "select", format: "{0}", source: contragentNameSourceInLine, callback: function (el, newValue) {} }
+                        },
+                        { code: "toID", title: "ID кому", tooltip: "ID кому", isVisible: false, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: false, callback: null },
+                        {
+                            code: "toName", title: "Кому", tooltip: "Кому", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                            filter: { type: "select", source: contragentNameSource, notSelected: "Не выбрано" },
+                            editable: { type: "select", format: "{0}", source: contragentNameSourceInLine, callback: function (el, newValue) {} }
+                        },
+                        {
+                            code: "sum", title: "Сумма", tooltip: "Сумма", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                            editable: { type: "text", format: "{0}", callback: function (el, newValue) { } }
+                        },
+                        {
+                            code: "desc", title: "Описание", tooltip: "Описание", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                            editable: { type: "text", format: "{0}", callback: function (el, newValue) { } }
+                        },
+                        { code: "typeID", title: "ID тип", tooltip: "ID тип", isVisible: false, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: false, callback: null },
+                        {
+                            code: "typeName", title: "Тип", tooltip: "Тип", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                            filter: { type: "select", source: typeNameSource, notSelected: "Не выбрано" },
+                            editable: { type: "select", format: "{0}", source: typeNameSourceInLine, callback: function (el, newValue) {} }
+                        },
+                        { code: "projectID", title: "ID проекта", tooltip: "ID проекта", isVisible: false, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: false, callback: null },
+                        {
+                            code: "projectName", title: "Проект", tooltip: "Проект", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                            filter: { type: "select", source: projectNameSource, notSelected: "Не выбрано" },
+                            editable: { type: "select", format: "{0}", source: projectNameSourceInLine, callback: function (el, newValue) {} }
+                        },
+                        { code: "statusID", title: "ID статуса", tooltip: "ID статуса", isVisible: false, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: false, callback: null },
+                        {
+                            code: "statusName", title: "Статус", tooltip: "Статус", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                            filter: { type: "checkboxes", source: statusNameSource, notSelected: "Не установлено"},
+                            editable: { type: "select", format: "{0}", source: statusNameSourceInLine, callback: function (el, newValue) {
+                                us.setItemColor($(el).closest("tr"), newValue);
+                            } }
+                        }
+                    ],
+                    operations: {
+                        create: false,
+                        remove: true,
+                        edit: false,
+                        comments: false,
+                        other: [
+                            {
+                                linkClass: 'crdTo', iconClass: 'glyphicon glyphicon-signal', title: 'Отметить задачи', callback: function (e,el) {
+                                    e.preventDefault();
+                                    alert('no action!')
+                                }
+                            }
+                        ]
+                    },
+                    processRowCallback: function (tr) {
+                        var statusID = $("td[data-code=statusID]", tr).text();
+                        us.setItemColor(tr, statusID);
+                    }
+
+                });
+            },
+            setItemColor: function(tr, statusID){
+                var color = $('.usStatusCheckBoxTemplate input[type=checkbox][data-value='+statusID+']').attr('data-color');
+                if(!color) color = "transparent";
+                $(tr).css("background-color", color);
+            },
+            createFinance: function () {
+                var s = [];
+
+                s.push("<span>Описание</span><input type='text' class='form-control usNewDesc' /><br />");
+                s.push("<span>Сумма</span><input type='text' class='form-control usNewSum' /><br />");
+
+                $('.usContragentTemplate option').removeAttr('selected');
+                $('.usContragentTemplate option:first').attr('selected', 'selected');
+                s.push("<span>От</span><select class='form-control usNewFromID' >"+ $('.usContragentTemplate').html() + "</select><br />");
+
+                $('.usContragentTemplate option').removeAttr('selected');
+                $('.usContragentTemplate option:first').attr('selected', 'selected');
+                s.push("<span>Кому</span><select class='form-control usNewToID' >"+ $('.usContragentTemplate').html() + "</select><br />");
+
+                $('.usTypeTemplate option').removeAttr('selected');
+                $('.usTypeTemplate option:first').attr('selected', 'selected');
+                s.push("<span>Тип</span><select class='form-control usNewTypeID' >"+ $('.usTypeTemplate').html() + "</select><br />");
+
+                $('.usProjectTemplate option').removeAttr('selected');
+                $('.usProjectTemplate option:first').attr('selected', 'selected');
+                s.push("<span>Проект</span><select class='form-control usNewProjectID' >"+ $('.usProjectTemplate').html() + "</select><br />");
+
+                setTimeout(function () { $('.usNewDesc').focus(); }, 200);
+
+                as.sys.showDialog("Новая транзакция", s.join(""), "Создать транзакцию", function () {
+
+                    var desc = $('.usNewDesc').val();
+                    var sum = $('.usNewSum').val();
+                    var fromID = $('.usNewFromID option:selected').val();
+                    var toID = $('.usNewToID option:selected').val();
+                    var typeID = $('.usNewTypeID option:selected').val();
+                    var projectID = $('.usNewProjectID option:selected').val();
+                    var statusID = 3;
+
+                    var params = { desc: desc,fromID: fromID, toID: toID, sum:sum, typeID:typeID, projectID:projectID, statusID:statusID };
+                    as.sys.ajaxSend("/Finances/CreateFinance", params, function (data) {
+                        if (typeof (data) != "object") data = eval('(' + data + ')');
+                        if (data.result) {
+                            as.sys.bootstrapAlert("Транзакция успешно добавлена", { type: 'success' });
+                            as.sys.closeDialog();
+                            as.crud.getItems();
+                            setTimeout(function () {
+                                as.crud.gotoItem(data.financeID);
+                            }, 1000);
+                        } else {
+                            as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                        }
+                    });
+                });
+            },
+            createIncomeFromClient: function () {
+                    var s = [];
+
+                    s.push("<span>Описание</span><input type='text' class='form-control usNewDesc' /><br />");
+                    s.push("<span>Сумма</span><input type='text' class='form-control usNewSum' /><br />");
+
+                    $('.usContragentTemplate option').removeAttr('selected');
+                    $('.usContragentTemplate option:first').attr('selected', 'selected');
+                    s.push("<span>От</span><select class='form-control usNewFromID' >"+ $('.usContragentTemplate').html() + "</select><br />");
+
+                    $('.usContragentTemplate option').removeAttr('selected');
+                    $('.usContragentTemplate option:first').attr('selected', 'selected');
+                    s.push("<span>Кому</span><select class='form-control usNewToID' >"+ $('.usContragentTemplate').html() + "</select><br />");
+
+                    $('.usTypeTemplate option').removeAttr('selected');
+                    $('.usTypeTemplate option:first').attr('selected', 'selected');
+                    s.push("<span>Тип</span><select class='form-control usNewTypeID' >"+ $('.usTypeTemplate').html() + "</select><br />");
+
+                    $('.usProjectTemplate option').removeAttr('selected');
+                    $('.usProjectTemplate option:first').attr('selected', 'selected');
+                    s.push("<span>Проект</span><select class='form-control usNewProjectID' >"+ $('.usProjectTemplate').html() + "</select><br />");
+
+                    setTimeout(function () { $('.usNewDesc').focus(); }, 200);
+
+                    as.sys.showDialog("Приход от клиента", s.join(""), "Создать приход от клиента", function () {
+
+                        var desc = $('.usNewDesc').val();
+                        var sum = $('.usNewSum').val();
+                        var fromID = $('.usNewFromID option:selected').val();
+                        var toID = $('.usNewToID option:selected').val();
+                        var typeID = $('.usNewTypeID option:selected').val();
+                        var projectID = $('.usNewProjectID option:selected').val();
+                        var statusID = 3;//status=payed
+
+                        var params = { desc: desc,fromID: fromID, toID: toID, sum:sum, typeID:typeID, projectID:projectID, statusID:statusID };
+                        as.sys.ajaxSend("/Finances/CreateFinance", params, function (data) {
+                            if (typeof (data) != "object") data = eval('(' + data + ')');
+                            if (data.result) {
+                                as.sys.bootstrapAlert("Приход от контрагента успешно добавлен", { type: 'success' });
+                                as.sys.closeDialog();
+                                as.crud.getItems();
+                                setTimeout(function () {
+                                    as.crud.gotoItem(data.financeID);
+                                }, 1000);
+                            } else {
+                                as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                            }
+                        });
+                    }, false,function(){$('.usNewTypeID').val(1);$('.usNewToID').val(3);});
+                },
+            createExpense: function () {
+                var s = [];
+
+                s.push("<span>Описание</span><input type='text' class='form-control usNewDesc' /><br />");
+                s.push("<span>Сумма</span><input type='text' class='form-control usNewSum' /><br />");
+
+                $('.usContragentTemplate option').removeAttr('selected');
+                $('.usContragentTemplate option:first').attr('selected', 'selected');
+                s.push("<span>От</span><select class='form-control usNewFromID' >"+ $('.usContragentTemplate').html() + "</select><br />");
+
+                $('.usContragentTemplate option').removeAttr('selected');
+                $('.usContragentTemplate option:first').attr('selected', 'selected');
+                s.push("<span>Кому</span><select class='form-control usNewToID' >"+ $('.usContragentTemplate').html() + "</select><br />");
+
+                $('.usTypeTemplate option').removeAttr('selected');
+                $('.usTypeTemplate option:first').attr('selected', 'selected');
+                s.push("<span>Тип</span><select class='form-control usNewTypeID' >"+ $('.usTypeTemplate').html() + "</select><br />");
+
+                $('.usProjectTemplate option').removeAttr('selected');
+                $('.usProjectTemplate option:first').attr('selected', 'selected');
+                s.push("<span>Проект</span><select class='form-control usNewProjectID' >"+ $('.usProjectTemplate').html() + "</select><br />");
+
+                setTimeout(function () { $('.usNewDesc').focus(); }, 200);
+
+                as.sys.showDialog("Новый нетиповой расход", s.join(""), "Создать нетиповой расход", function () {
+
+                    var desc = $('.usNewDesc').val();
+                    var sum = $('.usNewSum').val();
+                    var fromID = $('.usNewFromID option:selected').val();
+                    var toID = $('.usNewToID option:selected').val();
+                    var typeID =$('.usNewTypeID option:selected').val();
+                    var projectID = $('.usNewProjectID option:selected').val();
+                    var statusID = 3;
+
+                    var params = { desc: desc,fromID: fromID, toID: toID, sum:sum, typeID:typeID, projectID:projectID, statusID:statusID };
+                    as.sys.ajaxSend("/Finances/CreateFinance", params, function (data) {
+                        if (typeof (data) != "object") data = eval('(' + data + ')');
+                        if (data.result) {
+                            as.sys.bootstrapAlert("Нетиповой расход успешно добавлен", { type: 'success' });
+                            as.sys.closeDialog();
+                            as.crud.getItems();
+                            setTimeout(function () {
+                                as.crud.gotoItem(data.financeID);
+                            }, 1000);
+                        } else {
+                            as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                        }
+                    });
+                }, false,function(){$('.usNewTypeID').val(2);$('.usNewFromID').val(3);});
+            },
+            createContragent: function () {
+                var s = [];
+
+                s.push("<span>Название</span><input type='text' class='form-control usNewContragName' /><br />");
+
+                $('.usCrmTemplate option').removeAttr('selected');
+                $('.usCrmTemplate option:first').attr('selected', 'selected');
+                s.push("<span>Клиент</span><select class='form-control usNewClientID' >"+ $('.usCrmTemplate').html() + "</select><br />");
+
+                $('.usHrTemplate option').removeAttr('selected');
+                $('.usHrTemplate option:first').attr('selected', 'selected');
+                s.push("<span>Исполнитель</span><select class='form-control usNewHumanID' >"+ $('.usHrTemplate').html() + "</select><br />");
+
+                setTimeout(function () { $('.usNewContragName').focus(); }, 200);
+
+                as.sys.showDialog("Новый контрагент", s.join(""), "Создать контрагент", function () {
+
+                    var name = $('.usNewContragName').val();
+                    var humanID = $('.usNewHumanID option:selected').val();
+                    var clientID = $('.usNewClientID option:selected').val();
+
+                    if (!name) {
+                        as.sys.bootstrapAlert("Укажите, пожалуйста, название", { type: 'warning' });
+                        $('.usNewContragName').focus();
+                        return;
+                    }
+
+                    var params = {name:name, humanID:humanID, clientID:clientID };
+                    as.sys.ajaxSend("/Finances/CreateContragent", params, function (data) {
+                        if (typeof (data) != "object") data = eval('(' + data + ')');
+                        if (data.result) {
+                            as.sys.bootstrapAlert("Контрагент успешно создан", { type: 'success' });
+                            as.sys.closeDialog();
+                            location.reload(false);
+                        } else {
+                            as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                        }
+                    });
+                });
+            },
+            editValue: function(el){
+
+                var tr = el.closest("tr");
+                as.sys.showDialog($("td[data-code=desc]", tr).text() + " ("+$("td[data-code=sum]", tr).text()+")", s.join(""), "Сохранить", function () {
+                    as.sys.ajaxSend("/Finances/FinancesInline", params, function (data) {
+                            if (typeof (data) != "object") data = eval('(' + data + ')');
+                            if (data.result) {
+                                as.sys.bootstrapAlert("Сохранено", { type: 'success' });
+                                as.sys.closeDialog();
+                            } else {
+                                as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                            }
+                        });
+                    });
+            }
+        }
+        $(function () {
+            us.init();
+        });
+    </script>
+}

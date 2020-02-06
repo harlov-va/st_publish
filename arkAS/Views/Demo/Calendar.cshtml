@@ -1,0 +1,193 @@
+﻿
+@{
+    ViewBag.Title = "Calendar";
+    Layout = "~/Areas/Rosh/Views/Shared/_Layout.cshtml";
+}
+
+<br>
+<div id="selectBlock">
+    <div class="form-group col-xs-12 col-sm-12 col-md-12">
+        <label class="control-label">Выбор способа показа события</label>
+    </div>
+    <div class="form-group col-xs-12 col-sm-12 col-md-12">
+        <input type="radio" id="rButton1" name="selectView" checked />
+        <label for="rButton1">Показать событие во всплыващем окне</label><p />
+
+        <input type="radio" id="rButton2" name="selectView" />
+        <label for="rButton2">Показать событие в таблице, под календарем</label><p />
+    </div>
+</div>
+<br><p/>
+
+<div id='calendar'></div> <p/>
+
+<div id="newEventTable" class="display">
+    @*a place for event's table*@
+</div>
+
+@section css{
+    <link rel="stylesheet" href="~/Areas/Rosh/Content/fullcalendar-3.6.1/fullcalendar.min.css" />
+    <link rel="stylesheet" href="~/Areas/Rosh/Content/fullcalendar-3.6.1/fullcalendar.print.min.css" media="print" />
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" />
+
+<style>
+    body {
+        margin: 40px 10px;
+        padding: 0;
+        font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+        font-size: 14px;
+    }
+
+    #selectBlock {
+        max-width: 900px;
+        margin: 0 auto;
+        overflow: hidden; /*for fluid heihgt of "div class="selection"*/
+        background-color: #FFFFE0;
+        border: 1px #CCCCCC solid;
+        border-radius: 1%;
+    }
+
+    #calendar, #eventTable, .usCont {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    #eventTable {
+        border: 2px #FF0000 solid;
+        border-radius: 1%;
+    }
+</style>
+}
+
+@section js{
+
+<script src='~/Areas/Rosh/Content/fullcalendar-3.6.1/lib/moment.min.js'></script>
+<script src="~/Areas/Rosh/Content/fullcalendar-3.6.1/fullcalendar.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+
+<script>
+
+    var calendar = {
+        options: {},
+        init: function ()
+        {
+            var events = [];
+            var params = { id: $(this).closest('tr').attr('data-itemid') };
+            as.sys.ajaxSend("/Demo/Calendar_getEvents", params, function (data)
+            {
+                $.each(data, function (key, val)
+                {
+                    events.push({
+                        id: val.id,
+                        title: val.title,
+                        start: val.startEvent,
+                        end: val.endEvent,
+                        color: val.color,
+                        description: val.description
+                    });
+                })
+                GetCalendar(events);
+            })
+
+            //radiobuttons selection
+            $('#rButton1').change(function ()
+            {
+                if ($('#eventTable').html().length > 0) //if exist table-block table with event's data,
+                {
+                    $('#newEventTable').empty(); //remove table with event's data when checkbox2 is unchecked
+                }
+            })
+
+            function GetCalendar(events) //fullcalendar's function
+            {
+                $('#calendar').fullCalendar({
+                    header: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'month,agendaWeek,agendaDay,listWeek'
+                    },
+                    defaultDate: new Date(),
+                    timeFormat: 'h(:mm)a',
+                    editable: true,
+                    eventLimit: true,
+                    events: events,
+                    eventColor: '#378006',
+                    eventClick: function (data, jsEvent, view)
+                    {
+                        if ($('#rButton1').is(':checked'))
+                        {
+                            //generate dialog's window for showing event's data
+                            var s = [];
+                            s.push("<span>Дата начала: </span> <label class='control-label'> " + data.start.format("DD-MMM-YYYY HH:mm a") + " </label><br />");
+                            if (data.end != null)
+                            {
+                                s.push("<span>Дата окончания: </span><label class='control-label'>" + data.end.format("DD-MMM-YYYY HH:mm a") + " </label><br />");
+                            }
+                            s.push("<span>Описание: </span><label class='control-label'>" + data.description + " </label><br />");
+
+                            setTimeout(function () { $('.usNewTypeID').focus(); }, 200);
+                            as.sys.showDialog(data.title, s.join(""), "OK", function ()
+                            {
+                                as.sys.closeDialog();
+                            })
+                        }
+                        else if ($('#rButton2').is(':checked'))
+                        {
+                            if ($('#eventTable').html() == null) //if table-block does not exist, then
+                            {
+                                //add a new table-block in a div with id="newDataTable"
+                                var newDataTable = '<table id = \'eventTable\' class = \'table table-striped table-bordered\'></table>';
+                                $('#newEventTable').append(newDataTable);
+                            }
+
+                            //generate table for showing event's data in this one below the calendar (in the added table-block above)
+
+                            $('#eventTable').DataTable({
+                                "destroy": true,
+                                "paging": false,
+                                "searching": false,
+                                "serverSide": false,
+                                "processing": false,
+                                "data": [{
+                                    "title": data.title,
+                                    "description": data.description,
+                                    "start": data.start.format("DD-MMM-YYYY HH:mm a"),
+                                    "end": data.end.format("DD-MMM-YYYY HH:mm a")
+                                }],
+                                "columns": [
+                                    {
+                                        "title": "Наименование", "data": "title"
+                                    },
+                                    {
+                                        "title": "Описание", "data": "description"
+                                    },
+                                    {
+                                        "title": "Начало", "data": "start",
+                                    },
+                                    {
+                                        "title": "Окончание", "data": "end",
+                                    }
+                                ],
+                            });//table
+
+                            //the page scrolls to the <div id="newEventTable">
+                            if ($('#eventTable').html().length > 0)
+                            {
+                                $('html, body').animate({ scrollTop: $('#newEventTable').offset().top }, 'slow');
+                            }
+                        }
+                    } //main function
+                })
+            }
+        }
+    }
+
+    $(function ()
+    {
+        calendar.init();
+    });
+
+</script>
+}

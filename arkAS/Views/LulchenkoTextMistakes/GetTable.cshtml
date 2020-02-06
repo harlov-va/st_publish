@@ -1,0 +1,96 @@
+﻿
+@{
+    ViewBag.Title = "Обработка ошибок в текстах";
+    Layout = arkAS.BLL.Core.CoreManager.GetCabinetLayout();
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+
+<div class='dmCont'>
+</div>
+
+@section js{
+    <script type="text/javascript">
+
+        var statusesSourceFilter = @Html.Raw(js.Serialize(((List<string>)ViewBag.correctStatuses).Select(x => new { Value = x == "да" ? 1 : -1, Text = x })));
+        var statusesSourceEditable = @Html.Raw(js.Serialize(((List<string>)ViewBag.correctStatuses).Select(x => new { value = x, text = x })));
+        var usersSourceFilter=@Html.Raw(js.Serialize(((List<string>)ViewBag.Users).Select(x => new { Value = x, Text = x })));
+
+        var mistakes = {
+            init: function () {
+                mistakes.initMainTable();
+                mistakes.initCreateMistake();
+                $(document).delegate('.usCreateMistake', 'click', function () {
+                    as.createMistake.showDialog();
+                });
+            },
+            initCreateMistake: function(){
+                as.createMistake.init({
+                    dialogTitle: "Добавить ошибку"
+                });
+            },
+
+            initMainTable: function () {
+                as.crud.init({
+                    cont: $('.dmCont'),
+                    title: 'Обработка ошибок в текстах',
+                    toolbarAdditional: '<a href="#" class="btn btn-primary usCreateMistake">Добавить ошибку</a>',
+                    groupOperationsToolbar: '',
+                    ajaxURLFormat: '/LulchenkoTextMistakes/Table_{0}',
+                    inlineAjaxURL: "/LulchenkoTextMistakes/EditInline",
+                    pageSize: 150,
+                    cookiePrefix: "as-crud-GetTextMistakesTable-",
+                    emptyText: 'Элементов не найдено',
+                    filterLinkTitle: 'Найти',
+                    filterTitle: 'Фильтрация данных',
+                    showChecksCol: false,
+                    showNumsCol: true,
+                    showToolbar: true,
+                    showColSettings: false,
+                    showReplaceTool: false,
+                    showExcelExport: false,
+                    additionalSort: false,
+                    cols: [
+                         { code: "id", title: "ID", tooltip: "Идентификатор", isVisible: true, isPK: true, datatype: "int", isRequired: false },
+
+                         { code: "user", title: "Пользователь", tooltip: "Пользователь", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                             filter: { type: "select", source: usersSourceFilter, notSelected: "не выбрано" }},
+
+                         { code: "url", title: "URL", tooltip: "URL", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                             editable: { type: "text", format: "{0}", callback: function (el, newValue) { } } },
+
+                         { code: "selectText", title: "Ошибка", tooltip: "Ошибка", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: false, callback: null,
+                             editable: { type: "textarea", format: "{0}", callback: function (el, newValue) { } } },
+
+                         { code: "comment", title: "Комментарий", tooltip: "Комментарий", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: false, callback: null,
+                             editable: { type: "textarea", format: "{0}", callback: function (el, newValue) { } }},
+
+                         { code: "correct", title: "Исправлено", tooltip: "Исправлено", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                             filter: { type: "select", source: statusesSourceFilter, notSelected: "не выбрано" },
+                             editable: { type: "select", format: "{0}", source: statusesSourceEditable, notSelected: "нет", callback: function (el, newValue) { } } }
+                    ],
+                    operations: {
+                        create: false,
+                        remove: true,
+                        edit: false,
+                        other: []
+                    },
+                    getFilterMakeup: function (filter) {
+                        var s = [];
+                        s.push("<span class='gCap'>Произвольный фильтр</span><input type='text' class='dmSearchText' value='" + (filter.searchText || '') + "' /><br /><br />");
+                        return s.join("");
+                    },
+                    filter: function () {
+                        var filter = {
+                            searchText: $('.dmSearchText').val() || ""
+                        };
+                        return filter;
+                    }
+                });
+            }//,
+    }
+    $(function () {
+        mistakes.init();
+
+    });
+    </script>
+}

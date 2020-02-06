@@ -1,0 +1,201 @@
+﻿<error errorId="ebfe4c6a-5c20-4623-8212-59dcf67a0ebf" host="ADMIN2" type="System.Web.HttpException" message="The controller for path '/[object Object]' was not found or does not implement IController." source="System.Web.Mvc" detail="System.Web.HttpException (0x80004005): The controller for path '/[object Object]' was not found or does not implement IController.&#xD;&#xA;   в System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)&#xD;&#xA;   в System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)&#xD;&#xA;   в Castle.Proxies.Invocations.IControllerFactory_CreateController.InvokeMethodOnTarget()&#xD;&#xA;   в Castle.DynamicProxy.AbstractInvocation.Proceed()&#xD;&#xA;   в Glimpse.Core.Extensibility.CastleInvocationToAlternateMethodContextAdapter.Proceed()&#xD;&#xA;   в Glimpse.Core.Extensions.AlternateMethodContextExtensions.TryProceedWithTimer(IAlternateMethodContext context, TimerResult&amp; timerResult)&#xD;&#xA;   в Glimpse.Core.Extensibility.AlternateMethod.NewImplementation(IAlternateMethodContext context)&#xD;&#xA;   в Glimpse.Core.Extensibility.AlternateTypeToCastleInterceptorAdapter.Intercept(IInvocation invocation)&#xD;&#xA;   в Castle.DynamicProxy.AbstractInvocation.Proceed()&#xD;&#xA;   в Castle.Proxies.IControllerFactoryProxy.CreateController(RequestContext requestContext, String controllerName)&#xD;&#xA;   в System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController&amp; controller, IControllerFactory&amp; factory)&#xD;&#xA;   в System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)&#xD;&#xA;   в System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)&#xD;&#xA;   в System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)&#xD;&#xA;   в System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()&#xD;&#xA;   в System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)&#xD;&#xA;   в System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean&amp; completedSynchronously)" user="roshAdmin@email.com" time="2019-05-07T14:45:41.7518022Z" statusCode="404">
+  <serverVariables>
+    <item name="ALL_HTTP">
+      <value string="HTTP_CONNECTION:keep-alive&#xD;&#xA;HTTP_CONTENT_LENGTH:0&#xD;&#xA;HTTP_CONTENT_TYPE:application/json; charset=utf-8&#xD;&#xA;HTTP_ACCEPT:application/json, text/javascript, */*; q=0.01&#xD;&#xA;HTTP_ACCEPT_ENCODING:gzip, deflate, br&#xD;&#xA;HTTP_ACCEPT_LANGUAGE:ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7&#xD;&#xA;HTTP_COOKIE:.Nop.Antiforgery=CfDJ8E4E4h12H7FGsmnO9UTvw1hYOBtWkD4l9m8wpuAb6vf7uTKJWy-nDVg-XxqzvIag2HEyjfUorfmjHq6GbhqIYdx3V_fPQG-RbMkuYOmjBuGkj1B1C_5mkjasfvy-ES8wFT4ZyzoSY8_fc8ubPeFedg0; .Nop.Authentication=CfDJ8E4E4h12H7FGsmnO9UTvw1ip00wrzbnsEueCHRy81nOlt_d_JoW573GsIZgzS1-FpNTwxggdx6a3cLH4iRUI6_3K0NBHpcpUmmPxR60KhxiDsGAPzqoxyuudH_OlA2947qlAAP328-ivmMTAoaFYXc67FXwlns2GUbWw0OG8RFQAR0N5SuejMsobJBNXILO-H43xJSRLA2piEbjW8aw0cm7JGio4sHq3JqIxnOu9Uw0-S2-PDXvIoa4LRJrL_MSnRTaenxphQzL20Caikg41WA8a5qVBtLRWHtdRpc24TUxDau6LXfHHv5eEh74-9VX18S0ZqSeCN0dqIRpGeFjE0noSbBqao04VYSG9ukELTCJYaCPGp7X4jDQwbQ64skriwbuaIjnHDcCfeOJzwCy3_FMnzO1LaTOb9dHGlLxqttxrEjnWStvrIsfK2PRSi3NGZ0hkWNBm5iL_MD3SL96W66pBk3i15umQ6eUGipNNo7N3bjTmLy3Tbp976ZFQVx3d5GAbovw-0tMuDUIXK42wm0fCtehgADq3Vy2nX-CWWLolk00lNXnYBUoAuRL6XDlz1w; __atuvc=1%7C44; .Nop.Customer=74d7a8a1-4ea8-4441-999a-efa7e789aae7; .ASPXAUTH=F1C51A6F2333D1C1294A488A9BE8EDE39C152B07B4F9832F6A97169D0B6EB8C3D843422CE04B815D7E1CB4AE9EA481EACA6E23A12ADD8767D1924D1B2BB9FAE17A4D90BC55B2AF3E378D3D550DD26EC770BB96E8048DE7473D6E772F97072AD176532E2C9EB75E48D0465796380261F0; userGuid=268cee96-43d8-4f73-9e10-d606b7336d2b; __RequestVerificationToken=SDCSbuFpKIzRavhH2OGPfQ4XHwTTJbf9pHzHfD0dcBNc9hS8MNg5yBOZIbK5aTt2oopGuvjOfkvHtQXtq9iNeO8vwKQ1; arkAS=EF3F3DFD0A017195652CA97640836D7B7CEB62F01BF6B04FCC2706CBD35F5264D1FEF63DBDFA0E1281B3698AE8C212EA75DA0AB06070AC8C2552E804F451F3F168674A076D3220A39D7A5F249567A5A3EFAE7105E406C74F27C0344C7D0409DB70CBE23CE549A204A1D920DBFDFB8137C978C10E; as-crud-docs1-selectParams_usCont={&quot;page&quot;:1,&quot;pageSize&quot;:10,&quot;filter&quot;:{&quot;text&quot;:&quot;&quot;},&quot;sort&quot;:&quot;&quot;,&quot;direction&quot;:&quot;&quot;}&#xD;&#xA;HTTP_HOST:localhost:52390&#xD;&#xA;HTTP_REFERER:http://localhost:52390/harlov&#xD;&#xA;HTTP_USER_AGENT:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36&#xD;&#xA;HTTP_ORIGIN:http://localhost:52390&#xD;&#xA;HTTP_X_REQUESTED_WITH:XMLHttpRequest&#xD;&#xA;HTTP_DNT:1&#xD;&#xA;" />
+    </item>
+    <item name="ALL_RAW">
+      <value string="Connection: keep-alive&#xD;&#xA;Content-Length: 0&#xD;&#xA;Content-Type: application/json; charset=utf-8&#xD;&#xA;Accept: application/json, text/javascript, */*; q=0.01&#xD;&#xA;Accept-Encoding: gzip, deflate, br&#xD;&#xA;Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7&#xD;&#xA;Cookie: .Nop.Antiforgery=CfDJ8E4E4h12H7FGsmnO9UTvw1hYOBtWkD4l9m8wpuAb6vf7uTKJWy-nDVg-XxqzvIag2HEyjfUorfmjHq6GbhqIYdx3V_fPQG-RbMkuYOmjBuGkj1B1C_5mkjasfvy-ES8wFT4ZyzoSY8_fc8ubPeFedg0; .Nop.Authentication=CfDJ8E4E4h12H7FGsmnO9UTvw1ip00wrzbnsEueCHRy81nOlt_d_JoW573GsIZgzS1-FpNTwxggdx6a3cLH4iRUI6_3K0NBHpcpUmmPxR60KhxiDsGAPzqoxyuudH_OlA2947qlAAP328-ivmMTAoaFYXc67FXwlns2GUbWw0OG8RFQAR0N5SuejMsobJBNXILO-H43xJSRLA2piEbjW8aw0cm7JGio4sHq3JqIxnOu9Uw0-S2-PDXvIoa4LRJrL_MSnRTaenxphQzL20Caikg41WA8a5qVBtLRWHtdRpc24TUxDau6LXfHHv5eEh74-9VX18S0ZqSeCN0dqIRpGeFjE0noSbBqao04VYSG9ukELTCJYaCPGp7X4jDQwbQ64skriwbuaIjnHDcCfeOJzwCy3_FMnzO1LaTOb9dHGlLxqttxrEjnWStvrIsfK2PRSi3NGZ0hkWNBm5iL_MD3SL96W66pBk3i15umQ6eUGipNNo7N3bjTmLy3Tbp976ZFQVx3d5GAbovw-0tMuDUIXK42wm0fCtehgADq3Vy2nX-CWWLolk00lNXnYBUoAuRL6XDlz1w; __atuvc=1%7C44; .Nop.Customer=74d7a8a1-4ea8-4441-999a-efa7e789aae7; .ASPXAUTH=F1C51A6F2333D1C1294A488A9BE8EDE39C152B07B4F9832F6A97169D0B6EB8C3D843422CE04B815D7E1CB4AE9EA481EACA6E23A12ADD8767D1924D1B2BB9FAE17A4D90BC55B2AF3E378D3D550DD26EC770BB96E8048DE7473D6E772F97072AD176532E2C9EB75E48D0465796380261F0; userGuid=268cee96-43d8-4f73-9e10-d606b7336d2b; __RequestVerificationToken=SDCSbuFpKIzRavhH2OGPfQ4XHwTTJbf9pHzHfD0dcBNc9hS8MNg5yBOZIbK5aTt2oopGuvjOfkvHtQXtq9iNeO8vwKQ1; arkAS=EF3F3DFD0A017195652CA97640836D7B7CEB62F01BF6B04FCC2706CBD35F5264D1FEF63DBDFA0E1281B3698AE8C212EA75DA0AB06070AC8C2552E804F451F3F168674A076D3220A39D7A5F249567A5A3EFAE7105E406C74F27C0344C7D0409DB70CBE23CE549A204A1D920DBFDFB8137C978C10E; as-crud-docs1-selectParams_usCont={&quot;page&quot;:1,&quot;pageSize&quot;:10,&quot;filter&quot;:{&quot;text&quot;:&quot;&quot;},&quot;sort&quot;:&quot;&quot;,&quot;direction&quot;:&quot;&quot;}&#xD;&#xA;Host: localhost:52390&#xD;&#xA;Referer: http://localhost:52390/harlov&#xD;&#xA;User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36&#xD;&#xA;Origin: http://localhost:52390&#xD;&#xA;X-Requested-With: XMLHttpRequest&#xD;&#xA;DNT: 1&#xD;&#xA;" />
+    </item>
+    <item name="APPL_MD_PATH">
+      <value string="/LM/W3SVC/2/ROOT" />
+    </item>
+    <item name="APPL_PHYSICAL_PATH">
+      <value string="D:\YandexDisk\Projects\Курс Touch 1.0\Core\arkAS\" />
+    </item>
+    <item name="AUTH_TYPE">
+      <value string="Forms" />
+    </item>
+    <item name="AUTH_USER">
+      <value string="roshAdmin@email.com" />
+    </item>
+    <item name="AUTH_PASSWORD">
+      <value string="" />
+    </item>
+    <item name="LOGON_USER">
+      <value string="" />
+    </item>
+    <item name="REMOTE_USER">
+      <value string="roshAdmin@email.com" />
+    </item>
+    <item name="CERT_COOKIE">
+      <value string="" />
+    </item>
+    <item name="CERT_FLAGS">
+      <value string="" />
+    </item>
+    <item name="CERT_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SERIALNUMBER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CERT_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CONTENT_LENGTH">
+      <value string="0" />
+    </item>
+    <item name="CONTENT_TYPE">
+      <value string="application/json; charset=utf-8" />
+    </item>
+    <item name="GATEWAY_INTERFACE">
+      <value string="CGI/1.1" />
+    </item>
+    <item name="HTTPS">
+      <value string="off" />
+    </item>
+    <item name="HTTPS_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="INSTANCE_ID">
+      <value string="2" />
+    </item>
+    <item name="INSTANCE_META_PATH">
+      <value string="/LM/W3SVC/2" />
+    </item>
+    <item name="LOCAL_ADDR">
+      <value string="::1" />
+    </item>
+    <item name="PATH_INFO">
+      <value string="/[object Object]" />
+    </item>
+    <item name="PATH_TRANSLATED">
+      <value string="D:\YandexDisk\Projects\Курс Touch 1.0\Core\arkAS\[object Object]" />
+    </item>
+    <item name="QUERY_STRING">
+      <value string="" />
+    </item>
+    <item name="REMOTE_ADDR">
+      <value string="::1" />
+    </item>
+    <item name="REMOTE_HOST">
+      <value string="::1" />
+    </item>
+    <item name="REMOTE_PORT">
+      <value string="48827" />
+    </item>
+    <item name="REQUEST_METHOD">
+      <value string="POST" />
+    </item>
+    <item name="SCRIPT_NAME">
+      <value string="/[object Object]" />
+    </item>
+    <item name="SERVER_NAME">
+      <value string="localhost" />
+    </item>
+    <item name="SERVER_PORT">
+      <value string="52390" />
+    </item>
+    <item name="SERVER_PORT_SECURE">
+      <value string="0" />
+    </item>
+    <item name="SERVER_PROTOCOL">
+      <value string="HTTP/1.1" />
+    </item>
+    <item name="SERVER_SOFTWARE">
+      <value string="Microsoft-IIS/10.0" />
+    </item>
+    <item name="URL">
+      <value string="/[object Object]" />
+    </item>
+    <item name="HTTP_CONNECTION">
+      <value string="keep-alive" />
+    </item>
+    <item name="HTTP_CONTENT_LENGTH">
+      <value string="0" />
+    </item>
+    <item name="HTTP_CONTENT_TYPE">
+      <value string="application/json; charset=utf-8" />
+    </item>
+    <item name="HTTP_ACCEPT">
+      <value string="application/json, text/javascript, */*; q=0.01" />
+    </item>
+    <item name="HTTP_ACCEPT_ENCODING">
+      <value string="gzip, deflate, br" />
+    </item>
+    <item name="HTTP_ACCEPT_LANGUAGE">
+      <value string="ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7" />
+    </item>
+    <item name="HTTP_COOKIE">
+      <value string=".Nop.Antiforgery=CfDJ8E4E4h12H7FGsmnO9UTvw1hYOBtWkD4l9m8wpuAb6vf7uTKJWy-nDVg-XxqzvIag2HEyjfUorfmjHq6GbhqIYdx3V_fPQG-RbMkuYOmjBuGkj1B1C_5mkjasfvy-ES8wFT4ZyzoSY8_fc8ubPeFedg0; .Nop.Authentication=CfDJ8E4E4h12H7FGsmnO9UTvw1ip00wrzbnsEueCHRy81nOlt_d_JoW573GsIZgzS1-FpNTwxggdx6a3cLH4iRUI6_3K0NBHpcpUmmPxR60KhxiDsGAPzqoxyuudH_OlA2947qlAAP328-ivmMTAoaFYXc67FXwlns2GUbWw0OG8RFQAR0N5SuejMsobJBNXILO-H43xJSRLA2piEbjW8aw0cm7JGio4sHq3JqIxnOu9Uw0-S2-PDXvIoa4LRJrL_MSnRTaenxphQzL20Caikg41WA8a5qVBtLRWHtdRpc24TUxDau6LXfHHv5eEh74-9VX18S0ZqSeCN0dqIRpGeFjE0noSbBqao04VYSG9ukELTCJYaCPGp7X4jDQwbQ64skriwbuaIjnHDcCfeOJzwCy3_FMnzO1LaTOb9dHGlLxqttxrEjnWStvrIsfK2PRSi3NGZ0hkWNBm5iL_MD3SL96W66pBk3i15umQ6eUGipNNo7N3bjTmLy3Tbp976ZFQVx3d5GAbovw-0tMuDUIXK42wm0fCtehgADq3Vy2nX-CWWLolk00lNXnYBUoAuRL6XDlz1w; __atuvc=1%7C44; .Nop.Customer=74d7a8a1-4ea8-4441-999a-efa7e789aae7; .ASPXAUTH=F1C51A6F2333D1C1294A488A9BE8EDE39C152B07B4F9832F6A97169D0B6EB8C3D843422CE04B815D7E1CB4AE9EA481EACA6E23A12ADD8767D1924D1B2BB9FAE17A4D90BC55B2AF3E378D3D550DD26EC770BB96E8048DE7473D6E772F97072AD176532E2C9EB75E48D0465796380261F0; userGuid=268cee96-43d8-4f73-9e10-d606b7336d2b; __RequestVerificationToken=SDCSbuFpKIzRavhH2OGPfQ4XHwTTJbf9pHzHfD0dcBNc9hS8MNg5yBOZIbK5aTt2oopGuvjOfkvHtQXtq9iNeO8vwKQ1; arkAS=EF3F3DFD0A017195652CA97640836D7B7CEB62F01BF6B04FCC2706CBD35F5264D1FEF63DBDFA0E1281B3698AE8C212EA75DA0AB06070AC8C2552E804F451F3F168674A076D3220A39D7A5F249567A5A3EFAE7105E406C74F27C0344C7D0409DB70CBE23CE549A204A1D920DBFDFB8137C978C10E; as-crud-docs1-selectParams_usCont={&quot;page&quot;:1,&quot;pageSize&quot;:10,&quot;filter&quot;:{&quot;text&quot;:&quot;&quot;},&quot;sort&quot;:&quot;&quot;,&quot;direction&quot;:&quot;&quot;}" />
+    </item>
+    <item name="HTTP_HOST">
+      <value string="localhost:52390" />
+    </item>
+    <item name="HTTP_REFERER">
+      <value string="http://localhost:52390/harlov" />
+    </item>
+    <item name="HTTP_USER_AGENT">
+      <value string="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36" />
+    </item>
+    <item name="HTTP_ORIGIN">
+      <value string="http://localhost:52390" />
+    </item>
+    <item name="HTTP_X_REQUESTED_WITH">
+      <value string="XMLHttpRequest" />
+    </item>
+    <item name="HTTP_DNT">
+      <value string="1" />
+    </item>
+  </serverVariables>
+  <cookies>
+    <item name=".Nop.Antiforgery">
+      <value string="CfDJ8E4E4h12H7FGsmnO9UTvw1hYOBtWkD4l9m8wpuAb6vf7uTKJWy-nDVg-XxqzvIag2HEyjfUorfmjHq6GbhqIYdx3V_fPQG-RbMkuYOmjBuGkj1B1C_5mkjasfvy-ES8wFT4ZyzoSY8_fc8ubPeFedg0" />
+    </item>
+    <item name=".Nop.Authentication">
+      <value string="CfDJ8E4E4h12H7FGsmnO9UTvw1ip00wrzbnsEueCHRy81nOlt_d_JoW573GsIZgzS1-FpNTwxggdx6a3cLH4iRUI6_3K0NBHpcpUmmPxR60KhxiDsGAPzqoxyuudH_OlA2947qlAAP328-ivmMTAoaFYXc67FXwlns2GUbWw0OG8RFQAR0N5SuejMsobJBNXILO-H43xJSRLA2piEbjW8aw0cm7JGio4sHq3JqIxnOu9Uw0-S2-PDXvIoa4LRJrL_MSnRTaenxphQzL20Caikg41WA8a5qVBtLRWHtdRpc24TUxDau6LXfHHv5eEh74-9VX18S0ZqSeCN0dqIRpGeFjE0noSbBqao04VYSG9ukELTCJYaCPGp7X4jDQwbQ64skriwbuaIjnHDcCfeOJzwCy3_FMnzO1LaTOb9dHGlLxqttxrEjnWStvrIsfK2PRSi3NGZ0hkWNBm5iL_MD3SL96W66pBk3i15umQ6eUGipNNo7N3bjTmLy3Tbp976ZFQVx3d5GAbovw-0tMuDUIXK42wm0fCtehgADq3Vy2nX-CWWLolk00lNXnYBUoAuRL6XDlz1w" />
+    </item>
+    <item name="__atuvc">
+      <value string="1%7C44" />
+    </item>
+    <item name=".Nop.Customer">
+      <value string="74d7a8a1-4ea8-4441-999a-efa7e789aae7" />
+    </item>
+    <item name=".ASPXAUTH">
+      <value string="F1C51A6F2333D1C1294A488A9BE8EDE39C152B07B4F9832F6A97169D0B6EB8C3D843422CE04B815D7E1CB4AE9EA481EACA6E23A12ADD8767D1924D1B2BB9FAE17A4D90BC55B2AF3E378D3D550DD26EC770BB96E8048DE7473D6E772F97072AD176532E2C9EB75E48D0465796380261F0" />
+    </item>
+    <item name="userGuid">
+      <value string="268cee96-43d8-4f73-9e10-d606b7336d2b" />
+    </item>
+    <item name="__RequestVerificationToken">
+      <value string="SDCSbuFpKIzRavhH2OGPfQ4XHwTTJbf9pHzHfD0dcBNc9hS8MNg5yBOZIbK5aTt2oopGuvjOfkvHtQXtq9iNeO8vwKQ1" />
+    </item>
+    <item name="arkAS">
+      <value string="EF3F3DFD0A017195652CA97640836D7B7CEB62F01BF6B04FCC2706CBD35F5264D1FEF63DBDFA0E1281B3698AE8C212EA75DA0AB06070AC8C2552E804F451F3F168674A076D3220A39D7A5F249567A5A3EFAE7105E406C74F27C0344C7D0409DB70CBE23CE549A204A1D920DBFDFB8137C978C10E" />
+    </item>
+    <item name="as-crud-docs1-selectParams_usCont">
+      <value string="{&quot;page&quot;:1,&quot;pageSize&quot;:10,&quot;filter&quot;:{&quot;text&quot;:&quot;&quot;},&quot;sort&quot;:&quot;&quot;,&quot;direction&quot;:&quot;&quot;}" />
+    </item>
+  </cookies>
+</error>

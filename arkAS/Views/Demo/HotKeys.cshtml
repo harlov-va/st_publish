@@ -1,0 +1,71 @@
+﻿@using arkAS.Models;
+@{
+    Layout = arkAS.BLL.Core.CoreManager.GetCabinetLayout();
+    ViewBag.Title = "Горячие клавишы";
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+
+<div class='usCont'>
+</div>
+
+@*@section js{
+    <script src="~/js/AS/controls/as.hotKey.js"></script>
+    <script type="text/javascript">
+        var us = {
+            init: function () {
+                us.initMainTable();
+                $(document).delegate('.usCreateHotKey', 'click', function (e) {
+                    e.preventDefault();
+                    us.createHotKey();
+                });
+            },
+            initMainTable: function () {
+                as.crud.init({
+                    cont: $('.usCont'),
+                    title: 'Горячие кнопки',
+                    groupOperationsToolbar: '',
+                    ajaxURLFormat: '/Demo/HotKeys_{0}',
+                    pageSize: 150,
+                    cookiePrefix: "as-crud-hotkeyTable-",
+                    emptyText: 'Нет горячих клавиш',
+                    showChecksCol: false,
+                    showNumsCol: false,
+                    showToolbar: true,
+                    showColSettings: false,
+                    showReplaceTool: false,
+                    showExcelExport: false,
+                    additionalSort: false,
+                    cols: [
+                        { code: "Id", title: "ID", tooltip: "Идентификатор", isVisible: false, isPK: true, datatype: "int", isRequired: false },
+                        { code: "key", title: "Сочетание клавиш", tooltip: "Сочетание клафиш", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: false, callback: null },
+                        { code: "action", title: "Действие", tooltip: "Действие", isVisible: true, isPK: false, datatype: "bool", isRequired: false, format: "{0}", isSort: false, callback: null },
+                        { code: "roles", title: "Роли", tooltip: "Роли", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: false, callback: null }
+                    ],
+                    operations: {
+                        create: false,
+                        remove: false,
+                        edit: false,
+                        other: []
+                    },
+                    getItemsCallback: function () {
+                        $('.usCont .usHotKeyRoles').each(function () {
+                            var roles = ("," + $(this).text() + ",").split(",");
+                            $('.usHotKeysTemplate input').removeAttr("checked");
+                            $('.usHotKeysTemplate input').each(function () {
+                                if ($.inArray($(this).val(), roles) >= 0) {
+                                    $(this).attr("checked", "checked");
+                                }
+                            });
+                            $(this).html($('.usHotKeysTemplate').html());
+                        });
+                    }
+                });
+            },
+        }
+
+        $(function () {
+            us.init();
+            as.hotKeys.init();
+        });
+    </script>
+}*@

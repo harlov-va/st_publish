@@ -1,0 +1,101 @@
+﻿
+@{
+    ViewBag.Title = "Исправление ошибок";
+    Layout = arkAS.BLL.Core.CoreManager.GetCabinetLayout();
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+
+<div class='dmCont'>
+</div>
+
+@section js{
+    <script type="text/javascript">
+
+    var statusesSourceFilter = @Html.Raw(js.Serialize(((List<string>)ViewBag.correctType).Select(x => new { Value = x == "да" ? 1 : -1, Text = x })));
+    var statusesSourceEditable = @Html.Raw(js.Serialize(((List<string>)ViewBag.correctType).Select(x => new { value = x, text = x })));
+    var usersSourceFilter=@Html.Raw(js.Serialize(((List<string>)ViewBag.Users).Select(x => new { Value = x, Text = x })));
+
+    var asdemo = {
+        init: function () {
+            asdemo.initMainTable();
+        },
+
+        initMainTable: function () {
+            as.crud.init({
+                cont: $('.dmCont'),
+                title: 'Исправление ошибок',
+                toolbarAdditional: "",
+                groupOperationsToolbar: '',
+                ajaxURLFormat: '/TextMistakes/GetTextMistakesTable_{0}',
+                inlineAjaxURL: "/TextMistakes/GetTextMistakesTableInline",
+                pageSize: 150,
+                cookiePrefix: "as-crud-GetTextMistakesTable-",
+                emptyText: 'Нет элементов',
+                filterLinkTitle: 'Найти',
+                filterTitle: 'Фильтрация данных',
+                showChecksCol: false,
+                showNumsCol: true,
+                showToolbar: false,
+                showColSettings: false,
+                showReplaceTool: false,
+                showExcelExport: false,
+                additionalSort: false,
+                cols: [
+                    { code: "id",   title: "ID",            tooltip: "Идентификатор",   isVisible: true,    isPK: true,     datatype: "int",    isRequired: false},
+                    {
+                        code: "user", title: "Пользователь",  tooltip: "Пользователь",    isVisible: true,    isPK: false,    datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                        filter:{type:"select", source: usersSourceFilter, notSelected: "не выбрано"}
+                    },
+                    {
+                        code: "url",  title: "URL", tooltip: "URL", isVisible: true, isPK: false, datatype: "string",   isRequired: false, format: "{0}", isSort: true, callback: null
+                    },
+                    {
+                        code: "selectText", title: "Ошибка", tooltip: "Ошибка", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: false, callback: null
+                    },
+                    {
+                        code: "comment", title: "Комментарий", tooltip: "Комментарий", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: false, callback: null
+                    },
+
+                    {
+                        code: "correct", title: "Исправлено", tooltip: "Исправлено", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                        editable: { type: "select", format: "{0}", source: statusesSourceEditable, notSelected: "нет", callback: function (el, newValue) { } },
+                        filter: { type: "select", source: statusesSourceFilter, notSelected: "не выбрано" }
+
+                    }
+                ],
+                operations: {
+                    create: false,
+                    remove: true,
+                    edit: false,
+                    other: [
+                     // { linkClass: 'crdTo2', iconClass: 'glyphicon glyphicon-pencil', title: 'Редактировать текст', callback: asdemo.editValue }
+                    ]
+
+                },
+                /*getItemsCallback : function () {
+                        as.selectImage.changeImageContent();
+                    }*/
+                getFilterMakeup: function (filter) {
+                    var s = [];
+                    s.push("<span class='gCap'>Фильтр по url/тексту/коментарию</span><input type='text' class='dmSearchText' value='" + (filter.searchText || '') + "' /><br /><br />");
+                    return s.join("");
+                },
+                filter: function () {
+                    var filter = {
+                        searchText: $('.dmSearchText').val() || ""
+                    };
+                    return filter;
+                }
+            });
+        }//,
+
+
+    }
+    $(function () {
+        asdemo.init();
+
+    });
+
+</script>
+}
+

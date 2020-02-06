@@ -1,0 +1,25 @@
+﻿
+@{
+   Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section css{
+    <style type="text/css">
+       .as-count-down {
+            font-size:130% !important;
+        }
+    </style>
+}
+
+    <div class="counter">
+        <h3>До обеда осталось </h3>
+        <div class="as-count-down">
+        </div>
+    </div>
+@section js{
+    <script type="text/javascript">
+        $(function () {
+            as.countdown.init();
+        });
+    </script>
+}

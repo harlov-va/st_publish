@@ -1,0 +1,94 @@
+﻿@{
+    ViewBag.Title = "Вывод показателей";
+}
+@section css{
+    <link href="~/js/AS/controls/controls_style/indicators.css" rel="stylesheet" />
+    <link href="~/js/estimate/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+
+    <style>
+        #container {
+            background-color: #f7f7f7;
+            padding: 20px;
+        }
+
+        .row {
+            display: block;
+        }
+
+</style>
+
+}
+<script src="~/js/AS/controls/mics/as.indicators.js"></script>
+
+<h1>Показатели</h1>
+<div class="well">
+    Данный компонент позволяет выводить показатели
+</div>
+
+<div id="container">
+    <div id="indicators">
+    </div>
+</div>
+
+@section js
+{
+    <script>
+        $(function () {
+            as.indicators.init({
+                appendTo: "#indicators",
+                columns: 'col-md-2 col-sm-4 col-xs-6',
+                indicators: [{
+                    title: 'Total Users',
+                    count: '2500',
+                    titleImg: 'fa fa-user',
+                    footer: 'From last Week',
+                    footerPercent: 4,
+                    footerColor: 'green',
+                    footerImg: 'fa fa-sort-asc'
+                }, {
+                    title: 'Average Time',
+                    count: '123.50',
+                    titleImg: 'fa fa-clock-o',
+                    footer: 'From last Week',
+                    footerPercent: 3,
+                    footerColor: 'green',
+                    footerImg: 'fa fa-sort-asc'
+                }, {
+                    title: 'Total Males',
+                    count: '2,500',
+                    countColor: 'green',
+                    titleImg: 'fa fa-user',
+                    footer: 'From last Week',
+                    footerPercent: 34,
+                    footerColor: 'green',
+                    footerImg: 'fa fa-sort-asc'
+                }, {
+                    title: 'Total Females',
+                    count: '4,567',
+                    titleImg: 'fa fa-user',
+                    footer: 'From last Week',
+                    footerPercent: 12,
+                    footerColor: 'red',
+                    footerImg: 'fa fa-sort-desc'
+                }, {
+                    title: 'Total Collections',
+                    count: '2,315',
+                    titleImg: 'fa fa-user',
+                    footer: 'From last Week',
+                    footerPercent: 34,
+                    footerColor: 'green',
+                    footerImg: 'fa fa-sort-asc'
+                }, {
+                    title: 'Total Collections',
+                    count: '7,325',
+                    titleImg: 'fa fa-user',
+                    footer: 'From last Week',
+                    footerPercent: 34,
+                    footerColor: 'green',
+                    footerImg: 'fa fa-sort-asc'
+                }
+                ]
+            });
+        });
+    </script>
+}

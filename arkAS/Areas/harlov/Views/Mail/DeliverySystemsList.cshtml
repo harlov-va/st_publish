@@ -1,0 +1,78 @@
+﻿
+@{
+    ViewBag.Title = "Список почтовых систем";
+    Layout = "~/Areas/harlov/Views/Shared/_CabinetLayout.cshtml";
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+
+<div class='deliveryStatCont'>
+
+</div>
+@section js{
+    <script type="text/javascript">
+        var asApp = {
+            init: function () {
+                asApp.initMainTable();
+            },
+
+            initMainTable: function () {
+                as.crud.init({
+                    cont: $('.deliveryStatCont'),
+                    title: 'Список почтовых систем',
+                    toolbarAdditional: '',
+                    groupOperationsToolbar: '',
+                    ajaxURLFormat: '/harlov/Mail/DeliverySystemsList_{0}',
+                    inlineAjaxURL: '',
+                    pageSize: 5,
+                    cookiePrefix: 'as-crud-h-delsys',
+                    emptyText: 'Нет элементов',
+                    createLinkTitle: 'Создать',
+                    filterLinkTitle: 'Найти',
+                    filterTitle: 'Фильтрация данных',
+                    showChecksCol: false,
+                    showNumsCol: true,
+                    showToolbar: true,
+                    showColSettings: false,
+                    showReplaceTool: false,
+                    showExcelExport: false,
+                    additionalSort: false,
+                    cols: [
+                        { code: "id", title: "ID", tooltip: "Идентификатор", isVisible: false, isPK: true, datatype: "int", isRequired: false, editHide: true },
+                        { code: "name", title: "Название", tooltip: "Название", isVisible: true, isPK: false, datatype: "string", isRequired: true, format: "{0}", isSort: true, callback: null },
+                        { code: "code", title: "Код", tooltip: "Код", isVisible: true, isPK: false, datatype: "string", isRequired: true, format: "{0}", isSort: true, callback: null }
+                    ],
+                    operations: {
+                        create: true,
+                        remove: true,
+                        edit: true,
+                        other: [
+                        ]
+                    },
+                    getFilterMakeup: function (filter) {
+                        var s = "";
+                        s += "<div class='form-group'><input type='text' placeholder='Поиск по имени' class='usText form-control' value='" + (filter.text || '') + "' /></div>";
+                        return s;
+                    },
+                    filter: function () {
+
+                        var filter = {
+                            text: $('.usText').val() || ""
+                        };
+                        return filter;
+                    }
+
+                });
+            }
+        }
+        $(function () {
+            asApp.init();
+        });
+    </script>
+
+}
+
+
+
+
+
+

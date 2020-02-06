@@ -1,0 +1,87 @@
+﻿
+@{
+    ViewBag.Title = "Демо Ark AS";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<h3>Шаблон элементов личного кабинета</h3>
+<p>Различные элементы управления, которые могут использоваться в кабинете пользователя (клиента, администратора, оператора)</p>
+<ul>
+    <li><a href="~/Content/sb-admin-2-1.0.5/index.html" target="_blank">Шаблон кабинета</a></li>
+</ul>
+<h3>AS CRUD</h3>
+<p>Компонент отображения табличных данных</p>
+<ul class="">
+    <li>@Html.ActionLink("Просто вывод таблицы с сортировкой и фильтрами", "SimpleTable", "Demo")</li>
+    <li>@Html.ActionLink("Фильтрация данных", "FilterTable", "Demo")</li>
+    <li>@Html.ActionLink("Inline редактирование", "InlineEditTable", "Demo")</li>
+    <li>@Html.ActionLink("Редактирование через модальную форму", "FullEditTable", "Demo")</li>
+    <li>@Html.ActionLink("Галочки для групповых операций", "GroupOperationTable", "Demo")</li>
+    <li>@Html.ActionLink("Двойная сортировка", "DoubleSortTable", "Demo")</li>
+    <li>@Html.ActionLink("Управляющие кнопки и показ вложенных элементов", "RowButtonsTable", "Demo")</li>
+    <li>@Html.ActionLink("Показ вложенной статистики по дням", "ShowStatTable", "Demo")</li>
+    <li>@Html.ActionLink("Настройка столбцов", "ColSettingsTable", "Demo")</li>
+    <li>@Html.ActionLink("Комментарии к элементам таблицы", "CommentsTable", "Demo")</li>
+    <li>@Html.ActionLink("Копирование другой строки", "CopyRowTable", "Demo")</li>
+    <li>@Html.ActionLink("Экспорт в Excel и PDF", "ExportExcelTable", "Demo")</li>
+    <li>@Html.ActionLink("Инструмент замены в определенных полях", "ReplaceToolTable", "Demo")</li>
+    <li>@Html.ActionLink("GetSql", "SqlCrud", "Demo")</li>
+    <li>@Html.ActionLink("TegReplace", "TegReplace", "Demo")</li>
+    <li>@Html.ActionLink("Построение мозаики из картинок", "Mosaik", "Demo")</li>
+    <li><a href="#" class="disabled">Предустановленные значения фильтров (в процессе разработки)</a></li>
+</ul>
+
+<h3>AS FORM</h3>
+<p>Универсальная форма ввода данных</p>
+<ul class="">
+    <li>@Html.ActionLink("AS Form - создание форм различной сложности", "ASForm", "Demo")</li>
+    <li>@Html.ActionLink("Cоздание простой формы", "SimpleForm", "Demo")</li>
+</ul>
+<h3>Другие компоненты</h3>
+<ul class="">
+    <li>@Html.ActionLink("Файловый менеджер", "Example", "FileEditor")</li>
+    <li>@Html.ActionLink("Менеджер файлов", "FileManager", "Demo")</li>
+    <li>@Html.ActionLink("Новости", "GetArticleItems", "Article")</li>
+    <li>@Html.ActionLink("Компонент контроля действий", "AsCtrl", "Demo")</li>
+    <li>@Html.ActionLink("Графики", "Graphic", "Graphic")</li>
+    <li>@Html.ActionLink("AS Info - отображение уточняющего контента для элемента", "PopupInfo", "Demo")</li>
+    <li>@Html.ActionLink("Пример использования Signal R", "SignalR", "Demo")</li>
+    <li>@Html.ActionLink("Пример компонента одиночной замены картинки", "AsImageAsText", "Demo")</li>
+    <li>@Html.ActionLink("Пример элемента профиля пользователя", "ProfileFormUser", "Demo")</li>
+    <li>@Html.ActionLink("Обратный счетчик", "CountDown", "Demo")</li>
+    <li>@Html.ActionLink("Видео на фоне", "VideoBackground", "Demo")</li>
+    <li>@Html.ActionLink("AS Jubilee", "Jubilee", "Demo")</li>
+    <li>@Html.ActionLink("AS Crop", "ImageCrop", "Demo")</li>
+    <li>@Html.ActionLink("Горячие кнопки", "HotKeysDemo", "Demo")</li>
+    <li>@Html.ActionLink("Пример использования LESS", "Less", "Demo")</li>
+    <li>@Html.ActionLink("Ваше мнение", "UserOpinion", "Demo")</li>
+    <li>@Html.ActionLink("Пример работы с соц.сетями", "SocialNetworks", "Demo")</li>
+    <li>@Html.ActionLink("Пример поста на стену Вконтакте", "VkPost", "Demo")</li>
+    <li>@Html.ActionLink("Сравнение скорости работы шаблонизаторов", "DotJsDemo", "Demo")</li>
+    <li>@Html.ActionLink("Календарь с событиями", "Calendar", "Demo")</li>
+</ul>
+<h3>Mics</h3>
+<ul class="">
+    <li>@Html.ActionLink("Стандартные ответы на телефонные звонки", "PlayAudio", "Demo")</li>
+    <li>@Html.ActionLink("Машинки", "Car", "Demo")</li>
+    <li>@Html.ActionLink("Обратный остчет", "CountDown", "Demo")</li>
+    <li>@Html.ActionLink("Юбилей", "Jubilee", "Demo")</li>
+    <li>@Html.ActionLink("Skype & asp", "Skype", "Demo")</li>
+    <li>@Html.ActionLink("Проверка домена на занятость", "DomainChecker", "Demo")</li>
+    <li>@Html.ActionLink("Отображение показателей", "Indicators", "Demo")</li>
+    <li>@Html.ActionLink("Выбор города", "Location", "Demo")</li>
+    <li>@Html.ActionLink("Погода", "Weather", "Demo")</li>
+    <li>@Html.ActionLink("Курсы валют", "Currency", "Demo")</li>
+    <li>@Html.ActionLink("Вакансии hh", "Vacancy", "Demo")</li>
+    <li>@Html.ActionLink("Вакансии Super Job", "Index", "SuperJob")</li>
+    <li>@Html.ActionLink("SmallData", "Client", "SmallData")</li>
+    <li>@Html.ActionLink("Google Sheets", "GoogleSheets", "GoogleDocs")</li>
+    <li>@Html.ActionLink("Google Maps", "googlemap", "Demo")</li>
+    <li>@Html.ActionLink("TimeLine", "TimeLine", "Demo")</li>
+    <li>@Html.ActionLink("Города на карте Google", "MapPlaces", "Demo")</li>
+
+</ul>
+
+@Html.Raw(arkAS.BLL.Core.CoreManager.GetMainFormLink())
+

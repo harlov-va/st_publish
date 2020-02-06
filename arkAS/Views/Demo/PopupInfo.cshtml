@@ -1,0 +1,38 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<style>
+    .as-info{
+        display:none;
+    }
+</style>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Popup info</title>
+</head>
+<body>
+   <h1>Выпадаюшие окна с детализацией информации по объекту</h1>
+    <p>
+        В системе подобные окна можно использовать для более компактного представления информации об объекте. Например, в таблице вы выводите только имя пользователя, а дополнительную информацию по нему вы получаете нажав на ссылку.
+    </p>
+    <p>Чтобы закрыть окно, необходимо щелкнуть по той же ссылке.</p>
+    <ul>
+        <li>
+            <a href="#" class="as-info" data-itemid='12345' data-code='someinfo' data-url='/ArkStuff/Info'>
+                Пример всплавающего окна.
+            </a>
+        </li>
+        <li>
+            <a href="#" class="as-info" data-itemid='56789' data-code='otherinfo' data-url='/ArkStuff/Info'>
+                Еще один пример подобного окна.
+            </a>
+        </li>
+    </ul>
+    
+    
+</body>
+</html>

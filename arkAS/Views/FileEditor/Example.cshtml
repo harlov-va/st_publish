@@ -1,0 +1,75 @@
+﻿@{
+    ViewBag.Title = "Example";
+}
+
+<div class='dmCont'>
+    @*<input type="button" class="btn lpnPageSettingFavicon" value="Dialog" />*@
+    <div class="as-file-editor" data-code='123'>Галерея</div>
+    <div class="as-file-editor" data-code='456'>Документы</div>
+    <div class="as-file-editor" data-code='789'>Общие файлы</div>
+
+</div><br style="clear:both" />
+<br />
+<br />
+<br />
+
+
+@Html.Raw(arkAS.BLL.Core.CoreManager.GetMainFormLink());
+@section css {
+    <link href="~/Content/fe/festyle.css" rel="stylesheet" />
+<link href="~/js/CodeMirror/lib/codemirror.css" rel="stylesheet" />
+<link href="~/js/fancy/source/jquery.fancybox.css" rel="stylesheet" />
+    <style>
+        .as-file-editor {
+            
+            border: 1px solid black;
+            cursor: pointer;
+            float:left;
+            margin:50px 10px;
+            padding:20px;
+        }
+
+            .as-file-editor:hover {
+                background: #bbb;
+                border: 1px solid red;
+            }
+
+            .as-file-editor img {
+                width: 50px;
+                height: 50px;
+            }
+    </style>
+}
+@section js{
+    <script src="~/js/jQueryFileUpload/js/vendor/jquery.ui.widget.js"></script>
+    <script src="~/js/jQueryFileUpload/js/jquery.iframe-transport.js"></script>
+    <script src="~/js/jQueryFileUpload/js/jquery.fileupload.js"></script>
+    <script src="~/js/CodeMirror/lib/codemirror.js"></script>
+    @*<script src="~/js/CodeMirror/lib/codemirror-modes.js"></script>*@
+    <script src="~/js/CodeMirror/lib/require.js"></script>
+    <script src="~/js/cm.sys.js"></script>
+    <script src="~/js/AS/controls/as.fileEditor.js"></script>
+    <script src="~/js/fancy/source/jquery.fancybox.js"></script>
+
+    <script type="text/javascript">
+        fe.init();
+        $(document).delegate('.as-file-editor', 'click', function (e) {
+            e.preventDefault();
+            var t = $(this);
+            fe.showFileEditorDialog($(this), function (url, curElementData, params) {
+                $(t).attr('data-value', url).html("<img  src='" + url + "' title='" + params.alt + "' />");
+            }, { folderShared: '0', folderType: 'projects', folderName: "", id: $(this).attr('data-code') });
+
+        });
+    </script>
+}
+
+
+
+
+
+
+
+
+
+

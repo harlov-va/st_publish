@@ -1,0 +1,82 @@
+﻿@{
+    ViewBag.Title = "Платформа разработки веб-приложений Ark AS";
+
+    if (false) { 
+    foreach (var f in new DirectoryInfo(HttpContext.Current.Server.MapPath( @"/js/as")).GetFiles("*.js", SearchOption.AllDirectories))
+    {
+        string s = File.ReadAllText(f.FullName);
+        File.WriteAllText(f.FullName, s, System.Text.Encoding.UTF8);
+    }
+    }
+}
+
+<div class="jumbotron">
+    <h1>Ark Automated System (Ark AS)</h1>
+    <p class="lead">Платформа для разработки бизнес-ориентированных веб-приложений (личные кабинеты, CRM, роли, обработка данных)</p>
+    <p>
+        <a href="/demo" class="btn btn-primary btn-lg">Смотреть демо &raquo;</a>&nbsp;&nbsp;&nbsp;&nbsp;
+        @Html.Raw(arkAS.BLL.Core.CoreManager.GetMainFormLink("defaultTop"))   
+    </p>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="as-text" data-code="defaultFirstParagraph" data-seotext="1">@Html.Raw(arkAS.BLL.Core.TextManager.Get("defaultFirstParagraph"))</div>        
+    </div>
+    <div class="col-md-4" style=" margin-bottom: -40px; text-align: center; ">
+        <div class="as-text" data-code="defaultBook" data-seotext="1">@Html.Raw(arkAS.BLL.Core.TextManager.Get("defaultBook"))</div>
+        @Html.Raw(arkAS.BLL.Core.CoreManager.GetDownloadBookLink(""))
+    </div>
+</div>
+
+<div class="row">
+    
+    <div class="col-md-8">
+        <div class="as-text" data-code="defaultSecondParagraph" data-seotext="1">@Html.Raw(arkAS.BLL.Core.TextManager.Get("defaultSecondParagraph"))</div>
+    </div>
+    <div class="col-md-4" style="margin-top: 100px;">
+        <a class="as-showimage" href="~/Content/images/ark-core.png"><img src="~/Content/images/ark-core.png" alt="" width="350px" /></a>
+    </div>
+    
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="as-text" data-code="defaultThirdParagraph" data-seotext="1">@Html.Raw(arkAS.BLL.Core.TextManager.Get("defaultThirdParagraph"))</div>
+    </div>
+    <div class="col-md-4" style="padding-top: 60px;">
+        <a class="as-showimage" href="~/Content/images/ark-modules.png"><img src="~/Content/images/ark-modules.png" alt="" width="350px" /></a>
+    </div>
+   
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="as-text" data-code="defaultFourthParagraph" data-seotext="1">@Html.Raw(arkAS.BLL.Core.TextManager.Get("defaultFourthParagraph"))</div>
+    </div>    
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="as-text" data-code="defaultFifthParagraph" data-seotext="1">@Html.Raw(arkAS.BLL.Core.TextManager.Get("defaultFifthParagraph"))</div>
+    </div>
+    <div class="col-md-4" style="padding-top: 60px;">
+        <a class="as-showimage" href="~/Content/images/tech.png"><img src="~/Content/images/tech.png" alt="" width="350px" /></a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-8">
+        <div class="as-text" data-code="defaultSixthParagraph" data-seotext="1">@Html.Raw(arkAS.BLL.Core.TextManager.Get("defaultSixthParagraph"))</div>
+    </div>
+    <div class="col-md-4" style="padding-top: 60px;">
+        <a class="as-showimage" href="~/Content/images/dev-process.png"><img src="~/Content/images/dev-process.png" alt="" width="350px" /></a>
+    </div>    
+</div>
+@Html.Raw(arkAS.BLL.Core.CoreManager.GetMainFormLink())
+
+
+
+
+   
+
+

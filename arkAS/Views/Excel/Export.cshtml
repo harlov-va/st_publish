@@ -1,0 +1,196 @@
+﻿
+@{
+    ViewBag.Title = "Экспорт";
+    Layout = "~/Views/Shared/_CabinetLayout.cshtml";
+}
+
+<h2>Экспорт</h2>
+
+
+<div class="formExport">
+    <div class="row">
+        <div class="col-md-3">
+            <label>Что будем выгружать</label>
+        </div>
+        <div class="tablesDbList col-md-3">
+            <select class="form-control">
+                <option value="-1">Не выбрано</option>
+                @foreach (var t in (List<TableDataBase>)ViewBag.Tables)
+                {
+                    <option value="@t.code">@t.view_name</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="row titleForm">
+    </div>
+
+    <div class="row">
+        
+        <div>
+            <label>С</label>
+        </div>
+        <div class="col-md-2 periodWith">
+            <input type="number" class="col-md-1 form-control fromRows" />
+        </div>
+
+        <div>
+            <label>По</label>
+        </div>
+        <div class="col-md-2 periodTo">
+            <input type="number" class="col-md-1 form-control toRows" />
+        </div>
+        
+
+        <div>
+            <label>Выбрать все записи</label>
+        </div>
+        <div class="col-md-3 checkBoxAll">
+            <input type="checkbox" class="checkAllRows" />
+            <label class="contAllRows"></label>
+        </div>
+
+    </div>
+    
+    <div class="row">
+        <div>
+            <label>Название</label>
+        </div>
+        <div class="col-md-3">
+             <p class="type1"><input type="radio" name="nameType" checked />Название-(0-30)</p> 
+             <p class="type2"><input type="radio" name="nameType" />Название-дата-(0-30)</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div>
+            <label>Where</label>
+        </div>
+        <div class="col-md-3">
+            <input type="text" class="form-control where" />
+        </div>
+        <div class="col-md-2">
+            <label>для админа</label>
+        </div>
+    </div>
+
+    <div class="row">
+        <input type="button" class="btn btn-primary btnExport" value="Экспортировать в Excel" />
+    </div>
+    
+    <div class="columnsTable">
+        
+    </div>
+
+</div>
+
+
+
+@section js{
+    <script type="text/javascript">
+        var asdemo = {
+            init: function() {
+
+                asdemo.getValueDafault();
+
+                $('.tablesDbList').delegate('select', 'change', function() {
+                    asdemo.changeTable($(this));
+                });
+
+                $('.formExport').delegate('.btnExport', 'click', function() {
+                    asdemo.goExport();
+                });
+
+                $('.periodWith, .periodTo, .checkBoxAll').delegate('input', 'change', function() {
+                    asdemo.changeRadioText();
+                });
+
+                $('.checkBoxAll').delegate('.checkAllRows', 'change', function() {
+                    asdemo.changeRadioText();
+                });
+
+
+            },
+            getValueDafault: function() {
+                $('.titleForm').html("<h3>Экспорт данных для " + $('.tablesDbList select option:selected').text() + "</h3>");
+                $('.fromRows').val(0);
+                $('.toRows').val(100);
+            },
+            changeTable: function(tb) {
+                var params = { code: tb.val() };
+                if (params.code == -1) {
+                    $('.titleForm').html("<h3>Экспорт данных для </h3>");
+                    $('.contAllRows').html('(Всего записей )');
+                } else {
+                    as.sys.ajaxSend("/Excel/GetCountRows", params, function(data) {
+                        if (data.result) {
+                            asdemo.changeRadioText();
+                            $('.titleForm').html("<h3>Экспорт данных для " + $('.tablesDbList select option:selected').text() + "</h3>");
+                            $('.contAllRows').html('(Всего записей ' + data.count + ' )');
+                        } else {
+                            as.sys.bootstrapAlert("Произошла ошибка при извлечении данных!", { type: 'danger' });
+                        }
+                    });
+                }
+
+            },
+            changeRadioText: function() {
+                var period = "(" + $('.fromRows').val() +
+                    "-" + $('.toRows').val() + ")";
+
+                if ($('.checkAllRows').is(':checked')) {
+                    period = "все";
+                }
+
+                $('.type1').empty();
+                $('.type1').html("<input type='radio' name='nameType' checked/>" +
+                    $('.tablesDbList select option:selected').text() + "-" + period);
+
+                var date = new Date().getDate() + "." +
+                    (new Date().getMonth() + 1) + "." +
+                    new Date().getFullYear();
+
+                $('.type2').empty();
+                $('.type2').html("<input type='radio' name='nameType' />" +
+                    $('.tablesDbList select option:selected').text() + "-" + date + "-" + period);
+            },
+            goExport: function() {
+
+                var fileName = $('input[name="nameType"]:checked').parent().text();
+                var fromRows = $('.fromRows').val() == "" ? 0 : $('.fromRows').val();
+                var toRows = $('.toRows').val() == "" ? 0 : $('.toRows').val();
+                var allRows = $('.checkAllRows').is(':checked') ? 1 : 0;
+                var codeTable = $('.tablesDbList select').val();
+                var where = $('.where').val();
+
+                if (codeTable == -1) {
+                    as.sys.bootstrapAlert("Выберите таблицу для экспорта!", { type: 'danger' });
+                } else {
+                    var params = {
+                        codeTable: codeTable,
+                        fromRows: fromRows,
+                        toRows: toRows,
+                        allRows: allRows,
+                        where: where,
+                        fileName: fileName
+                    };
+                    as.sys.ajaxSend("/Excel/ExportData", params, function(data) {
+                        if (data.msg == "") {
+                            as.sys.bootstrapAlert("Данные успешно экспортированы!", { type: 'success' });
+                            window.location = '/Excel/DownloadFile?path=' + data.path + "&fileName=" + data.fileName;
+
+                        } else {
+                            as.sys.bootstrapAlert("Произошла ошибка при извлечении данных!" + data.msg, { type: 'danger' });
+                        }
+                    });
+                }
+            }
+        };
+
+        $(function() {
+            asdemo.init();
+        });
+
+    </script>
+}

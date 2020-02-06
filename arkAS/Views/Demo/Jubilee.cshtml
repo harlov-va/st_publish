@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "Мой юбилей";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section css{
+    <link rel="stylesheet" type="text/css" href="~/js/AS/as.css" />
+}
+
+<h2>Определение даты юбилея от указанной даты</h2>
+<div class="as-jubilee">
+    <input type="text" class="asDateOfBirth asDatepicker form-control" style="display:inline-block;width:auto !important" required="required">
+    <button class="btn btn-primary asBtnJubilee">Мой настоящий юбилей</button>
+</div>
+<div class="table"></div>
+@section js{
+    <script src="~/js/jquery.ui.datepicker-ru.min.js"></script>
+}

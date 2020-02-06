@@ -1,0 +1,108 @@
+﻿@using arkAS.Models;
+@{
+    ViewBag.Title = "Редактирование специализаций сотрудников";
+    Layout = arkAS.BLL.Core.CoreManager.GetCabinetLayout();
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+
+<div class="hrHSpecTemplate hide">
+    <div class="row">
+        @foreach (var item in (List<arkAS.BLL.hr_specializations>)ViewBag.Spec)
+        {
+            <div class="col-lg-2 hrHSpecItem">
+                <input type="checkbox" value='@item.id' id='svOurSup@(item.id)' />
+                <label for='svOurSup@(item.id)'>@item.name</label>@Html.Raw("&nbsp; &nbsp; &nbsp; &nbsp;")
+            </div>
+        }
+    </div>
+</div>
+
+
+<div class="hrspec">
+</div>
+
+@section js{
+    <script type="text/javascript">
+ 
+        var hspec = {
+            init: function () {
+                hspec.initMainTable();
+                $(document).delegate('.hrspec .usHSpec input[type=checkbox]', 'change', function (e) {
+                    e.preventDefault();
+                    var tr = $(this).closest('tr');
+                    var params = {
+                        pk: $('td[data-code=id]', tr).text(),
+                        value: $(this).val() + "=" + $(this).is(":checked")
+                    };
+                    as.sys.ajaxSend("/HR/HSpecInline", params, function (data) {
+                        if (typeof (data) != "object") data = eval('(' + data + ')');
+
+                        if (data.result) {
+                            as.sys.bootstrapAlert("Специализация изменена", { type: 'success' });
+                        } else {
+                            as.sys.bootstrapAlert("Возникли ошибки при выполнении операции!", { type: 'danger' });
+                        }
+                    });
+                });
+            },
+            initMainTable: function () {
+                as.crud.init({
+                    cont: $(".hrspec"),
+                    title: "Специализации сотрудников",
+                    toolbarAdditional:"", // "<a href='#' class='btn btn-primary hrcreatehspec'>Создать</a>",
+                    groupOperationsToolbar: "",
+                    ajaxURLFormat: "/HR/HSpec_{0}",
+                    inlineAjaxURL: "/HR/HSpecInline",
+                    pageSize: 150,
+                    cookiePrefix: "as-crud-hspecTable-",
+                    emptyText: "Специализаций сотрудников нет",
+                    createLinkTitle: "Создать",
+                    filterLinkTitle: "",
+                    filterTitle: "",
+                    showChecksCol: false,
+                    showNumsCol: false,
+                    showToolbar: false,
+                    showColSettings: false,
+                    showReplaceTool: false,
+                    showExcelExport: false,
+                    additionalSort: false,
+                    cols: [
+                        { code: "id", title: "ID", tooltip: "Идентификатор", isVisible: false, isPK: true, datatype: "int", isRequired: false },
+                        { code: "fio", title: "Сотрудник", tooltip: "Сотрудник", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: false },
+                        { code: "specIds", title: "Специализации", tooltip: "Специализации", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: false }
+                    ],
+                    operations: {
+                        create: false,
+                        remove: false,
+                        edit: false,
+                        other: [
+                        ]
+                    },
+                    getFilterMakeup: function (filter) {
+                        var s = [];
+                        return s.join("");
+                    },
+                    filter: function () {
+                        return {};
+                    },
+                    getItemsCallback: function () {
+                        $('.hrspec .usHSpec').each(function () {
+                            var hSpecs = ("," + $(this).text() + ",").split(",");
+                            $('.hrHSpecTemplate input').removeAttr("checked");
+                            $('.hrHSpecTemplate input').each(function () {
+                                if ($.inArray($(this).val(), hSpecs) >= 0) {
+                                    $(this).attr("checked", "checked");
+                                }
+                            });
+                            $(this).html($('.hrHSpecTemplate').html());
+                        });
+                    }
+                });
+            }
+        }
+
+        $(function () {
+            hspec.init();
+        });
+    </script>
+}

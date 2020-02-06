@@ -1,0 +1,94 @@
+﻿@{
+    ViewBag.Title = "Favorites";
+}
+
+<style type="text/css">
+    .as-favorites-add { background: yellow; }
+</style>
+
+
+<h1>Работа с компонентом Избранное</h1>
+<input type="button" value="Просмотр" id="buttonView">
+<input type="button" value="Добавление" id="buttonAdd">
+
+
+<div class="as-favorite">
+</div>
+
+<div class="dmCont">
+</div>
+
+
+@section js{
+    <script type="text/javascript">
+        $(".dmCont").hide();
+        
+        $("#buttonAdd").click(function () {
+
+            $("div.dmCont > h1").each(function (i, em) {
+                $(em).replaceWith("<h2>" + $(em).html() + "</h2>");
+            });
+
+            $(".dmCont").show();
+            $(as.favorites.options.cont).hide();
+        });
+
+        $("#buttonView").click(function () {
+            $(".dmCont").hide();
+            $(as.favorites.options.cont).empty();
+            as.favorites.loadFavorites();
+            $(as.favorites.options.cont).show();
+        });
+
+        var asdemo = {
+            init: function () {
+                asdemo.initMainTable();
+            },
+            initMainTable: function () {
+                as.crud.init({
+                    cont: $(".dmCont"),
+                    title: "Пример добавления данных в Избранное.",
+                    toolbarAdditional: "Используется функция добавления данных",
+                    groupOperationsToolbar: "",
+                    ajaxURLFormat: "/Favorites/SimpleTable_{0}",
+                    inlineAjaxURL: "",
+                    pageSize: 150,
+                    cookiePrefix: "as-crud-simpleTable-",
+                    emptyText: "Нет элементов",
+                    createLinkTitle: "Создать",
+                    filterLinkTitle: "Найти",
+                    filterTitle: "Фильтрация данных",
+                    showChecksCol: false,
+                    showNumsCol: true,
+                    showToolbar: true,
+                    showColSettings: false,
+                    showReplaceTool: false,
+                    showExcelExport: false,
+                    additionalSort: false,
+                    cols: [
+                        { code: "id", title: "ID", tooltip: "Идентификатор", isVisible: false, isPK: true, datatype: "int", isRequired: false },
+                        { code: "created", title: "Дата создания", tooltip: "Дата создания", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null },
+                        { code: "id", title: "Номер  заказа", tooltip: "Номер  заказа", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null },
+                        { code: "statusName", title: "Статус", tooltip: "Статус", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null },
+                        { code: "statusID", title: "ID статуса", tooltip: "ID статуса", isVisible: false, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null },
+                        { code: "clientName", title: "Клиент", tooltip: "Клиент", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null },
+                        { code: "clientID", title: "ID клиента", tooltip: "ID клиента", isVisible: false, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null },
+                        { code: "setFavorite", title: "В избранное", tooltip: "В избранное", isVisible: true, isPK: false, datatype: "string", isRequired: false, isSort: false, callback: null }
+                    ],
+                    operations: {
+                        create: false,
+                        remove: false,
+                        edit: false,
+                        other: [
+                        ]
+                    }
+                });
+            }
+        }
+
+        $(function () {
+            asdemo.init();
+            as.favorites.init();
+        });
+    </script>
+}

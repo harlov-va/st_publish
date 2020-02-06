@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = "Пример простой формы ввода через AS Form";
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+<style type="text/css">
+    .dmCont input[type=text], .dmCont select { width: 200px; }
+</style>
+<div class='dmCont'>
+</div>
+@Html.Raw(arkAS.BLL.Core.CoreManager.GetMainFormLink());
+
+
+@section js{
+<script type="text/javascript">
+    var clientsSource = @Html.Raw(js.Serialize(((List<arkAS.BLL.crm_clients>)ViewBag.Clients).Select(x => new { Value = x.id, Text = x.fio, Selected = false })));
+
+    var asdemo = {
+        init: function () {
+            asdemo.initForm();
+        },
+        initForm: function () {
+            as.form.init({
+                editID: "0",
+                cont: $('.dmCont'),
+                title: 'Создание заказа',
+                subtitle: 'Компонент AS.Form обладает следующими характеристиками: <ul><li>Возможность редактировать / добавлять элементы</li><li>Возможность указывать примеры заполнения полей форм</li><li>Проверка формы на корректность заполнения</li><li>Установка видимости полей</li></ul>',
+                buttonText: 'Создать новый заказ',
+                ajaxURLFormat: "/Demo/asForm_{0}",  // load, save
+                cookiePrefix: 'as-form-',
+                fields: [
+                   { code: "orderNum", title: "Номер заказа", tooltip: "Укажите номер заказа", example: "#xxxx", datatype: "string", visible: true, isRequired: true, checkCallback: function () { } },
+                   { code: "clientName", title: "Клиент", tooltip: "Кто является заказчиком", example: "напр. Иванов Иван Иванович", visible: true, datatype: "select", sources: clientsSource, isRequired: true, checkCallback: function () { } }
+                ]
+            });
+        }
+    }
+    $(function () {
+        asdemo.init();
+    });
+</script>
+
+
+}
+
+
+
+
+
+

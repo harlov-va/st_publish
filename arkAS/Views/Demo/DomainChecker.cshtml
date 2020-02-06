@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "Проверка доступности доменов";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script src="~/js/AS/as.sys.js"></script>
+<script src="~/js/AS/controls/as.domainChecker.js"></script>
+
+<h1>Проверка домена на занятость</h1>
+<div class="as-domainCheck"></div>
+
+@section js{
+    <script type="text/javascript">
+        $(function () {
+            as.domainChecker.init();
+        });
+
+    </script>
+
+}
+
+
+
+

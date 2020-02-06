@@ -1,0 +1,259 @@
+﻿@using arkAS.Models;
+@{
+    Layout = arkAS.BLL.Core.CoreManager.GetCabinetLayout();
+    ViewBag.Title = "HR";
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+<style type="text/css">
+    .usStatusItem {
+        display: inline-block;
+        padding-right: 20px;
+    }
+</style>
+
+<select class='usHumanStatusTemplate hide'>
+    <option value="0">Не выбрано</option>
+    @foreach (var item in (List<arkAS.BLL.hr_statuses>)ViewBag.statusName)
+    {
+        <option value='@item.id'>@item.name</option>
+    }
+</select>
+
+<div class='usHumanStatusChTemplate hide'>
+    @foreach (var item in (List<arkAS.BLL.hr_statuses>)ViewBag.statusName)
+    {
+        <div class="usStatusItem">
+            <input type="checkbox" value='@item.code' data-color="@item.color" data-value="@item.id" id='svOurSup@(item.id)' /><label for='svOurSup@(item.id)'>@item.name</label>
+        </div>
+    }
+</div>
+
+<select class='usHumanSourceTemplate hide'>
+    <option value="0">Не выбрано</option>
+    @foreach (var item in (List<arkAS.BLL.hr_sources>)ViewBag.sourceName)
+    {
+        <option value='@item.id'>@item.name</option>
+    }
+</select>
+
+<select class='usNeedActiveTemplate hide'>
+    <option value="-1">Не выбрано</option>
+    <option value="0">Нет</option>
+    <option value="1">Да</option>
+</select>
+
+<div class='usCont'>
+</div>
+@section js{
+    <script type="text/javascript">
+    var statusNameSource = @Html.Raw(js.Serialize(((List<arkAS.BLL.hr_statuses>)ViewBag.statusName).Select(x => new { Value = x.id, Text = x.name, Selected = false })));
+    var sourceNameSource = @Html.Raw(js.Serialize(((List<arkAS.BLL.hr_sources>)ViewBag.sourceName).Select(x => new { Value = x.id, Text = x.name, Selected = false })));
+
+    var statusNameSourceInLine = @Html.Raw(js.Serialize(((List<arkAS.BLL.hr_statuses>)ViewBag.statusName).Select(x => new { value = x.id, text = x.name})));
+    var sourceNameSourceInLine = @Html.Raw(js.Serialize(((List<arkAS.BLL.hr_sources>)ViewBag.sourceName).Select(x => new { value = x.id, text = x.name})));
+
+var us = {
+    init: function () {
+        us.initMainTable();
+        $(document).delegate('.usCreateHuman', 'click', function (e) {
+            e.preventDefault();
+            us.createHuman();
+        });
+    },
+    initMainTable: function () {
+        as.crud.init({
+            cont: $('.usCont'),
+            title: 'HR',
+            toolbarAdditional: '<a href="#" class="btn btn-primary usCreateHuman">Добавить</a>&nbsp;&nbsp;',
+            groupOperationsToolbar: '',
+            ajaxURLFormat: '/HR/Humans_{0}',
+            inlineAjaxURL: "/HR/HumansInline",
+            pageSize: 150,
+            cookiePrefix: "as-crud-humansTable-",
+            emptyText: 'Данных нет',
+            createLinkTitle: 'Создать',
+            filterLinkTitle: 'Найти',
+            filterTitle: 'Фильтрация данных',
+            showChecksCol: false,
+            showNumsCol: true,
+            showToolbar: true,
+            showColSettings: true,
+            showReplaceTool: false,
+            showExcelExport: false,
+            additionalSort: true,
+            cols: [
+                { code: "id", title: "ID", tooltip: "Идентификатор", isVisible: false, isPK: true, datatype: "int", isRequired: false },
+                {
+                    code: "fio", title: "ФИО", tooltip: "ФИО", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                    editable: { type: "text", format: "{0}", callback: function (el, newValue) { } }
+                },
+                {
+                    code: "city", title: "Город", tooltip: "Город", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                    editable: { type: "text", format: "{0}", callback: function (el, newValue) { } }
+                },
+                {
+                    code: "note", title: "Комментарий", tooltip: "Комментарий", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                    editable: { type: "text", format: "{0}", callback: function (el, newValue) { } }
+                },
+                {
+                    code: "sourceName", title: "Источник", tooltip: "Источник", isVisible: false, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                    filter: { type: "select", source: sourceNameSource, notSelected: "Не выбрано" },
+                    editable: { type: "select", format: "{0}", source: sourceNameSourceInLine, callback: function (el, newValue) { } }
+                },
+                {
+                    code: "statusID", title: "ID статуса", tooltip: "ID статуса", isVisible: false, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null
+                },
+                {
+                    code: "statusName", title: "Статус", tooltip: "Статус", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                    filter: { type: "checkboxes", source: statusNameSource, notSelected: "Не установлено"},
+                    editable: { type: "select", format: "{0}", source: statusNameSourceInLine, callback: function (el, newValue) {
+                        us.setItemColor($(el).closest("tr"), newValue);                                   } }
+                },
+                {
+                    code: "addedBy", title: "Кем добавлен", tooltip: "Кем добавлен", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                    editable: { type: "text", format: "{0}", callback: function (el, newValue) { } }
+                },
+                { code: "created", title: "Дата создания", tooltip: "Дата создания", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null },
+                {
+                    code: "subchannel", title: "Подканал", tooltip: "Подканал", isVisible: false, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                    editable: { type: "text", format: "{0}", callback: function (el, newValue) { } }
+                },
+                {
+                    code: "username", title: "Логин", tooltip: "Логин", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                    editable: { type: "text", format: "{0}", callback: function (el, newValue) { } }
+                },
+                 {
+                     code: "needActive", title: "Проработка", tooltip: "Проработка", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                     editable: { type: "select", format: "{0}", source: [{value:"Да",text:"Да"},{value:"Нет",text:"Нет"}], callback: function (el, newValue) { } }
+                 },
+                 {
+                     code: "pay", title: "Способ оплаты", tooltip: "Способ оплаты", isVisible: false, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                     editable: { type: "text", format: "{0}", callback: function (el, newValue) { } }
+                 },
+                {
+                    code: "hourRate", title: "Ставка", tooltip: "Ставка", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                    editable: { type:"text", format: "{0}", callback: function (el, newValue) { } }
+                },
+            ],
+            operations: {
+                create: false,
+                remove: true,
+                edit: false,
+                comments: true,
+                other: [
+                ]
+            },
+            predefinedFilterLinks: [
+                    {title: "Кандидаты", tooltip:"Исполнители, у которых статус равен Не установлено, Кандидат", code:"candidateHR", setFilter: function(){
+                        var res = {};
+                        res.statusName = ["2"];
+                        return res;
+                    }},
+                    {title: "Исполнители", tooltip:"Текущие активные исполнители, статус имеет значение ", code:"workerHR", setFilter: function(){
+                        var res = {};
+                        res.statusName = ["3", "6"];
+                        return res;
+                    }},
+            ],
+
+            getFilterMakeup: function (filter) {
+                var s = [];
+
+                s.push("<span class='gCap'>Текст</span><input type='text' class='usText' value='" + (filter.text || '') + "' /> <span class='badge badge-info'>ФИО/Город/Комментарий/Кем добавлен/Логин/Способ Оплаты</span><br /><br />");
+
+                $('.usNeedActiveTemplate option').removeAttr('selected');
+                $('.usNeedActiveTemplate option[value=' + filter.needActive + ']').attr('selected', 'selected');
+                s.push("<span class='gCap'>Требует проработки</span><select class='usNeedActive as-select'>" + $('.usNeedActiveTemplate').html() + "</select><br /><br />");
+
+                return s.join("");
+            },
+            filter: function () {
+
+                var filter = {
+                    text: $('.usText').val() || "",
+                    needActive: $('.usNeedActive option:selected').val()
+                };
+                return filter;
+            },
+
+            processRowCallback: function (tr) {
+                var statusID = $("td[data-code=statusID]", tr).text();
+                us.setItemColor(tr, statusID);
+            }
+
+        });
+    },
+    setItemColor: function(tr, statusID){
+        var color = $('.usHumanStatusChTemplate input[type=checkbox][data-value='+statusID+']').attr('data-color');
+        if(!color) color = "transparent";
+        $(tr).css("background-color", color);
+    },
+    createHuman: function () {
+        var s = [];
+        s.push("<span>ФИО</span><input type='text' class='form-control usNewFio' /><br />");
+
+        s.push("<span>Комментарий</span><br /><textarea class='crdCommentText usNewNote'></textarea><br />");
+
+        $('.usHumanStatusTemplate option').removeAttr('selected');
+        $('.usHumanStatusTemplate option:first').attr('selected', 'selected');
+        s.push("<span>Статус</span><select class='form-control usNewStatusID' >"+ $('.usHumanStatusTemplate').html() + "</select><br />");
+
+        $('.usHumanSourceTemplate option').removeAttr('selected');
+        $('.usHumanSourceTemplate option:first').attr('selected', 'selected');
+        s.push("<span>Источник</span><select class='form-control usNewSourceID' >"+ $('.usHumanSourceTemplate').html() + "</select><br />");
+
+        setTimeout(function () { $('.usNewFio').focus(); }, 200);
+        as.sys.showDialog("Новый HR", s.join(""), "Создать", function () {
+            var fio = $('.usNewFio').val();
+
+            var note = $('.usNewNote').val();
+            var sourceID = $('.usNewSourceID option:selected').val();
+            var statusID = $('.usNewStatusID option:selected').val();
+
+
+            if (!fio) {
+                as.sys.bootstrapAlert("Укажите, пожалуйста, ФИО", { type: 'warning' });
+                $('.usNewFio').focus();
+                return;
+            }
+
+            var params = { fio: fio, note: note, sourceID: sourceID,statusID: statusID};
+            as.sys.ajaxSend("/HR/CreateHuman", params, function (data) {
+                if (typeof (data) != "object") data = eval('(' + data + ')');
+                if (data.result) {
+                    as.sys.bootstrapAlert("HR успешно добавлен", { type: 'success' });
+                    as.sys.closeDialog();
+                    as.crud.getItems();
+                    setTimeout(function () {
+                        as.crud.gotoItem(data.settingID);
+                    }, 1000);
+                } else {
+                    as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                }
+            });
+        });
+    },
+
+    editValue: function(el){
+
+        var tr = el.closest("tr");
+        as.sys.showDialog($("td[data-code=fio]", tr).text() + " ("+$("td[data-code=city]", tr).text()+
+            " ("+$("td[data-code=note]", tr).text()+ " ("+$("td[data-code=addedBy]", tr).text()+
+            " ("+$("td[data-code=subchannel]", tr).text()+ " ("+$("td[data-code=username]", tr).text()+ " ("+$("td[data-code=pay]", tr).text()+ " ("+$("td[data-code=hourRate]", tr).text()+")" , s.join(""), "Сохранить", function () {
+            as.sys.ajaxSend("/HR/HumansInline", params, function (data) {
+                if (typeof (data) != "object") data = eval('(' + data + ')');
+                if (data.result) {
+                    as.sys.bootstrapAlert("Сохранено", { type: 'success' });
+                    as.sys.closeDialog();
+                } else {
+                    as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                }
+            });
+        });
+    }
+}
+$(function () {
+    us.init();
+});
+    </script>
+}

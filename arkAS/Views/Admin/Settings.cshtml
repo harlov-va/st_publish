@@ -1,0 +1,220 @@
+﻿@using arkAS.Models;
+@{
+    Layout = arkAS.BLL.Core.CoreManager.GetCabinetLayout();
+    ViewBag.Title = "Настройки";    
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+
+<select class='usCategoriesTemplate hide'>
+    <option value="0">Не выбрано</option>
+    @foreach (var item in (List<arkAS.BLL.as_settingCategories>)ViewBag.Categories)
+    {
+        <option value='@item.id'>@item.name</option>
+    }
+</select>
+<select class='usDataTypesTemplate hide'>
+    <option value="0">Не выбрано</option>
+    @foreach (var item in (List<arkAS.BLL.as_dataTypes>)ViewBag.DataTypes)
+    {
+        <option value='@item.id'>@item.name</option>
+    }
+</select>
+<div class='usCont'>
+</div>
+@section js{
+<script type="text/javascript">
+var categoriesSource = @Html.Raw(js.Serialize(((List<arkAS.BLL.as_settingCategories>)ViewBag.Categories).Select(x => new { value = x.id, text = x.name })));
+   
+var us = {
+    init: function () {
+        us.initMainTable();
+        $(document).delegate('.usCreateSetting', 'click', function (e) {
+            e.preventDefault();
+            us.createSetting();
+        });
+        $(document).delegate('.usClearCache', 'click', function (e) {
+            e.preventDefault();
+            us.clearCache();
+        });
+        $(document).delegate('a.usBackupDatabase', 'click', function (e) {
+            e.preventDefault();
+            us.BackupDatabase();
+        });
+
+        
+    },
+    initMainTable: function () {
+        as.crud.init({
+            cont: $('.usCont'),
+            title: 'Настройки',
+            toolbarAdditional: '<a href="#" class="btn btn-primary usCreateSetting">Создать настройку</a>&nbsp;&nbsp;<a href="#" class="btn btn-warning usClearCache">Очистка кеша</a>&nbsp;&nbsp;<a href="#" class="btn btn-warning usBackupDatabase">Бекап(копия) базы данных</a>',
+            groupOperationsToolbar: '',
+            ajaxURLFormat: '/Admin/Settings_{0}',
+            inlineAjaxURL: "/Admin/SettingsInline",
+            pageSize: 150,
+            cookiePrefix: "as-crud-settingsTable-",
+            emptyText: 'Нет настроек',
+            createLinkTitle: 'Создать',
+            filterLinkTitle: 'Найти',
+            filterTitle: 'Фильтрация данных',
+            showChecksCol: false,
+            showNumsCol: true,
+            showToolbar: true,
+            showColSettings: false,
+            showReplaceTool: false,
+            showExcelExport: false,
+            additionalSort: false,
+            cols: [
+                { code: "id", title: "ID", tooltip: "Идентификатор", isVisible: false, isPK: true, datatype: "int", isRequired: false },
+                {
+                     code: "name", title: "Название", tooltip: "Название", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                     editable: { type: "text", format: "{0}", callback: function (el, newValue) { } }
+                },
+                {
+                    code: "code", title: "Код", tooltip: "Код", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                    editable: { type: "text", format: "{0}", callback: function (el, newValue) { } }
+                },
+                {
+                    code: "categoryName", title: "Категория", tooltip: "Категория", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                    editable: { type: "select", format: "{0}", source: categoriesSource, callback: function (el, newValue) { } }
+                },
+                { code: "typeCode", title: "Тип", tooltip: "Тип данных", isVisible: false, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: false, callback: null },
+                { code: "value", title: "Значение", tooltip: "Значение", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: function(el){ us.editValue(el); }   },
+                {
+                    code: "value2", title: "Доп. значение", tooltip: "Доп. значение", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                    editable: { type: "text", format: "{0}", callback: function (el, newValue) { } }
+                }
+            ],
+            operations: {
+                create: false,
+                remove: true,
+                edit: false,
+                other: [
+                ]
+            },
+            getFilterMakeup: function (filter) {
+                var s = [];
+                s.push("<span class='gCap'>Текст</span><input type='text' class='usText' value='" + (filter.text || '') + "' /><br /><br />");
+                $('.usCategoriesTemplate option').removeAttr('selected');
+                $('.usCategoriesTemplate option[value=' + filter.categoryID + ']').attr('selected', 'selected');
+                s.push("<span class='gCap'>Категория</span><select class='usCategories'>" + $('.usCategoriesTemplate').html() + "</select><br /><br />");
+
+                return s.join("");
+            },
+            filter: function () {
+               
+                var filter = {
+                    text: $('.usText').val() || "",
+                    categoryID: $('.usCategories option:selected').val()
+                };
+                return filter;
+            }
+        });
+    },
+    createSetting: function () {
+        var s = [];
+        s.push("<span>Название</span><input type='text' class='form-control usNewName' /><br />");
+        s.push("<span>Код (латиница)</span><input type='text' class='form-control usNewCode' /><br />");
+
+        $('.usCategoriesTemplate option').removeAttr('selected');
+        $('.usCategoriesTemplate option:first').attr('selected', 'selected');        
+        s.push("<span>Категория</span><select class='form-control usNewCategoryID' >"+ $('.usCategoriesTemplate').html() + "</select><br />");
+        
+        $('.usDataTypesTemplate option').removeAttr('selected');
+        $('.usDataTypesTemplate option:first').attr('selected', 'selected');        
+        s.push("<span>Тип данных</span><select class='form-control usNewTypeID' >"+ $('.usDataTypesTemplate').html() + "</select><br />");
+        
+
+        setTimeout(function () { $('.usNewName').focus(); }, 200);
+        as.sys.showDialog("Новая настройка", s.join(""), "Создать настройку", function () {
+            var name = $('.usNewName').val();
+            var code = $('.usNewCode').val();
+            var categoryID = $('.usNewCategoryID option:selected').val();
+            var typeID = $('.usNewTypeID option:selected').val();
+            
+            if (!name) {
+                as.sys.bootstrapAlert("Укажите пожалуйста название", { type: 'warning' });
+                $('.usNewName').focus();
+                return;
+            }
+            if (!code) {
+                as.sys.bootstrapAlert("Укажите пожалуйста код", { type: 'warning' });
+                $('.usNewCode').focus();
+                return;
+            }
+
+            var params = { name: name, code: code, categoryID: categoryID, typeID: typeID };
+            as.sys.ajaxSend("/Admin/CreateSetting", params, function (data) {
+                if (typeof (data) != "object") data = eval('(' + data + ')');
+                if (data.result) {
+                    as.sys.bootstrapAlert("Настройка успешно создана", { type: 'success' });
+                    as.sys.closeDialog();
+                    as.crud.getItems();
+                    setTimeout(function () {
+                        as.crud.gotoItem(data.settingID);
+                    }, 1000);
+                } else {
+                    as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                }
+            });
+        });
+    },
+    clearCache: function () {
+        var params = { };
+        as.sys.ajaxSend("/Admin/ClearCache", params, function (data) {
+            if (typeof (data) != "object") data = eval('(' + data + ')');
+
+            if (data.result) {
+                as.sys.bootstrapAlert("Кеш очищен", { type: 'success' });                
+            } else {
+                as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+            }
+        });
+    },
+    BackupDatabase: function () {
+        var params = { };
+        as.sys.bootstrapAlert("Начато создание бекапа(копии) базы данных - подождите.....", { type: 'info' });   
+        as.sys.ajaxSend("/Admin/BackupDatabase", params, function (data) {
+            if (typeof (data) != "object") data = eval('(' + data + ')'); 
+            if (data.result=="SUCCESS") {
+                as.sys.bootstrapAlert("Cделан бекап(копия) базы данных<br> Файл:<br>"+data.DbFile, { type: 'success' });                
+            } 
+            else 
+            {
+                as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+            }
+        });
+    },
+    editValue: function(el){
+        var tr = el.closest("tr");
+        var typeCode = $("td[data-code=typeCode]", tr).text();
+        var valuesForSelect = $("td[data-code=value2]", tr).text().split("|");
+        var selValues = [];
+        $.each(valuesForSelect, function(i, item){
+            selValues.push({Text: item, Value: item});
+        });
+        var s = [];
+        s.push("<div class='usEditValue'>"+ as.makeup.getControlMakeupByDataType(typeCode, el.html(), selValues || []) + "</div>");
+             
+        setTimeout(function () { $('.usEditValue select, .usEditValue input, .usEditValue textarea').addClass('form-control').focus(); }, 200);
+        as.sys.showDialog($("td[data-code=name]", tr).text() + " ("+$("td[data-code=code]", tr).text()+")", s.join(""), "Сохранить", function () {
+            var value =  as.makeup.getValueFromControlMakeup(typeCode, $(".usEditValue"));
+            var params = { pk: tr.attr('data-itemID'), value: value, name: "value" };
+            as.sys.ajaxSend("/Admin/SettingsInline", params, function (data) {
+                if (typeof (data) != "object") data = eval('(' + data + ')');
+                if (data.result) {
+                    as.sys.bootstrapAlert("Сохранено", { type: 'success' });
+                    as.sys.closeDialog();
+                    el.html(value);
+                } else {
+                    as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                }
+            });
+        });
+    }
+}
+$(function () {
+    us.init();
+});
+</script>
+}

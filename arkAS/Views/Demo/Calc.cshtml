@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "Calc";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="as-calc" data-code="calc1"></div>
+<div class="as-calc" data-code="calc2"></div>
+
+@section js{
+<script type="text/javascript">
+    $(function () {
+        as.calc.init({
+            calc1: function (params) {
+                return parseInt(params.test1) + parseInt(params.test2);
+            },
+            result1: function (res) {
+                $('#result').val(res);
+            },
+            calc2: function (params) {
+                return parseInt(params.test1) - parseInt(params.test2);
+            },
+            result2: function (res) {
+                $('#anotherResult').val(res);
+            }
+        });
+    });
+</script>
+
+}
+

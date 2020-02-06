@@ -1,0 +1,38 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section css{
+    <link rel="stylesheet" type="text/css" href="~/js/uploadify/uploadify.css" />
+    <link rel="stylesheet" type="text/css" href="~/js/cropper/cropper.min.css" />
+}
+
+
+@section js{
+<script src="~/js/uploadify/jquery.uploadify-3.1.min.js"></script>
+<script type="text/javascript" src="~/js/cropper/cropper.min.js"></script>
+<script type="text/javascript" src="~/js/AS/controls/mics/as.uploadImage.js"></script>
+
+<script type="text/javascript">
+    var crop = {
+        options: {
+            size1: { "x": 0, "y": 0, "width": 320, "height": 240 },
+            size2: { "x": 0, "y": 0, "width": 640, "height": 480 },
+            size3: { "x": 0, "y": 0, "width": 640, "height": 240 },
+            size4: { "x": 0, "y": 0, "width": 320, "height": 480 }
+        },
+        init: function () {
+            as.uploadImage.init(crop.options);
+        }
+    }
+    $(function () {
+        crop.init();
+    });
+
+</script>
+}
+
+<h2>Нажмите на кнопку для загрузки изображения</h2>
+
+<div class="cropped"></div>
+
+

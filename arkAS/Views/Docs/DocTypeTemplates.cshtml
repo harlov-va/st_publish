@@ -1,0 +1,267 @@
+﻿@using arkAS.BLL
+
+@{
+    Layout = arkAS.BLL.Core.CoreManager.GetCabinetLayout();
+    ViewBag.Title = "Шаблоны (рыбы) документов";
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+
+
+<select class='usCheckDocTypes hide'>
+    <option value="0">Не выбрано</option>
+    @foreach (var item in ViewBag.DocTypes)
+    {
+        <option value='@item.id'>@item.name</option>
+
+    }
+</select>
+
+<div class='usCont'>
+</div>
+@section js{
+    <script src="~/js/jQueryFileUpload/js/jquery.fileupload.js"></script>
+
+    <script type="text/javascript">
+        var sourceDocTypes = @Html.Raw(js.Serialize(((List<doc_docTypes>) ViewBag.DocTypes).Select(x => new {Value = x.id, Text = x.name, Selected = false})));
+
+        var asdemo = {
+            init: function() {
+                asdemo.initMainTable();
+                $(document).delegate('.usCreateDocTypeTemplate', 'click', function(e) {
+                    e.preventDefault();
+                    asdemo.createItem();
+                });
+                $(document).delegate('#upload', 'change', function(e) {
+                    e.preventDefault();
+                    asdemo.uploadFile();
+                });
+            },
+
+            initMainTable: function() {
+                as.crud.init({
+                    cont: $('.usCont'),
+                    title: 'Шаблоны (рыбы) документов',
+                    toolbarAdditional: '<a href="#" class="btn btn-primary usCreateDocTypeTemplate">Создать</a>&nbsp;&nbsp;',
+                    groupOperationsToolbar: '',
+                    ajaxURLFormat: '/Docs/DocTypeTemplates_{0}',
+                    pageSize: 150,
+                    cookiePrefix: "as-crud-DocTypeTemplatesDict-",
+                    emptyText: 'Нет элементов',
+                    createLinkTitle: 'Создать',
+                    filterLinkTitle: 'Найти',
+                    filterTitle: 'Фильтрация данных',
+                    showChecksCol: false,
+                    showNumsCol: true,
+                    showToolbar: true,
+                    showColSettings: false,
+                    showReplaceTool: false,
+                    showExcelExport: false,
+                    additionalSort: false,
+                    cols: [
+                        { code: "id", title: "ID", tooltip: "Идентификатор", isVisible: false, isPK: true, datatype: "int", isRequired: false, editHide: true },
+                        { code: "name", title: "Название", tooltip: "Название", isVisible: true, isPK: false, datatype: "string", isRequired: true, format: "{0}", isSort: true, callback: null },
+                        { code: "typeName", title: "Тип", tooltip: "Тип", isVisible: true, isPK: false, datatype: "select", isRequired: false, format: "{0}", isSort: true, editSources: sourceDocTypes, callback: null },
+                        { code: "typeID", title: "Код типа", tooltip: "Код типа", isVisible: false, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, editHide: true, callback: null },
+                        { code: "path", title: "Путь", tooltip: "Путь", isVisible: true, isPK: false, datatype: "string", isRequired: true, format: "{0}", isSort: true, callback: null },
+                        { code: "ord", title: "Порядок сортировки", tooltip: "Порядок сортировки", isVisible: true, isPK: false, datatype: "int", isRequired: false, format: "{0}", isSort: true, callback: null },
+                    ],
+                    operations: {
+                        create: false,
+                        remove: true,
+                        edit: false,
+                        other: [
+                            { linkClass: 'crdTo2', iconClass: 'glyphicon glyphicon-pencil', title: 'Редактировать', callback: asdemo.editItem }
+                        ]
+                    },
+                    getFilterMakeup: function(filter) {
+                        var s = [];
+                        s.push("<div class='crdFilterItem'><span class='gCap'>Название</span><input type='text' class='usName' value='" + (filter.name || '') + "' /></div>");
+                        $('.usCheckDocTypes option').removeAttr('selected');
+                        $('.usCheckDocTypes option[value=' + filter.typeID + ']').attr('selected', 'selected');
+                        s.push("<div class='crdFilterItem'><span class='gCap'>Тип</span><select class='usDocType'>" + $('.usCheckDocTypes').html() + "</select></div>");
+                        return s.join("");
+                    },
+                    filter: function() {
+                        var filter = {
+                            name: $('.usName').val() || "",
+                            typeID: $('.usDocType option:selected').val()
+                        };
+                        return filter;
+                    }
+                });
+            },
+            createItem: function() {
+                var s = [];
+                s.push("<span>Название</span><input type='text' class='form-control usNewName' /><br />");
+                $('.usCheckDocTypes option').removeAttr('selected');
+                $('.usCheckDocTypes option:first').attr('selected', 'selected');
+                s.push("<span>Тип</span><select class='form-control usNewTypeID'>" + $('.usCheckDocTypes').html() + "</select><br />");
+                s.push("<span>Шаблон</span><input type='text' class='form-control usNewPath' value='' placeholder='Выберите файл'/>");
+                s.push("<input type='file' name='UploadFile' id='upload' multiple' /><br />");
+                s.push("<span>Порядок сортировки</span><input type='text' class='form-control usNewOrd' /><br />");
+
+                setTimeout(function() { $('.usNewName').focus(); }, 200);
+
+                as.sys.showDialog("Создание", s.join(""), "Сохранить", function() {
+                    var name = $('.usNewName').val();
+                    var typeID = $('.usNewTypeID option:selected').val();
+                    var path = $('.usNewPath').val();
+                    var ord = $('.usNewOrd').val();
+
+                    if (!name) {
+                        as.sys.bootstrapAlert("Укажите пожалуйста название", { type: 'warning' });
+                        $('.usNewName').focus();
+                        return;
+                    }
+                    if (!typeID || typeID == 0) {
+                        as.sys.bootstrapAlert("Укажите пожалуйста тип", { type: 'warning' });
+                        $('.usNewTypeID').focus();
+                        return;
+                    }
+                    if (!path) {
+                        as.sys.bootstrapAlert("Укажите пожалуйста ссылку или загрузите шаблон", { type: 'warning' });
+                        $('.usNewPath').focus();
+                        return;
+                    }
+                    if (!ord) {
+                        as.sys.bootstrapAlert("Укажите пожалуйста порядок сортировки", { type: 'warning' });
+                        $('.NewOrd').focus();
+                        return;
+                    }
+                    var pos = ord.indexOf(".");
+                    if (!$.isNumeric(ord) || pos != -1 || ord != Math.round(ord)) {
+                        as.sys.bootstrapAlert("Порядок сортировки должен быть целым числом", { type: 'warning' });
+                        $('.NewOrd').focus();
+                        return;
+                    }
+                    var params = { name: name, typeID: typeID, path: path, ord: ord };
+                    as.sys.ajaxSend("/Docs/CreateDocTypeTemplate", params, function(data) {
+                        if (typeof (data) != "object") data = eval('(' + data + ')');
+                        if (data.result) {
+                            as.sys.bootstrapAlert("Элемент сохранен", { type: 'success' });
+                            as.sys.closeDialog();
+                            as.crud.getItems();
+                            setTimeout(function() {
+                                as.crud.gotoItem(data.textID);
+                            }, 1000);
+                        } else {
+                            as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                        }
+                    });
+                });
+            },
+
+            editItem: function() {
+                var s = [];
+                var params = { id: $(this).closest('tr').attr('data-itemid') };
+                var p = params;
+                as.sys.ajaxSend("/Docs/GetDocTypeTemplate", params, function(data) {
+                    if (typeof (data) != "object") data = eval('(' + data + ')');
+                    if (data.id) {
+                        var s = [];
+                        s.push("<span>Название</span><input type='text' class='form-control usNewName' value='" + data.name + "' /><br />");
+
+                        $('.usCheckDocTypes option').removeAttr('selected');
+                        $(".usCheckDocTypes option[value='" + data.typeID + "']").attr("selected", "selected");
+                        s.push("<span>Тип</span><select class='form-control usNewTypeID' >" + $('.usCheckDocTypes').html() + "</select><br />");
+
+                        s.push("<span>Шаблон</span><input type='text' class='form-control usNewPath' value='" + data.path + "' readonly/>");
+                        s.push("<input type='file' name='UploadFile' id='upload' multiple' /><br />");
+
+                        s.push("<span>Порядок сортировки</span><input type='text' class='form-control usNewOrd' value='" + data.ord + "'/><br />");
+
+                        setTimeout(function() { $('.usNewName').focus(); }, 200);
+                        as.sys.showDialog("Редактирование", s.join(""), "Сохранить", function() {
+                            var id = parseInt(params.id);
+                            var name = $('.usNewName').val();
+                            var typeID = $('.usNewTypeID option:selected').val();
+                            var path = $('.usNewPath').val();
+                            var ord = $('.usNewOrd').val();
+
+                            if (!name) {
+                                as.sys.bootstrapAlert("Укажите пожалуйста название", { type: 'warning' });
+                                $('.usNewName').focus();
+                                return;
+                            }
+                            if (!typeID || typeID == 0) {
+                                as.sys.bootstrapAlert("Укажите пожалуйста тип", { type: 'warning' });
+                                $('.usNewTypeID').focus();
+                                return;
+                            }
+
+                            if (!path) {
+                                as.sys.bootstrapAlert("Укажите пожалуйста шаблон", { type: 'warning' });
+                                $('.usNewPath').focus();
+                                return;
+                            }
+                            if (!ord) {
+                                as.sys.bootstrapAlert("Укажите пожалуйста порядок сортировки", { type: 'warning' });
+                                $('.NewOrd').focus();
+                                return;
+                            }
+
+                            var pos = ord.indexOf(".");
+                            if (!$.isNumeric(ord) || pos != -1 || ord != Math.round(ord)) {
+                                as.sys.bootstrapAlert("Порядок сортировки должен быть целым числом", { type: 'warning' });
+                                $('.NewOrd').focus();
+                                return;
+                            }
+
+                            var paramsEdit = { id: id, name: name, typeID: typeID, path: path, ord: ord };
+                            as.sys.ajaxSend("/Docs/DocTypeTemplateEdit", paramsEdit, function(data) {
+                                if (typeof (data) != "object") data = eval('(' + data + ')');
+                                if (data.result) {
+                                    as.sys.bootstrapAlert("Запись успешно отредактирована", { type: 'success' });
+                                    as.sys.closeDialog();
+                                    as.crud.getItems();
+                                    setTimeout(function() {
+                                        as.crud.gotoItem(data.itemID);
+                                    }, 1000);
+                                } else {
+                                    as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                                }
+                            });
+                        });
+                    } else {
+                        as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                    }
+                });
+            },
+            uploadFile: function() {
+                    var fileUpload = $("#upload").get(0);
+                    var files = fileUpload.files;
+                    var formData = new FormData();
+                    formData.append(files[0].name, files[0]);
+                $.ajax({
+                    type: "POST",
+                    url: '/Docs/UploadTemplate',
+                    data: formData,
+                    dataType: 'json',
+                    contentType: false,
+                    processData: false,
+                    success: function(data) {
+                        if (data.result) {
+                            $('.usNewPath').val(data.path);
+                            as.sys.bootstrapAlert("Шаблон загружен", { type: 'success' });
+                        } else {
+                            as.sys.bootstrapAlert(data.msg || data.exMessage, { type: 'danger' });
+                        }
+                    },
+                    error: function(error) {
+                        as.sys.bootstrapAlert(data.msg || "Возникли ошибки!", { type: 'danger' });
+                    }
+                });
+            }
+        }
+
+        $(function() {
+            asdemo.init();
+        });
+
+    </script>
+}
+
+
+
+ 
+

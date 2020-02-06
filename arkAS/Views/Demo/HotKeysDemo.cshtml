@@ -1,0 +1,75 @@
+﻿@{
+    ViewBag.Title = "Горячие кнопки";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>Горячие клавиши</h1>
+<div class="row">
+    <div class="col-md-12">
+        К Ролям пользователей системы возможно сделать привязку Горячих клавиш. Действия по горячим клавишам - либо переход на заданный URL, либо вызов JS-функции.
+    </div>
+</div>
+<div class='usCont'>
+</div>
+
+@section js{
+    @Scripts.Render("~/hotKeys")
+    <script type="text/javascript">
+        var us = {
+            init: function () {
+                us.initMainTable();
+                us.initHotKeys();
+            },
+            initHotKeys: function () {
+                as.hotKeys.init({
+                    GetHotKeysLink: '/Demo/HotKeysForUser',
+                    AccessLink: '/Demo/Access'
+                });
+            },
+            initMainTable: function () {
+                as.crud.init({
+                    cont: $('.usCont'),
+                    groupOperationsToolbar: '',
+                    ajaxURLFormat: '/Demo/HotKeysDemo_{0}',
+                    pageSize: 150,
+                    cookiePrefix: "as-crud-hotkeyTable-",
+                    emptyText: 'Нет горячих клавиш',
+                    showChecksCol: false,
+                    showNumsCol: false,
+                    showToolbar: false,
+                    showColSettings: false,
+                    showReplaceTool: false,
+                    showExcelExport: false,
+                    additionalSort: false,
+                    cols: [
+                        { code: "Id", title: "ID", tooltip: "Идентификатор", isVisible: false, isPK: true, datatype: "int", isRequired: false },
+                        { code: "key", title: "Сочетание клавиш", tooltip: "Сочетание клафиш", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: false, callback: null },
+                        { code: "action", title: "Действие", tooltip: "Действие", isVisible: true, isPK: false, datatype: "bool", isRequired: false, format: "{0}", isSort: false, callback: null },
+                        { code: "roles", title: "Роли", tooltip: "Роли", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: false, callback: null }
+                    ],
+                    operations: {
+                        create: false,
+                        remove: false,
+                        edit: false,
+                        other: []
+                    },
+                    getItemsCallback: function () {
+                        $('.usCont .usHotKeyRoles').each(function () {
+                            var roles = ("," + $(this).text() + ",").split(",");
+                            $('.usHotKeysTemplate input').removeAttr("checked");
+                            $('.usHotKeysTemplate input').each(function () {
+                                if ($.inArray($(this).val(), roles) >= 0) {
+                                    $(this).attr("checked", "checked");
+                                }
+                            });
+                            $(this).html($('.usHotKeysTemplate').html());
+                        });
+                    }
+                });
+            },
+        }
+
+        $(function () {
+            us.init();
+        });
+    </script>
+}

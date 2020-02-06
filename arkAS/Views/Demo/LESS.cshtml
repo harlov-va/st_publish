@@ -1,0 +1,75 @@
+﻿@{
+    ViewBag.Title = "Пример использования LESS";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet/less" href="~/Content/Styles.less" />
+<script type="text/javascript" src="~/js/jquery-1.10.2.js"></script>
+<h1>LESS</h1>
+<div>
+    <h4>LESS - это динамический язык стилей, в котором использован синтаксис, являющийся расширением CSS.</h4>
+    <hr />
+    <h5>В левой колонке написан код с помощью препроцессора LESS, а справа - обычный CSS</h5>
+</div>
+<div class="row">
+    <pre class="col-md-2">
+@@row: 15px;
+@@background: #66A8E2;
+.btn-item {
+    margin-top: 10px;
+    .color {
+        margin: 0.5em;
+    }
+}
+.col-md-2 {
+    width:27%;
+}
+.radius {
+    border-radius: 5px;
+    border: 1px solid blue;
+    background:@@background;
+}
+.row {
+    padding-left: @@row;
+}
+</pre>
+    <pre class="col-md-2">
+btn-item {
+  margin-top: 10px;
+}
+.btn-item .color {
+  margin: 0.5em;
+}
+.col-md-2 {
+  width: 27%;
+}
+.radius {
+  border-radius: 5px;
+  border: 1px solid blue;
+  background: #66a8e2;
+}
+.row {
+  padding-left: 15px;
+}
+</pre>
+</div>
+    <div class="radius">
+        С помощью LESS мы сделали рамку с закруглеными краями на 5 пикселей. Изменяя значение, мы можем изменить ступень закругления.
+        Можно задать еще параметры, и изменить определенный угол, или 2 угла с 4.
+    </div>
+    <button class="btn-item" id="button">PRESS ME!!</button>
+    
+    <script>
+        $(document).ready(function() {
+            $(".btn-item").on('click', function () {
+                $(".radius").animate({
+                    opacity: 0.8,
+                    color: "green",
+                    borderWidth: "2px"
+                }, 1000);
+                alert("При нажатии на кнопку, рамка елемента вокруг текста стала шире, сам елемент светлее и текст сменил цвет на зеленый");
+            });
+        });
+    </script>
+
+<script src="~/js/less.js"></script>

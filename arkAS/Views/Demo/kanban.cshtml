@@ -1,0 +1,47 @@
+﻿@model arkAS.Models.SettingsCategoriesViewMdels
+@{
+    ViewBag.Title = "kanban";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+
+}
+
+@section css{
+
+    @Styles.Render("~/Content/as.kanban.css")
+
+    <style type="text/css">
+
+    </style>
+    }
+
+<div class="kanban" style="display:flex;overflow:auto;"></div>
+<div class="clearfix"></div>
+
+<select class='categoryID form-control hide'>
+    <option value="0">Не выбрано</option>
+    @foreach (var item in Model.settingCategories)
+            {
+        <option value='@item.id'>@item.name</option>
+    }
+</select>
+
+    @section js{
+
+    @Scripts.Render("~/js/AS/controls/mics/as.kanban.js")
+
+    <script type="text/javascript">
+
+        var params = @Html.Raw(js.Serialize(Model.settingCategories.Select(x => new { ID = x.id, Text = x.name, Selected = false })));
+        var params1 = @Html.Raw(js.Serialize(Model.settings.Select(x => new { ID = x.id, Text = x.value, CategoryID = x.categoryID, Name=x.name, Selected = false })));
+        var count = '.kanban';
+
+        as.kanban.init({
+            params: params,
+            params1: params1,
+            count: count
+        });
+
+    </script>
+    }

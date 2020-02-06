@@ -1,0 +1,39 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section css{
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <style>
+        #vkButton {
+            background:url(../../Content/images/vk_ico.png) no-repeat top left;
+            padding-left: 24px;
+            height:24px;
+            font-style: italic;
+            font-size: 12px;
+        }
+    </style>
+}
+
+<script src="//vk.com/js/api/openapi.js" type="text/javascript"></script>
+<script type="text/javascript" src="http://vk.com/js/api/share.js?90" charset="windows-1251"></script>
+<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script src="~/js/AS/controls/mics/as.postVK.js"></script>
+
+<div>
+    <h1>VKPost</h1>
+</div>
+<div>
+    <h3>"Данный пример демонстрирует пост на стену VK"</h3>
+</div>
+<hr />
+
+<div class="as-vk-post">
+</div>
+
+<script>
+    $(function() {
+        as.postVK.init(5226786);    //id Вашего приложения 
+    });
+</script>

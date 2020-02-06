@@ -1,0 +1,136 @@
+﻿@{
+    ViewBag.Title = "Пример использования Maplace.js plug-in для работы с Google Map";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="https://maps.google.com/maps/api/js?sensor=false&libraries=geometry&v=3.22&key=AIzaSyCisbOTamdWyBb6tGbKNXkqa4TB4jT7gV4"></script>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="~/js/maplace/maplace.min.js"></script>
+<script src="~/js/AS/controls/mics/as.maplace.js"></script>
+
+@section css{
+    <style>
+        #gmap-dropdown {
+            height: 600px;
+        }
+    </style>
+}
+
+<h2>Пример использования Maplace.js - Google Maps Javascript plugin для jQuery</h2>
+
+<div id="gmap-dropdown"></div>
+<div id="gmap-list"></div>
+
+@section js{
+    <script>
+        var cities = [{
+            city: 495,
+            name: 'Москва',
+            lat: 55.755826,
+            lon: 37.6173,
+            html: ['<h3>Москва</h3>', '<p>Росийская федерация</p>'].join(''),
+            icon: 'http://maps.google.com/mapfiles/marker.png'
+        }, {
+            city: 812,
+            name: 'Санкт-Петербург',
+            lat: 59.93068496,
+            lon: 30.31639022,
+            html: ['<h3>Санкт-Петербур</h3>', '<p>Росийская федерация</p>'].join(''),
+            icon: 'http://maps.google.com/mapfiles/marker.png'
+        }, {
+            city: 831,
+            name: 'Нижний Новгород',
+            lat: 56.2965039,
+            lon: 43.9360589,
+            html: ['<h3>Нижний Новгород</h3>', '<p>Росийская федерация</p>'].join(''),
+            icon: 'http://maps.google.com/mapfiles/marker.png'
+        }, {
+            city: 473,
+            name: 'Воронеж',
+            lat: 51.6754966,
+            lon: 39.2088823,
+            html: ['<h3>Воронеж</h3>', '<p>Росийская федерация</p>'].join(''),
+            icon: 'http://maps.google.com/mapfiles/marker.png'
+        }, {
+            city: 845,
+            name: 'Саратов',
+            lat: 51.5923654,
+            lon: 51.5923654,
+            html: ['<h3>Саратов</h3>', '<p>Росийская федерация</p>'].join(''),
+            icon: 'http://maps.google.com/mapfiles/marker.png'
+        }, {
+            city: 844,
+            name: 'Волгоград',
+            lat: 48.708048,
+            lon: 44.5133034,
+            html: ['<h3>Волгоград</h3>', '<p>Росийская федерация</p>'].join(''),
+            icon: 'http://maps.google.com/mapfiles/marker.png'
+        }, {
+            city: 863,
+            name: 'Ростов-на-Дону',
+            lat: 47.2357137,
+            lon: 39.701505,
+            html: ['<h3>Ростов-на-Дону</h3>', '<p>Росийская федерация</p>'].join(''),
+            icon: 'http://maps.google.com/mapfiles/marker.png'
+        }, {
+            city: 861,
+            name: 'Краснодар',
+            lat: 45.0392674,
+            lon: 38.987221,
+            html: ['<h3>Краснодар</h3>', '<p>Росийская федерация</p>'].join(''),
+            icon: 'http://maps.google.com/mapfiles/marker.png'
+        }, {
+            city: 44,
+            name: 'Київ',
+            lat: 50.4501,
+            lon: 30.5234,
+            html: ['<h3>Київ</h3>', '<p>Україна</p>'].join(''),
+            icon: 'http://maps.google.com/mapfiles/marker.png'
+        }, {
+            city: 32,
+            name: 'Львів',
+            lat: 49.839683,
+            lon: 24.029717,
+            html: ['<h3>Львів</h3>', '<p>Україна</p>'].join(''),
+            icon: 'http://maps.google.com/mapfiles/marker.png'
+        }, {
+            city: 48,
+            name: 'Одеса',
+            lat: 46.482526,
+            lon: 30.7233095,
+            html: ['<h3>Одеса</h3>', '<p>Україна</p>'].join(''),
+            icon: 'http://maps.google.com/mapfiles/marker.png'
+        }, {
+            city: 562,
+            name: 'Дніпро́',
+            lat: 48.464717,
+            lon: 35.046183,
+            html: ['<h3>Дніпро́</h3>', '<p>Україна</p>'].join(''),
+            icon: 'http://maps.google.com/mapfiles/marker.png'
+        }, {
+            city: 57,
+            name: 'Харків',
+            lat: 49.9935,
+            lon: 36.230383,
+            html: ['<h3>Харків</h3>', '<p>Україна</p>'].join(''),
+            icon: 'http://maps.google.com/mapfiles/marker.png'
+        }, {
+            city: 61,
+            name: 'Запоріжжя',
+            lat: 47.8388,
+            lon: 35.139567,
+            html: ['<h3>Запоріжжя</h3>', '<p>Україна</p>'].join(''),
+            icon: 'http://maps.google.com/mapfiles/marker.png'
+        }];
+
+        $(function () {
+            as.maplace.init({
+                cities: cities,
+                map_div: '#gmap-dropdown',
+                controls_title: 'Выберите город:',
+                controls_type: "dropdown",
+                view_all_text: "Показать все города"
+            });
+            as.maplace.show();
+        });
+    </script>
+}

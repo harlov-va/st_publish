@@ -1,0 +1,349 @@
+﻿
+@{
+    Layout = null;
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Оценка бюджета и сроков проекта. Веб-разработка ASP.NET MVC</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="~/js/estimate/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link href="~/js/estimate/css/stylish-portfolio.css" rel="stylesheet" />
+    <!-- Custom Fonts -->
+    <link href="~/js/estimate/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="~/js/color-box/colorbox.css" rel="stylesheet" />
+    <link href="~/js/AS/as.css" rel="stylesheet" />
+    <link href="~/js/estimate/estimate.css" rel="stylesheet" />
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css">
+        .as-form-submit{ display: inline-block;  margin-left: 120px; width: 300px; }
+
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i></a>
+    <nav id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <a id="menu-close" href="#" class="btn btn-light btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
+            <li class="sidebar-brand">
+                <a href="#top" onclick=$("#menu-close").click();>ОЦЕНКА ПРОЕКТА</a>
+            </li>
+            <li>
+                <a href="#top" onclick=$("#menu-close").click();>Начало</a>
+            </li>
+            <li>
+                <a href="#about" onclick=$("#menu-close").click();>Стоимость</a>
+            </li>
+            <li>
+                <a href="#services" onclick=$("#menu-close").click();>Варианты оценки</a>
+            </li>
+            <li>
+                <a href="#portfolio" onclick=$("#menu-close").click();>Как выглядит результат</a>
+            </li>
+            <li>
+                <a href="#contact" onclick=$("#menu-close").click();>Контакты</a>
+            </li>
+            <li>
+                <a href="#made" onclick=$("#menu-close").click();>Сделать оценку</a>
+            </li>
+        </ul>
+    </nav>
+    <!-- Header -->
+    <header id="top" class="header">
+        <div class="text-vertical-center">
+            <h1>Хочешь узнать сколько стоит разработка твоего проекта?</h1>
+            <h3>У вас есть проект, но нет даже представления сколько он может стоить?</h3>
+            <br>
+            <a href="#about" class="btn btn-dark btn-lg">Тогда читай дальше</a>
+        </div>
+    </header>
+    <!-- About -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 col-lg-offset-1 text-center">
+                    <h2>Стоимость проекта может очень разнится в зависимости от уровня исполнителей и особенностей проекта</h2>
+                    <p class="lead">Причем зачастую заказчик не может самостоятельно оценить проект. Мы предлагаем вам проработать ваш проект и сделать его оценку. Очень важно иметь на начальном этапе хотя бы приблизительную оценку, чтобы вас не смогли обмануть неблагонадежные исполнители. <!-- <a target="_blank" href="#"></a> --></p>
+                </div>
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container -->
+    </section>
+    <!-- Services -->
+    <!-- The circle icons use Font Awesome's stacked icon classes. For more information, visit http://fontawesome.io/examples/ -->
+    <section id="services" class="services bg-primary">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-lg-10 col-lg-offset-1">
+                    <h2>Варианты оценки</h2>
+                    <hr class="small">
+                    <div class="row">
+                        <div class="col-md-5 col-sm-6">
+                            <div class="service-item">
+                                <span class="fa-stack fa-4x">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-cloud fa-stack-1x text-primary"></i>
+                                </span>
+                                <h4>
+                                    <strong>Бесплатно</strong>
+                                </h4>
+                                <p>Оценка помодульная, ряд предложений по улучшению вашего проекта</p>
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-sm-6 col-md-offset-2">
+                            <div class="service-item">
+                                <span class="fa-stack fa-4x">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-shield fa-stack-1x text-primary"></i>
+                                </span>
+                                <h4>
+                                    <strong>5 тыс. руб.</strong>
+                                </h4>
+                                <p>анализ конкурентов, оценка более детальная - по функциям, проработка предложений по каждому модулю, создание концепции проекта, разработка запроса на КП на проект (концепции вашего проекта) с учетом специфики проекта</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.row (nested) -->
+                </div>
+                <!-- /.col-lg-10 -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container -->
+    </section>
+    <!-- Callout -->
+    <aside class="callout">
+        <div class="text-vertical-center">
+            <a href="#made" class="btn btn-light"><h2>Хочу сделать оценку своего проекта</h2></a>
+            <h4>Если вы сомневаетесь в заказе платной версии - закажите бесплатную! Вы ничего не теряете.</h4>
+            <h4>Если вам понравится бесплатный вариант - можем сделать в дальнейшем и более уточненную оценку.</h4>
+        </div>
+    </aside>
+    <!-- Portfolio -->
+    <section id="portfolio" class="portfolio">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 col-lg-offset-1 text-center">
+                    <h2>Как выглядит результат</h2>
+                    <hr class="small">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="portfolio-item">
+                                <a href="~/js/estimate/img/estimate.png" class="gallery-image" rel="mygallery01">
+                                    <img class="img-portfolio img-responsive" src="~/js/estimate/img/estimate1.png">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="portfolio-item">
+                                <a href="~/js/estimate/img/estimate-doc.png" class="gallery-image" rel="mygallery01">
+                                    <img class="img-portfolio img-responsive" src="~/js/estimate/img/estimate-doc1.png">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="portfolio-item">
+                                <a href="~/js/estimate/img/brief.png" class="gallery-image" rel="mygallery01">
+                                    <img class="img-portfolio img-responsive" src="~/js/estimate/img/brief1.png">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="portfolio-item">
+                                <a href="~/js/estimate/img/analysis.png" class="gallery-image" rel="mygallery01">
+                                    <img class="img-portfolio img-responsive" src="~/js/estimate/img/analysis1.png">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.row (nested) -->
+                    <div class="text-vertical-center">
+                        <h4>Оценка представляет из себя диапазон часов/бюджета. С вероятностью 90% ваш бюджет будет лежать в этом диапазоне. Чем больше предоставите данных - тем точнее будет оценка. Т.е. чем больше неопределенности по заданию на проекте - тем шире будет вилка оценки.</h4>
+                    </div>
+                    <!--<a href="#" class="btn btn-dark">View More Items</a>-->
+                </div>
+                <!-- /.col-lg-10 -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container -->
+    </section>
+    <!-- Call to Action -->
+    <aside class="call-to-action bg-primary">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>Как производится оценка</h2>
+                    <br />
+                    <div class="col-lg-8 col-lg-offset-2 text-left">
+                        <ul class="borderEST">
+                            <li>Вы оставляете заявку (20 сек.)&nbsp;&nbsp;<a href="#made" style="color: #fff; font-weight: bold;">Оставить заявку</a></li>
+                            <li>Мы созваниваемся по скайпу и прорабатываем отдельные вопросы вашего проекта (10-30 мин)</li>
+                            <li>Наш технический специалист делает оценку проекта (1-3 рабочих дня)</li>
+                            <li>Вы получаете документ оценки с проработкой нюансов вашего проекта (5-10 мин)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aside>
+    <!-- Map -->
+    <section id="contact" class="map" style="position: relative;">
+        <div style="position: absolute; right: 200px; top: 0px;">
+            <div style="width:450px; margin: 10px; padding: 2px 10px; background-color: #404040; color:white; opacity:0.7; box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px; border-radius: 2px;">
+                <h3>Наши гарантии</h3>
+                <p>
+                    Мы гарантируем, что сделаем честную беспристрастную оценку на основании тех данных, которые вы нам предоставите.<br />
+                    Мы гарантируем конфиденциальность ваших данных: как личных данных, так и данных вашего проекта
+                </p>
+            </div>
+        </div>
+        <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1155.123580546458!2d39.693277!3d54.617254!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4149e2693539deef%3A0x87a84cb11c8117cb!2z0JLRi9GB0L7QutC-0LLQvtC70YzRgtC90LDRjyDRg9C7LiwgNTQsINCg0Y_Qt9Cw0L3RjCwg0KDRj9C30LDQvdGB0LrQsNGPINC-0LHQuy4sIDM5MDAyOQ!5e0!3m2!1sru!2sru!4v1424932418068"></iframe>
+        <br />
+        <small>
+            <a href="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1155.123580546458!2d39.693277!3d54.617254!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4149e2693539deef%3A0x87a84cb11c8117cb!2z0JLRi9GB0L7QutC-0LLQvtC70YzRgtC90LDRjyDRg9C7LiwgNTQsINCg0Y_Qt9Cw0L3RjCwg0KDRj9C30LDQvdGB0LrQsNGPINC-0LHQuy4sIDM5MDAyOQ!5e0!3m2!1sru!2sru!4v1424932418068;iwloc=A"></a>
+        </small>
+    </section>
+    <!-- Footer -->
+    <footer id="made">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 col-lg-offset-1 text-center">
+                    <h2>Хочу сделать оценку своего проекта</h2>
+                </div>
+                <div class="col-md-9 col-md-offset-3 col-lg-9 col-lg-offset-3">
+                    <div class="dmCont"></div>
+                </div>
+                <div class="col-lg-10 col-lg-offset-1 text-center" style=" margin-top: 40px;">
+                    <p>&copy; @DateTime.Now.Year - Система разработки CRM (личных кабинетов) на заказ Ark AS (Web-automation.ru)</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/js/AS/as.tools.js" charset="Windows-1251" type="text/javascript"></script>
+    <script src="~/js/AS/as.resources.js" charset="Windows-1251" type="text/javascript"></script>
+    <script src="~/js/AS/as.sys.js" charset="Windows-1251" type="text/javascript"></script>
+    <script src="~/js/AS/as.makeup.js" charset="Windows-1251" type="text/javascript"></script>
+    <script src="~/js/AS/controls/as.form.js" charset="Windows-1251" type="text/javascript"></script>
+
+    <!-- jQuery -->
+    <script src="~/js/estimate/js/jquery.js" charset="Windows-1251" type="text/javascript"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="~/js/estimate/js/bootstrap.min.js" charset="Windows-1251" type="text/javascript"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="~/js/color-box/jquery.colorbox-min.js" charset="Windows-1251" type="text/javascript"></script>
+    <script>
+    // Closes the sidebar menu
+    $("#menu-close").click(function(e) {
+        e.preventDefault();
+        $("#sidebar-wrapper").toggleClass("active");
+    });
+
+    // Opens the sidebar menu
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#sidebar-wrapper").toggleClass("active");
+    });
+
+    $('a.gallery-image').colorbox({
+        rel: "myGallery01",
+        transition:"none", 
+        width:"900px", 
+        height: "600px",
+        //innerWidth: '70%',
+        //innerHeight: '100%',
+        slideshowAuto: false,
+        current: "слайд {current} из {total}",
+        previous: "предыдущий",
+        next: "следующий",
+        close: "закрыть",
+        xhrError: "Этот контент не удалось загрузить.",
+        imgError: "Это изображение не удалось загрузить.",
+        onComplete: function () {
+            $("img.cboxPhoto").wrap("<div class='cboxDiv1Photo'></div>");
+            //$("img.cboxPhoto").removeAttr("height");
+            //$("img.cboxPhoto").removeAttr("width");
+            var mag = ($("div.cboxDiv1Photo").height() - $("img.cboxPhoto").height()) / 2;
+            $("img.cboxPhoto").attr("style", "margin: 0px auto 0px;");
+            $("div.cboxDiv1Photo").attr("style", "padding-top:" + mag + "px;");
+        },
+      /*  onClosed: function () {
+            $('a.gallery-image').removeAttr('rel').attr('href', '#');
+            $.colorbox.remove({ rel: "myGallery01" });
+        }*/
+    });
+
+
+    // Scrolls to the selected menu item on the page
+    $(function() {
+        $('a[href*=#]:not([href=#])').click(function() {
+            if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') || location.hostname == this.hostname) {
+
+                var target = $(this.hash);
+                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                if (target.length) {
+                    $('html,body').animate({
+                        scrollTop: target.offset().top
+                    }, 1000);
+                    return false;
+                }
+            }
+        });
+    });
+    </script>
+    <script type="text/javascript">
+        var estT = @Html.Raw(js.Serialize(((List<arkAS.Models.EstimateTypes>)ViewBag.estimateType).Select(x => new { Value = x.id, Text = x.type, Selected = false })));
+
+        var asdemo = {
+            init: function () {
+                asdemo.initForm();
+            },
+            initForm: function () {
+                as.form.init({
+                    editID: "0",
+                    cont: $('.dmCont'),
+                    title: '',
+                    subtitle: '',
+                    buttonText: 'Сделайте оценку моего проекта',
+                    ajaxURLFormat: '/Home/Estimate_{0}',  // load, save
+                    cookiePrefix: 'as-form-',
+                    fields: [
+                       { code: "name", title: "Имя", tooltip: "Укажите имя", datatype: "string", visible: true, isRequired: true, checkCallback: function () { } },
+                       { code: "email", title: "E-mail", tooltip: "Укажите e-mail", example: "Ivanov@gmail.com", datatype: "string", visible: true, isRequired: true, checkCallback: function () { } },
+                       { code: "skype", title: "Skype", tooltip: "Укажите Skype", datatype: "string", visible: true, isRequired: false, checkCallback: function () { } },
+                       { code: "estimate", title: "Тип оценки", tooltip: "Укажите тип оценки", visible: true, datatype: "select", sources: estT, isRequired: true, checkCallback: function () { } }
+                    ]
+                });
+            }
+        }
+        $(function () {
+            as.options = {
+                jspath: '/js',
+                jsErrorHandler: '/ArkStuff/jsError'
+            };
+            as.sys.init();
+            asdemo.init();
+        });
+    </script>
+
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript"> (function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter32000186 = new Ya.Metrika({ id:32000186, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = "https://mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks");</script><noscript><div><img src="https://mc.yandex.ru/watch/32000186" style="position:absolute; left:-9999px;" alt="" /></div></noscript><!-- /Yandex.Metrika counter -->
+</body>
+</html>

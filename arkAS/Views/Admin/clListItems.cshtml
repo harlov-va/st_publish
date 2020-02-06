@@ -1,0 +1,153 @@
+﻿@{
+    ViewBag.Title = "List Items";
+    Layout = arkAS.BLL.Core.CoreManager.GetCabinetLayout();
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+
+<div class='LICont'>
+</div>
+
+@section js{
+    <script type="text/javascript">
+        debugger;
+    var listsSource = @Html.Raw(js.Serialize(((Dictionary<int, string>)ViewBag.Lists).Select(x => new { Value = x.Key, Text = x.Value })));
+    var listsSource2 = @Html.Raw(js.Serialize(((Dictionary<int, string>)ViewBag.Lists).Select(x => new { value = x.Key, text = x.Value })));
+
+    var li = {
+        init: function () {
+            li.initMainTable();
+            $(document).delegate('.usCreateDoc', 'click', function (e) {
+                e.preventDefault();
+                li.createItem();
+            });
+        },
+        initMainTable: function () {
+            as.crud.init({
+                cont: $('.LICont'),
+                title: 'Параметры чек-листов',
+                toolbarAdditional: '<a href="#" class="btn btn-primary usCreateDoc">Создать</a>',
+                groupOperationsToolbar: '',
+                ajaxURLFormat: '/Admin/clListItems_{0}',
+                inlineAjaxURL: "/Admin/clListItemsInline",
+                pageSize: 15,
+                cookiePrefix: "as-crud-clListItemsTable-",
+                emptyText: 'Нет элементов',
+                createLinkTitle: 'Создать',
+                filterLinkTitle: 'Найти',
+                filterTitle: 'Фильтрация данных',
+                showChecksCol: false,
+                showNumsCol: true,
+                showToolbar: true,
+                showColSettings: false,
+                showReplaceTool: false,
+                showExcelExport: false,
+                additionalSort: false,
+                cols: [
+                    { code: "id", title: "ID", tooltip: "Идентификатор", isVisible: false, isPK: true, datatype: "int", isRequired: false },
+                    {
+                        code: "name", title: "Параметр", tooltip: "Параметр", isVisible: true, isPK: false, datatype: "string", isRequired: true, format: "{0}", isSort: true, callback: null,
+                        editable: { type: "text", format: "{0}", callback: function (el, newValue) { } }
+                    },
+                    {
+                        code: "listName", title: "Чек-лист", tooltip: "Чек-лист", isVisible: true, isPK: false, datatype: "string", isRequired: true, format: "{0}", isSort: true, callback: null,
+                        filter: { type: "select", source: listsSource, notSelected: "Не выбрано" },
+                        editable: { type: "select", format: "{0}", source: listsSource2, callback: function (el, newValue) { } }
+                    },
+                    {
+                        code: "listID", title: "listID", tooltip: "listID", isVisible: false, isPK: false, datatype: "string", isRequired: true, format: "{0}", isSort: false, callback: null
+                    },
+                    {
+                        code: "ord", title: "Порядок сортировки", tooltip: "Порядок сортировки", isVisible: true, isPK: false, datatype: "int", isRequired: true, format: "{0}", isSort: true, callback: null,
+                        editable: { type: "text", format: "{0}", callback: function (el, newValue) { } }
+                    }
+                ],
+                operations: {
+                    create: false,
+                    remove: true,
+                    edit: false,
+                    other: [
+                    ]
+                },
+                getFilterMakeup: function (filter) {
+                    var s = [];
+                    s.push("<span class='gCap'>Порядок сортировки</span><input type='text' class='ordFilter' value='" + (filter.ord || '') + "' /><br />");
+                    return s.join("");
+                },
+                filter: function () {
+                    var listID = 0;
+                    var filter = {
+                        listID: listID,
+                        ord: $('.ordFilter').val() || ""
+                    };
+                    return filter;
+                }
+            });
+        },
+        createItem: function () {
+            var s = [];
+            s.push("<span>Название параметра чек-листа</span><input type='text' class='form-control NewListItemName' /><br />");
+            s.push("<span>Название чек-листа</span><select class='form-control NewListName'><option value='0' selected='selected'>Не выбрано</option>");
+            $.each(listsSource2, function(index, value)
+            {
+                s.push("<option value='" + value.value + "'>" + value.text + "</option>");
+            });
+            s.push("</select><br />");
+            s.push("<span>Порядок сортировки</span><input type='text' class='form-control NewOrd' /><br />");
+            
+            setTimeout(function () { $('.NewListItemName').focus(); }, 200);
+            as.sys.showDialog("Создание", s.join(""), "Сохранить", function () { 
+                var newName = $('.NewListItemName').val();
+                var listID = $('.NewListName option:selected').val();
+                var ord = $('.NewOrd').val();
+                if (!newName) {
+                    as.sys.bootstrapAlert("Укажите пожалуйста название параметра чек-листа", { type: 'warning' });
+                    $('.NewListItemName').focus();
+                    return;
+                }
+                if (!listID || listID == 0) {
+                    as.sys.bootstrapAlert("Укажите пожалуйста название чек-листа", { type: 'warning' });
+                    $('.NewListName').focus();
+                    return;
+                }
+                if (!ord) {
+                    as.sys.bootstrapAlert("Укажите пожалуйста порядок сортировки", { type: 'warning' });
+                    $('.NewOrd').focus();
+                    return;
+                }
+                var pos = ord.indexOf(".");
+                    if (!$.isNumeric(ord) || pos != -1 || ord != Math.round(ord)) {
+                    as.sys.bootstrapAlert("Порядок сортировки должен быть целым числом", { type: 'warning' });
+                    $('.NewOrd').focus();
+                    return;
+                }
+
+                var params = {
+                    name: newName,
+                    listID: listID,
+                    ord: ord
+                };
+
+                as.sys.ajaxSend("/Admin/clListItemsCreate", params, function (data) {
+                    if (typeof (data) != "object") data = eval('(' + data + ')');
+                    if (data.result) {
+                        as.sys.bootstrapAlert("Элемент сохранен", { type: 'success' });
+                        as.sys.closeDialog();
+                        as.crud.getItems();
+                        setTimeout(function () {
+                            as.crud.gotoItem(data.textID);
+                        }, 1000);
+                    } else {
+                        as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                    }
+                });
+            });
+        },
+    }
+    $(function () {
+        li.init();
+    });
+    </script>
+
+    }
+
+

@@ -1,0 +1,100 @@
+﻿
+@{
+    ViewBag.Title = "Skype";
+    Layout = "~/Views/Shared/_CabinetLayout.cshtml";
+}
+
+<h2>Пример отправки сообщение в  Skype</h2>
+<div class="row">
+
+</div>
+<div class="row">
+    <div id="discussion" class="col-md-12 col-sm-12 col-xs-12" style="height:400px; width:100%; overflow-y:scroll">
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2 col-sm-2 col-xs-12">
+        @Html.DropDownList("name", (List<SelectListItem>)ViewBag.contacts, "Выбрать пользователя", new { @class = "css-class form-control", @id = "choosenUser", @style = "margin-top:10px" })<br /><br />
+    </div>
+    <div class="col-md-7 col-sm-7 col-xs-12">
+        @Html.TextArea("msg", new { @id = "message", @class = "form-control", @style="width:100%; max-width:100%;"})<br /><br />
+    </div>
+    <div class="col-md-1 col-sm-1 col-xs-12 text-center">
+        <input type="button" value="Send" id="sendMessages" class="btn btn-default" style="margin-top:10px"/>
+    </div>
+    <div class="col-md-2 col-sm-2 col-xs-12">
+        <div class="col-md-12 col-sm-12 col-xs-12 alert alert-success" id="skypeMessageBox" role="alert">
+            <a href="#" class="alert-link">Message successfully sent</a>
+        </div>
+    </div>
+
+</div>      
+
+
+
+
+
+@section js{ 
+<script>
+    var sendSkypeMessagecomponent = {
+        init: function () {
+            this.initHub();
+            $("#skypeMessageBox").hide();
+        },
+        sendMessage: function () {
+            var userName = $("#choosenUser").val();
+            var userMessage = $("#message").val();
+            if (userMessage != null) {
+                $.ajax({
+                    method: "POST",
+                    url: "Skype",
+                    data: {
+                        name: userName,
+                        msg: userMessage
+                    },
+                    success: function () {
+                        $("#message").val("");
+                        sendSkypeMessagecomponent.showMessageBox();
+                        sendSkypeMessagecomponent.chatTextMessageBox('You', userMessage, true);
+                    }
+                });
+            }
+        },
+        initHub: function () {
+            var connectionHub = $.connection.baseHub;
+            connectionHub.client.getMessage = function (user, recievedText) {
+                sendSkypeMessagecomponent.chatTextMessageBox(user, recievedText, false);
+            };
+
+            $.connection.hub.start().done(function () {
+                console.log("Connected");
+            });
+        },
+        showMessageBox: function () {
+            $("#skypeMessageBox").show();
+            setTimeout(function () {
+                $("#skypeMessageBox").hide();
+            }, 5000);
+        },
+        chatTextMessageBox: function (user, recievedText, isSending) {
+            var encodedName = $('<div />').text(user).html();         
+            var encodedMsg = $('<div />').text(recievedText).html();
+            var msg = '<div class="well"><strong>' + encodedName
+                + '</strong>:&nbsp;&nbsp;' + encodedMsg + '</div>';
+            if (isSending) {
+                msg = '<div class="well text-right">' + encodedMsg + '<strong>:&nbsp;&nbsp;' + encodedName
+                + '</strong></div>';
+            }
+
+            $('#discussion').append(msg);
+        }
+    };
+
+    (function () {
+        sendSkypeMessagecomponent.init();
+        $("#sendMessages").click(function () {
+            sendSkypeMessagecomponent.sendMessage();
+        });
+    })();
+</script>
+    }

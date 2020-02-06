@@ -1,0 +1,191 @@
+﻿
+@{
+    Layout = arkAS.BLL.Core.CoreManager.GetCabinetLayout();
+    ViewBag.Title = "Контрагенты";
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+
+<select class='usClientsTemplate hide'>
+    <option value="0">Не выбрано</option>
+    @foreach (var item in (List<arkAS.BLL.crm_clients>) ViewBag.Clients)
+    {
+        <option value='@item.id'>@item.fio</option>
+    }
+</select>
+
+<select class='usHumansTemplate hide'>
+    <option value="0">Не выбрано</option>
+    @foreach (var item in (List<arkAS.BLL.hr_humans>)ViewBag.Humans)
+    {
+        <option value='@item.id'>@item.fio</option>
+    }
+</select>
+
+<div class="usCont"></div>
+
+@section js{
+    <script type="text/javascript">
+
+        var clientsSource = @Html.Raw(js.Serialize(((List<arkAS.BLL.crm_clients>) ViewBag.Clients).Select(x => new {Value = x.id, Text = x.fio, Selected = false})));
+        var humansSource = @Html.Raw(js.Serialize(((List<arkAS.BLL.hr_humans>) ViewBag.Humans).Select(x => new {Value = x.id, Text = x.fio, Selected = false})));
+
+        var clientsSourceInLine = @Html.Raw(js.Serialize(((List<arkAS.BLL.crm_clients>) ViewBag.Clients).Select(x => new {value = x.id, text = x.fio})));
+        var humansSourceInLine = @Html.Raw(js.Serialize(((List<arkAS.BLL.hr_humans>) ViewBag.Humans).Select(x => new {value = x.id, text = x.fio})));
+
+        clientsSourceInLine.splice(0, 0, { value: "", text: "Не задано" });
+        humansSourceInLine.splice(0, 0, { value: "", text: "Не задано" });
+
+        var us = {
+            init: function() {
+                us.initMainTable();
+                $(document).delegate('.usCreateContragent', 'click', function(e) {
+                    e.preventDefault();
+                    us.createContragent();
+                });
+                $(document).delegate('.usNewClientID, .usNewHumanID', 'change', function(e) {
+                    $(this).siblings('select').val('0');
+                });
+            },
+            initMainTable: function() {
+                as.crud.init({
+                    cont: $('.usCont'),
+                    title: 'Контрагенты',
+                    toolbarAdditional: '<a href="#" class="btn btn-primary usCreateContragent">Создать контрагента</a>&nbsp;&nbsp;',
+                    ajaxURLFormat: '/Finances/Contragents_{0}',
+                    inlineAjaxURL: "/Finances/ContragentInline",
+                    filterLinkTitle: 'Найти',
+                    filterTitle: 'Фильтрация данных',
+                    showChecksCol: false,
+                    cookiePrefix: "as-crud-contragentsTable-",
+                    pageSize: 10,
+                    cols: [
+                        { code: "id", title: "ID", tooltip: "Идентификатор", isVisible: false, isPK: true, datatype: "int", isRequired: false },
+                        {
+                            code: "name", title: "Название", tooltip: "Название", isVisible: true, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: true, callback: null,
+                            editable: { type: "text", format: "{0}", callback: function (el, newValue) { } }
+                        },
+                        { code: "clientID", title: "ID клиента", tooltip: "ID клиента", isVisible: false, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: false, callback: null },
+                        {
+                            code: "clientName",
+                            title: "Клиент",
+                            tooltip: "Клиент",
+                            isVisible: true,
+                            isPK: false,
+                            datatype: "string",
+                            isRequired: false,
+                            format: "{0}",
+                            isSort: true,
+                            callback: null,
+                            filter: { type: "select", source: clientsSource, notSelected: "Не выбрано" },
+                            editable: { type: "select", format: "{0}", source: clientsSourceInLine, callback: function(el, newValue) {
+                                var human = el.closest('.crdRow').find('[data-name="humanName"]');
+                                human.editable('setValue',"");
+                            } }
+                        },
+                        { code: "humanID", title: "ID контакта", tooltip: "ID контакта", isVisible: false, isPK: false, datatype: "string", isRequired: false, format: "{0}", isSort: false, callback: null },
+                        {
+                            code: "humanName",
+                            title: "Контактное лицо",
+                            tooltip: "Контактное лицо",
+                            isVisible: true,
+                            isPK: false,
+                            datatype: "string",
+                            isRequired: false,
+                            format: "{0}",
+                            isSort: true,
+                            callback: null,
+                            filter: { type: "select", source: humansSource, notSelected: "Не выбрано" },
+                            editable: { type: "select", format: "{0}", source: humansSourceInLine, callback: function(el, newValue) {
+                                var client = el.closest('.crdRow').find('[data-name="clientName"]');
+                                client.editable('setValue',"");
+                            } }
+                        },
+                    ],
+                    operations: {
+                        create: false,
+                        remove: true,
+                        edit: false,
+                        other: []
+                    },
+                    getFilterMakeup: function(filter) {
+                        var s = [];
+                        s.push("<div class='crdFilterItem'><span class='as-cap'>Имя</span><input type='text' class='usName' value='" + (filter.name || '') + "' /></div>");
+
+                        return s.join("");
+                    },
+                    filter: function () {
+               
+                        var filter = {
+                            name: $('.usName').val() || "",
+                        };
+                        return filter;
+                    }
+                });
+            },
+            createContragentMarkup: function(s) {
+                s.push("<span>Имя</span><input type='text' class='form-control usNewName' /><br />");
+                s.push(us.createSelectMarkup('.usClientsTemplate', 'Клиент', 'usNewClientID'));
+                s.push(us.createSelectMarkup('.usHumansTemplate', 'Контактное лицо', 'usNewHumanID'));
+            },
+            createSelectMarkup: function(templateSelector, header, code) {
+                $(templateSelector + ' option').removeAttr('selected');
+                $(templateSelector + ' option:first').attr('selected', 'selected');
+                return "<span>" + header + "</span><select class='form-control " + code + "' >" + $(templateSelector).html() + "</select><br />";
+            },
+            getParams: function() {
+                var name = $('.usNewName').val();
+                var clientID = $('.usNewClientID option:selected').val();
+                var humanID = $('.usNewHumanID option:selected').val();
+                return { name: name, clientID: clientID, humanID: humanID };
+            },
+            checkParams: function(params) {
+                var res = true;
+                if (!params.name) {
+                    as.sys.bootstrapAlert("Укажите пожалуйста имя контрагента", { type: 'warning' });
+                    $('.usNewName').focus();
+                    res = false;
+                }
+                var c = params.clientID;
+                var h = params.humanID;
+                if ((!c || c == 0) && (!h || h == 0 )) {
+                    as.sys.bootstrapAlert("Выберите пожалуйста клиента или контактное лицо", { type: 'warning' });
+                    res = false;
+                }
+                return res;
+            },
+            createContragent: function() {
+                var s = [];
+                us.createContragentMarkup(s);
+
+                setTimeout(function() { $('.usNewName').focus(); }, 200);
+                as.sys.showDialog("Новый контрагент", s.join(""), "Сохранить", function() {
+
+                    var params = us.getParams();
+                    if (!us.checkParams(params))
+                        return;
+
+                    as.sys.ajaxSend("/Finances/CreateContragent", params, function(data) {
+                        if (typeof (data) != "object") data = eval('(' + data + ')');
+                        if (data.result) {
+                            as.sys.bootstrapAlert("Контрагент сохранен", { type: 'success' });
+                            as.sys.closeDialog();
+                            as.crud.getItems();
+                            setTimeout(function() {
+                                as.crud.gotoItem(data.contragentID);
+                            }, 1000);
+                        } else {
+                            as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                        }
+                    });
+                });
+            },
+        }
+
+        $(function() {
+            us.init();
+        });
+    </script>
+
+
+
+}

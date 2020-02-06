@@ -1,0 +1,229 @@
+﻿@using arkAS.Models;
+@{
+    Layout = arkAS.BLL.Core.CoreManager.GetCabinetLayout();
+    ViewBag.Title = "Комментарии";    
+    var js = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+
+@*<select class='usCommentsTypesTemplate hide'>
+        <option value="0">Не выбрано</option>
+        @foreach (string item in (List<string>)ViewBag.CommentsTypes)
+        {
+            <option value='@item'>@item</option>
+        }
+    </select>*@
+
+<div class='usCont'>
+</div>
+@section js{
+<script type="text/javascript">
+    //var CommentsTypesSource = Html.Raw(js.Serialize(((List<arkAS.BLL.as_categories>)ViewBag.Categories).Select(x => new { value = x.id, text = x.name })));
+    var sourceCommentsTypes = @Html.Raw(js.Serialize(((List<string>)ViewBag.CommentsTypes).Select(x => new { Value = x, Text = x, Selected = false })));
+    var sourceUsers = @Html.Raw(js.Serialize(((List<MembershipUser>)Membership.GetAllUsers().Cast<MembershipUser>().AsQueryable().ToList()).Select(x => new { Value = x.UserName, Text = x.UserName, Selected = false })));
+
+    var us = {
+        init: function() {
+            us.initMainTable();
+            $(document).delegate('.usCloseText', 'click', function(e) {
+                e.preventDefault();
+                $(this).closest("tr").hide(250, function () { $(this).remove(); });
+            });
+            $(document).delegate('.usSaveText', 'click', function(e) {
+                e.preventDefault();
+                us.saveText($(this));
+            });
+        },
+        initMainTable: function() {
+            as.crud.init({
+                cont: $('.usCont'),
+                title: 'Комментарии',
+                //toolbarAdditional: '<a href="#" class="btn btn-primary usCreateText">Создать текст</a>&nbsp;&nbsp;',
+                groupOperationsToolbar: '',
+                ajaxURLFormat: '/Admin/Comments_{0}',
+                inlineAjaxURL: "/Admin/CommentsInline",
+                pageSize: 10,
+                cookiePrefix: "as-crud-commentsTable-",
+                emptyText: 'Нет элементов',
+                createLinkTitle: 'Создать',
+                filterLinkTitle: 'Найти',
+                filterTitle: 'Фильтрация данных',
+                showChecksCol: false,
+                showNumsCol: true,
+                showToolbar: false,
+                showColSettings: false,
+                showReplaceTool: false,
+                showExcelExport: false,
+                showPDFExport: false,
+                additionalSort: false,
+                cols: [
+                    { code: "id", title: "ID", tooltip: "Идентификатор", isVisible: false, isPK: true, datatype: "int", isRequired: false },
+                    {
+                        code: "username",
+                        title: "Пользователь",
+                        tooltip: "Пользователь",
+                        isVisible: true,
+                        isPK: false,
+                        datatype: "string",
+                        isRequired: false,
+                        isRequired: false,
+                        format: "{0}",
+                        isSort: true,
+                        callback: null,
+                        filter: { type: "select", source: sourceUsers, notSelected: "Не выбрано" },
+                        editable: false
+                    },
+                    {
+                        code: "created",
+                        title: "Дата",
+                        tooltip: "Дата",
+                        isVisible: true,
+                        isPK: false,
+                        datatype: "string",
+                        isRequired: false,
+                        format: "{0}",
+                        isSort: true,
+                        callback: null,
+                        editable: false
+                    },
+                    {
+                        code: "text",
+                        title: "Содержимое",
+                        tooltip: "Содержимое",
+                        isVisible: true,
+                        isPK: false,
+                        datatype: "string",
+                        isRequired: false,
+                        format: "{0}",
+                        isSort: false,
+                        callback: null,
+                        editable: false
+                    },
+                     {
+                         code: "audio",
+                         title: "Аудио",
+                         tooltip: "Аудио",
+                         isVisible: false,
+                         isPK: false,
+                         datatype: "string",
+                         isRequired: false,
+                         format: "{0}",
+                         isSort: true,
+                         callback: null,
+                         editable: false
+                     },
+                    {
+                        code: "type",
+                        title: "Тип",
+                        tooltip: "Тип",
+                        isVisible: true,
+                        isPK: false,
+                        datatype: "string",
+                        isRequired: false,
+                        format: "{0}",
+                        isSort: true,
+                        callback: null,
+                        filter: { type: "select", source: sourceCommentsTypes, notSelected: "Не выбрано" },
+                        editable: false
+
+                    },
+                    {
+                        code: "itemID",
+                        title: "Ид элемента",
+                        tooltip: "Тип",
+                        isVisible: true,
+                        isPK: false,
+                        datatype: "int",
+                        isRequired: false,
+                        format: "{0}",
+                        isSort: true,
+                        callback: null,
+                        editable: false
+                    }
+                ],
+                operations: {
+                    create: false,
+                    remove: true,
+                    edit: false,
+                    other: [
+                        { linkClass: 'crdTo2', iconClass: 'glyphicon glyphicon-pencil', title: 'Редактировать текст', callback: us.editValue }
+                    ]
+                },
+                getFilterMakeup: function(filter) {
+                    var s = [];
+                    s.push("<div class='crdFilterItem'><span class='as-cap'>Текст</span><input type='text' class='usText' value='" + (filter.text || '') + "' /></div>");
+
+                    return s.join("");
+                },
+                getItemsCallback: function(){
+
+                    $('td.crdItem[data-code="audio"]').each(function(){
+                        if($(this).html() != "null"){
+                            var text = $(this).siblings('td.crdItem[data-code="text"]').html();
+                            $(this).siblings('td.crdItem[data-code="text"]').html(text + "</br><audio src='" + $(this).html() + "' controls></audio><a href='/Admin/GetAudioComment/" + $(this).siblings('td.crdItem[data-code="id"]').html() + "' class='btn btn-primary btn-sm' style='margin-left:20px; margin-bottom:20px'>" + as.resources.crud_getComments_LoadAudioComment + "</a>");
+                        }
+                    });
+
+                },
+
+                filter: function() {
+
+                    var filter = {
+                        text: $('.usText').val() || ""
+                    };
+                    return filter;
+                }
+            });
+        },
+        editValue: function(e) {
+            e.preventDefault();
+            var btn = $(this);
+            var tr = btn.closest('tr');
+            if (tr.next().hasClass('crdAddRow')) {
+                tr.next().hide(50, function() { $(this).remove(); });
+            } else {
+                var s = [];
+                s.push("<tr class='crdAddRow'><td colspan='5'>");
+                s.push("<div class='well well-sm'><a href='#' class='btn btn-success usSaveText'>Сохранить</a>&nbsp;&nbsp;<a href='#' class='btn btn-default usCloseText'>Закрыть</a></div>");
+                s.push("<textarea class='as-html usText' rows='15' cols='120' style='max-width:  1600px;'></textarea>");
+                s.push("</td></tr>");
+                $(s.join("")).insertAfter(tr);
+                var params = { id: tr.find("td[data-code=id]").text() };
+                as.sys.ajaxSend("/Admin/GetComment", params, function(data) {
+                    if (typeof (data) != "object") data = eval('(' + data + ')');
+                    if (data.result) {
+
+
+                        var t = tr.next().find('.usText');
+                        var mce = tinyMCE.get(t.attr('id'));
+                        mce.setContent ? mce.setContent(data.text) : t.val(data.text);
+   
+
+                    } else {
+                        as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                    }
+                });
+            }
+        },
+        saveText: function(btn) {
+            var tr = btn.closest("tr").prev();
+            var t = btn.closest("tr").find('.usText');
+            var mce = tinyMCE.get(t.attr('id'));
+            var text = mce.getContent ? mce.getContent() : t.val();
+            var params = { pk: tr.attr('data-itemID'), value: text, name: "text" };
+            as.sys.ajaxSend("/Admin/CommentsInline", params, function (data) {
+                if (typeof (data) != "object") data = eval('(' + data + ')');
+                if (data.result) {
+                    tr.find("td[data-code=text]").html(params.value);
+                    as.sys.bootstrapAlert("Сохранено", { type: 'success' });
+                } else {
+                    as.sys.bootstrapAlert(data.msg || "Возникли ошибки при выполнении операции!", { type: 'danger' });
+                }
+            });
+        }
+    };
+
+$(function () {
+    us.init();
+});
+</script>
+}
